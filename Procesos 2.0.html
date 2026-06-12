@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)file:///Users/lucianadottori/Downloads/checklist_inmobiliario_30.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Procesos">
+<meta name="theme-color" content="#0f0f0f">
+<title>Procesos</title>
+<style>
+:root{--bg:#0f0f0f;--bg2:#1a1a1a;--bg3:#242424;--bg4:#2e2e2e;--border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.16);--text:#f0f0f0;--text2:#999;--text3:#666;--accent:#e8d5a3;--accent2:#c4a96b;--green:#4caf7d;--green-bg:rgba(76,175,125,0.12);--yellow:#f0c060;--yellow-bg:rgba(240,192,96,0.12);--red:#e05555;--red-bg:rgba(224,85,85,0.12);--blue:#6ab0e8;--radius:12px;--radius-sm:8px;--font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px}
+body{display:flex;flex-direction:column;min-height:100vh}
+.app-shell{display:flex;flex-direction:column;max-width:600px;margin:0 auto;width:100%;min-height:100vh;position:relative}
+@media(min-width:700px){body{background:#111}.app-shell{border-left:0.5px solid var(--border);border-right:0.5px solid var(--border);box-shadow:0 0 60px rgba(0,0,0,.5)}}
+.topbar{padding:16px 20px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:50}
+.topbar-title{font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.4px}
+.topbar-sub{font-size:12px;color:var(--text3);margin-top:2px}
+.bottom-nav{display:flex;background:var(--bg2);border-top:0.5px solid var(--border);position:sticky;bottom:0;z-index:50}
+.bnav-btn{flex:1;padding:10px 4px 14px;display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;color:var(--text3);font-size:10px;font-family:var(--font);transition:color .15s;position:relative}
+.bnav-btn.active{color:var(--accent)}
+.bnav-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav-badge{position:absolute;top:6px;right:calc(50% - 18px);background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;min-width:16px;text-align:center}
+.screen{display:none;flex:1;overflow-y:auto;padding-bottom:20px}
+.screen.active{display:block}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);padding:18px 20px 8px}
+.card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);margin:0 16px 8px;padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:background .12s}
+.card:hover{background:var(--bg3)}
+.card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.card-body{flex:1;min-width:0}
+.card-title{font-size:14px;font-weight:500;color:var(--text)}
+.card-sub{font-size:12px;color:var(--text2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;flex-shrink:0}
+.badge-green{background:var(--green-bg);color:var(--green)}
+.badge-yellow{background:var(--yellow-bg);color:var(--yellow)}
+.badge-red{background:var(--red-bg);color:var(--red)}
+.badge-gray{background:var(--bg3);color:var(--text2)}
+.badge-accent{background:rgba(232,213,163,0.15);color:var(--accent)}
+.prog-bar{height:3px;background:var(--bg4);border-radius:2px;overflow:hidden;margin-top:8px}
+.prog-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font);cursor:pointer;border:0.5px solid var(--border2);background:var(--bg3);color:var(--text);transition:background .1s}
+.btn:hover{background:var(--bg4)}
+.btn-primary{background:var(--accent);color:#0f0f0f;border-color:transparent;font-weight:600}
+.btn-primary:hover{background:var(--accent2)}
+.btn-full{width:100%;justify-content:center}
+.btn-sm{padding:7px 12px;font-size:12px}
+.input-wrap{margin-bottom:14px}
+.input-label{font-size:12px;color:var(--text2);margin-bottom:6px;display:block;font-weight:500}
+.input-label .req{color:var(--red);margin-left:2px}
+input[type=text],input[type=number],input[type=date],select{width:100%;padding:11px 14px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:14px;font-family:var(--font);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s}
+input[type=text]:focus,input[type=number]:focus,input[type=date]:focus,select:focus{border-color:var(--accent)}
+input.error,select.error{border-color:var(--red)}
+input::placeholder{color:var(--text3)}
+.back-btn{display:flex;align-items:center;gap:6px;color:var(--accent);font-size:14px;cursor:pointer;padding:14px 20px 10px;background:none;border:none;font-family:var(--font)}
+.back-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.cl-header{padding:0 20px 16px;border-bottom:0.5px solid var(--border);margin-bottom:4px}
+.cl-header-title{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-0.4px}
+.cl-header-sub{font-size:13px;color:var(--text2);margin-top:3px}
+.cl-stats{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.partes-block{background:var(--bg3);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:10px}
+.partes-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:8px}
+.parte-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.parte-row input{flex:1;padding:8px 12px;font-size:13px}
+.add-parte-btn{background:none;border:0.5px dashed var(--border2);border-radius:var(--radius-sm);padding:7px 12px;color:var(--text3);font-size:12px;cursor:pointer;width:100%;font-family:var(--font);transition:all .1s}
+.add-parte-btn:hover{color:var(--accent);border-color:var(--accent)}
+.sec-group{border-top:0.5px solid var(--border);margin-top:16px}
+.sec-group:first-child{border-top:none;margin-top:0}
+.sec-title{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--text3);padding:14px 20px 8px}
+.step-item{margin:0 16px 6px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s}
+.step-item.done{border-color:rgba(76,175,125,0.25)}
+.step-item.pending{border-color:rgba(240,192,96,0.25)}
+.step-item.skip{opacity:.5}
+.step-main{padding:12px 14px;display:flex;gap:10px;align-items:flex-start}
+.step-num{width:24px;height:24px;border-radius:50%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--text3);flex-shrink:0;transition:all .2s}
+.step-num.done{background:var(--green-bg);color:var(--green)}
+.step-num.pending{background:var(--yellow-bg);color:var(--yellow)}
+.step-text{flex:1;font-size:13px;line-height:1.5;color:var(--text)}
+.step-text.done{text-decoration:line-through;color:var(--text3)}
+.step-actions{display:flex;gap:6px;padding:0 14px 12px 48px;flex-wrap:wrap}
+.step-act-btn{padding:5px 11px;font-size:12px;font-family:var(--font);border-radius:20px;border:0.5px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:4px;transition:all .12s}
+.step-act-btn:hover{background:var(--bg4)}
+.step-act-btn.active-done{background:var(--green-bg);color:var(--green);border-color:rgba(76,175,125,0.3)}
+.step-act-btn.active-pend{background:var(--yellow-bg);color:var(--yellow);border-color:rgba(240,192,96,0.3)}
+.step-act-btn.active-skip{background:var(--bg4);color:var(--text3);border-color:transparent}
+.step-note-area{padding:0 14px 10px 48px}
+.step-note-area input{font-size:12px;padding:7px 10px;background:var(--bg3)}
+.snooze-panel{display:none;padding:10px 14px 14px 48px;background:rgba(240,192,96,0.05);border-top:0.5px solid rgba(240,192,96,0.15)}
+.snooze-panel.open{display:block}
+.snooze-title{font-size:11px;color:var(--yellow);margin-bottom:8px;font-weight:600}
+.snooze-input-wrap{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.snooze-input-wrap input{width:64px;text-align:center;padding:7px 8px}
+.snooze-input-wrap span{font-size:12px;color:var(--text2)}
+.snooze-presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.snooze-preset{padding:5px 11px;font-size:12px;border-radius:20px;border:0.5px solid rgba(240,192,96,0.25);background:transparent;color:var(--yellow);cursor:pointer;font-family:var(--font);transition:background .1s}
+.snooze-preset:hover{background:var(--yellow-bg)}
+.snooze-date-preview{font-size:11px;color:var(--text2);margin-bottom:10px;min-height:16px;font-weight:500}
+/* Step extra panel for autorización and propietarios */
+.step-extra-panel{display:none;padding:10px 14px 14px 48px;background:rgba(232,213,163,0.05);border-top:0.5px solid rgba(232,213,163,0.2)}
+.step-extra-panel.open{display:block}
+.step-extra-title{font-size:11px;color:var(--accent);margin-bottom:8px;font-weight:600}
+.empty{text-align:center;padding:60px 30px 40px;color:var(--text3)}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.empty p{font-size:14px;line-height:1.6}
+.reminder-item{display:flex;align-items:flex-start;gap:12px;padding:13px 20px;border-bottom:0.5px solid var(--border);cursor:pointer;transition:background .1s}
+.reminder-item:hover{background:var(--bg2)}
+.reminder-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.reminder-body{flex:1}
+.reminder-prop{font-size:13px;font-weight:600;color:var(--text)}
+.reminder-step{font-size:12px;color:var(--text2);margin-top:2px;line-height:1.4}
+.reminder-when{font-size:11px;margin-top:4px;font-weight:600}
+.new-form{padding:0 20px}
+.loading{display:flex;align-items:center;justify-content:center;gap:10px;padding:40px 20px;color:var(--text3);font-size:13px}
+.spinner{width:18px;height:18px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.user-pill{padding:5px 14px;background:var(--bg3);border-radius:20px;font-size:12px;color:var(--accent);border:0.5px solid var(--border2);cursor:pointer;font-weight:600}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{background:var(--bg2);border-radius:var(--radius) var(--radius) 0 0;border-top:0.5px solid var(--border2);padding:20px 20px 40px;width:100%;max-width:600px;margin:0 auto;transform:translateY(30px);transition:transform .2s}
+.modal-overlay.open .modal-box{transform:translateY(0)}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:16px}
+.modal-close-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.sheet-status{display:flex;align-items:center;gap:6px;font-size:11px;padding:6px 16px;color:var(--text3)}
+.sheet-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.sheet-dot.error{background:var(--red)}
+.sheet-dot.loading{background:var(--yellow);animation:pulse .8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:10px 18px;font-size:13px;color:var(--text);z-index:300;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.stats-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 16px}
+.stat-box{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;text-align:center}
+.stat-num{font-size:22px;font-weight:700;color:var(--text)}
+.stat-lbl{font-size:10px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+.partes-display{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.parte-chip{background:var(--bg3);border:0.5px solid var(--border2);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--text2)}
+.parte-chip.v{border-color:rgba(76,175,125,0.3);color:var(--green)}
+.parte-chip.c{border-color:rgba(106,176,232,0.3);color:var(--blue)}
+.info-box{background:rgba(232,213,163,0.08);border:0.5px solid rgba(232,213,163,0.2);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:12px;font-size:12px;color:var(--accent);line-height:1.5}
+.overdue-banner{margin:10px 16px 0;background:var(--red-bg);border:0.5px solid rgba(224,85,85,0.3);border-radius:var(--radius-sm);padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.overdue-banner span{font-size:13px;color:var(--red);flex:1}
+</style>
+</head>
+<body>
+<div class="app-shell">
+<div class="topbar">
+  <div><div class="topbar-title">Procesos</div><div class="topbar-sub" id="topbar-sub">Gestión de checklists</div></div>
+  <div class="user-pill" id="user-pill" onclick="showUserModal()">Identificate</div>
+</div>
+<div class="screen active" id="screen-home">
+  <div class="sheet-status"><div class="sheet-dot error" id="sheet-dot"></div><span id="sheet-status-txt">Sin acceso — usando plantillas locales</span></div>
+  <div id="home-content"><div class="section-label">Plantillas de proceso</div><div class="card" onclick="startNew(&#39;captacion&#39;)">
+      <div class="card-icon" style="background:#1a2e1a">🏠</div>
+      <div class="card-body"><div class="card-title">Captación</div><div class="card-sub">38 pasos · 6 secciones</div></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+    </div><div class="card" onclick="startNew(&#39;reserva&#39;)">
+      <div class="card-icon" style="background:#1a1e2e">📋</div>
+      <div class="card-body"><div class="card-title">Reserva</div><div class="card-sub">30 pasos · 3 secciones</div></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+    </div><div class="card" onclick="startNew(&#39;escrituracion&#39;)">
+      <div class="card-icon" style="background:#2e2a1a">📜</div>
+      <div class="card-body"><div class="card-title">Escrituración</div><div class="card-sub">28 pasos · 5 secciones</div></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+    </div><div class="card" onclick="startNew(&#39;referido&#39;)">
+      <div class="card-icon" style="background:#2e1a2a">👥</div>
+      <div class="card-body"><div class="card-title">Referido</div><div class="card-sub">9 pasos · 3 secciones</div></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+    </div><div class="card" onclick="startNew(&#39;modificacion&#39;)">
+      <div class="card-icon" style="background:#2e1a1a">📉</div>
+      <div class="card-body"><div class="card-title">Modificación de Valor</div><div class="card-sub">5 pasos · 1 secciones</div></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+    </div><div class="card" onclick="startNew(&#39;baja&#39;)">
+      <div class="card-icon" style="background:#2e1818">🔴</div>
+      <div class="card-body"><div class="card-title">Baja de Propiedad</div><div class="card-sub">4 pasos · 1 secciones</div></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+    </div><div class="card" onclick="startNew(&#39;renovacion&#39;)">
+      <div class="card-icon" style="background:#1a1e2e">🔄</div>
+      <div class="card-body"><div class="card-title">Renovación de Propiedad</div><div class="card-sub">7 pasos · 1 secciones</div></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+    </div></div>
+</div>
+<div class="screen" id="screen-active"><div id="active-content"><div class="empty"><div class="empty-icon">📋</div><p>No hay checklists en curso.<br>Elegí un proceso para comenzar.</p></div></div></div>
+<div class="screen" id="screen-reminders"><div id="reminders-content"><div class="empty"><div class="empty-icon">🔔</div><p>No hay avisos activos.</p></div></div></div>
+<div class="screen" id="screen-prev"><div id="prev-content"><div class="empty"><div class="empty-icon">📁</div><p>Acá aparecen los procesos completados.</p></div></div></div>
+<div class="screen" id="screen-new">
+  <button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"></polyline></svg>volver</button>
+  <div class="new-form" id="new-form-content"></div>
+</div>
+<div class="screen" id="screen-checklist">
+  <button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"></polyline></svg>volver</button>
+  <div id="cl-content"></div>
+</div>
+<div class="bottom-nav">
+  <button class="bnav-btn active" id="bnav-home" onclick="showTab(&#39;home&#39;)">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9,22 9,12 15,12 15,22"></polyline></svg>Procesos
+  </button>
+  <button class="bnav-btn" id="bnav-active" onclick="showTab(&#39;active&#39;)">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>En curso
+  </button>
+  <button class="bnav-btn" id="bnav-reminders" onclick="showTab(&#39;reminders&#39;)"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg>Avisos</button>
+  <button class="bnav-btn" id="bnav-prev" onclick="showTab(&#39;prev&#39;)">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12,6 12,12 16,14"></polyline></svg>Anteriores
+  </button>
+</div>
+</div>
+<div class="modal-overlay" id="user-modal">
+  <div class="modal-box">
+    <div class="modal-close-row">
+      <div class="modal-title">Tu perfil</div>
+      <button class="btn btn-sm" onclick="closeModal(&#39;user-modal&#39;)">cerrar</button>
+    </div>
+    <div class="input-wrap">
+      <label class="input-label">Tu nombre</label>
+      <input type="text" id="user-name-input" placeholder="Ej: Lu, Fer...">
+    </div>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:16px">Se guarda en este dispositivo para identificarte.</p>
+    <button class="btn btn-primary btn-full" onclick="saveUser()">Guardar</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+
+const META={
+  captacion:{icon:'🏠',label:'Captación',color:'#1a2e1a',accent:'#4caf7d'},
+  reserva:{icon:'📋',label:'Reserva',color:'#1a1e2e',accent:'#6ab0e8'},
+  escrituracion:{icon:'📜',label:'Escrituración',color:'#2e2a1a',accent:'#f0c060'},
+  referido:{icon:'👥',label:'Referido',color:'#2e1a2a',accent:'#d08ec0'},
+  modificacion:{icon:'📉',label:'Modificación de Valor',color:'#2e1a1a',accent:'#e05555'},
+  baja:{icon:'🔴',label:'Baja de Propiedad',color:'#2e1818',accent:'#e07755'},
+  renovacion:{icon:'🔄',label:'Renovación de Propiedad',color:'#1a1e2e',accent:'#7ab0e8'}
+};
+const FERIADOS=['2025-01-01','2025-03-24','2025-04-02','2025-04-18','2025-05-01','2025-05-25','2025-06-20','2025-07-09','2025-08-17','2025-10-12','2025-11-20','2025-12-08','2025-12-25','2026-01-01','2026-03-24','2026-04-02','2026-04-03','2026-05-01','2026-05-25','2026-06-19','2026-07-09','2026-08-17','2026-10-12','2026-11-20','2026-12-08','2026-12-25'];
+
+let APP={user:null,templates:{},prevTab:'home',currentInstId:null};
+let shared=[];
+
+function loadUser(){try{const u=localStorage.getItem('re_user_v3');if(u)APP.user=JSON.parse(u);}catch(e){}}
+function saveUserLocal(){try{localStorage.setItem('re_user_v3',JSON.stringify(APP.user));}catch(e){}}
+async function loadShared(){
+  try{
+    const r=await fetch(APPS_SCRIPT_URL+'?action=getData');
+    if(r.ok){
+      const text=await r.text();
+      const parsed=JSON.parse(text);
+      if(Array.isArray(parsed)&&parsed.length>0){
+        shared=parsed;
+        // Update local backup
+        try{localStorage.setItem('re_shared_backup',text);}catch(e){}
+        return;
+      }
+    }
+  }catch(e){}
+  // Fallback to localStorage
+  try{const s=localStorage.getItem('re_shared_backup');if(s)shared=JSON.parse(s);}catch(e){}
+}
+async function saveShared(){
+  const data=JSON.stringify(shared);
+  // Save to localStorage immediately
+  try{localStorage.setItem('re_shared_backup',data);}catch(e){}
+  // Save to Apps Script via no-cors iframe trick
+  try{
+    const url=APPS_SCRIPT_URL+'?action=saveData&data='+encodeURIComponent(data);
+    // Use image trick to avoid CORS
+    const img=new Image();
+    img.src=url;
+  }catch(e){}
+}
+
+async function init(){
+  loadUser();updateUserPill();
+  if(!APP.user)showUserModal(true);
+  await Promise.all([loadShared(),fetchTemplates()]);
+  renderAll();
+}
+
+function setSheetStatus(st,txt){
+  document.getElementById('sheet-dot').className='sheet-dot'+(st==='loading'?' loading':st==='error'?' error':'');
+  document.getElementById('sheet-status-txt').textContent=txt;
+}
+
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbyFHXR42XohUIY04nVNi5uRC9C6svHS_wwwBAcbNJq8ABT_XWY3daVQqhosU01BM1vC/exec';
+
+const SHEET_ID='1N6Df_cg1-WmX2HwXwh6uCL7xrUT7OcCjhz199pfYdiA';
+const TABS=[
+  {key:'captacion',gid:'966815152'},
+  {key:'reserva',gid:'1126633349'},
+  {key:'escrituracion',gid:'1906328336'},
+  {key:'referido',gid:'2030526856'},
+  {key:'modificacion',gid:'1010521982'},
+  {key:'baja',gid:'2002116076'},
+  {key:'renovacion',gid:'1653314650'}
+];
+
+async function fetchTemplates(){
+  setSheetStatus('loading','Sincronizando con Google Sheets...');
+  APP.templates=getEmbedded();
+  let ok=0;
+  try{
+    const results=await Promise.allSettled(TABS.map(async t=>{
+      const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${t.gid}`;
+      const r=await fetch(url);
+      if(!r.ok)throw new Error('fail');
+      return{key:t.key,csv:await r.text()};
+    }));
+    results.forEach(res=>{if(res.status==='fulfilled'&&parseCSV(res.value.key,res.value.csv))ok++;});
+    setSheetStatus(ok?'ok':'error',ok?`${ok} plantilla${ok>1?'s':''} sincronizada${ok>1?'s':''} desde Google Sheets`:'Sin acceso — usando plantillas locales');
+  }catch(e){setSheetStatus('error','Sin acceso — usando plantillas locales');}
+}
+
+function parseCSV(key,csv){
+  if(!META[key])return false;
+  const lines=csv.split('\n');
+  const sections=[];let cur=null;
+
+  for(const line of lines){
+    // Parse CSV properly handling quoted fields
+    const cols=[];let field='',inQ=false;
+    for(let ci=0;ci<line.length;ci++){
+      const ch=line[ci];
+      if(ch==='"'){inQ=!inQ;}
+      else if(ch===','&&!inQ){cols.push(field.trim());field='';}
+      else{field+=ch;}
+    }
+    cols.push(field.trim());
+
+    // Find the task text — it's the first non-empty, non-checkbox, non-boolean col with real text
+    // Checkboxes can be: ☐, TRUE, FALSE, true, false, or empty
+    const isCheckbox=v=>/^(☐|TRUE|FALSE|true|false)$/.test(v.trim())||v.trim()===''||v.trim()==='☑';
+    
+    // Find all non-checkbox columns with meaningful text
+    const textCols=cols.map((c,i)=>({i,v:c})).filter(({v})=>!isCheckbox(v)&&v.length>0);
+    
+    if(textCols.length===0)continue;
+    
+    const firstText=textCols[0].v;
+    
+    // Skip meta rows
+    if(/^(CHECK|SI$|NO$|TAREA|NOTAS|Propiedad|Fecha|Horario|DNI|Email|Valor|Forma|¿Hay)/i.test(firstText))continue;
+    
+    // Determine if this row is a step or a section header
+    // A step row has at least one checkbox-like value in the first few columns
+    const hasCheckbox=cols.slice(0,3).some(v=>isCheckbox(v)&&v.trim()!=='');
+    
+    if(hasCheckbox&&firstText.length>3){
+      // It's a step
+      if(cur)cur.steps.push(firstText);
+    } else if(firstText.length>1&&firstText.length<100){
+      // It's a section header
+      cur={label:firstText,steps:[]};
+      sections.push(cur);
+    }
+  }
+
+  if(sections.length>0&&sections.some(s=>s.steps.length>0)){
+    APP.templates[key]={...META[key],key,sections};return true;
+  }
+  return false;
+}
+
+function addBizDays(from,days){
+  let d=new Date(from);let n=0;
+  while(n<days){d.setDate(d.getDate()+1);const iso=d.toISOString().slice(0,10),dow=d.getDay();if(dow!==0&&dow!==6&&!FERIADOS.includes(iso))n++;}
+  return d;
+}
+function fmtDate(ts){const d=new Date(ts);return d.toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short'});}
+function fmtDateStr(s){if(!s)return'';const d=new Date(s+'T12:00:00');return d.toLocaleDateString('es-AR',{day:'numeric',month:'short',year:'numeric'});}
+function totalSteps(tpl){return tpl.sections.reduce((a,s)=>a+s.steps.length,0);}
+function doneCount(inst){return Object.values(inst.stepStatus||{}).filter(s=>s.status==='done'||s.status==='skip').length;}
+function pendCount(inst){return Object.values(inst.stepStatus||{}).filter(s=>s.status==='pending').length;}
+function overdueCount(inst){const now=Date.now();return Object.values(inst.stepStatus||{}).filter(s=>s.status==='pending'&&s.snoozeUntil&&s.snoozeUntil<now).length;}
+function allOverdue(){return shared.filter(i=>!i.completed).reduce((a,i)=>a+overdueCount(i),0)+getAutoReminders().filter(r=>r.when<Date.now()).length;}
+
+function getAutoReminders(){
+  const rem=[];
+  shared.filter(i=>!i.completed).forEach(inst=>{
+    if(inst.template==='reserva'&&inst.recordatorioVencimiento)
+      rem.push({inst,label:'Vencimiento de reserva',when:inst.recordatorioVencimiento});
+    if(inst.template==='captacion'&&inst.autorizacionRecordatorio)
+      rem.push({inst,label:'Vencimiento de autorización',when:inst.autorizacionRecordatorio});
+    if(inst.template==='escrituracion'){
+      if(inst.recordatorio7)rem.push({inst,label:'Escrituración — 7 días antes',when:inst.recordatorio7});
+      if(inst.recordatorio3)rem.push({inst,label:'Escrituración — 3 días antes',when:inst.recordatorio3});
+      if(inst.recordatorio1)rem.push({inst,label:'Escrituración — 1 día antes',when:inst.recordatorio1});
+    }
+  });
+  return rem;
+}
+
+function showUserModal(force){
+  if(!force&&APP.user)document.getElementById('user-name-input').value=APP.user.name||'';
+  document.getElementById('user-modal').classList.add('open');
+}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function saveUser(){
+  const name=document.getElementById('user-name-input').value.trim();
+  if(!name)return;
+  APP.user={id:'u_'+name.toLowerCase().replace(/\s/g,'_'),name};
+  saveUserLocal();updateUserPill();closeModal('user-modal');renderAll();toast('Hola, '+name+'!');
+}
+function updateUserPill(){document.getElementById('user-pill').textContent=APP.user?APP.user.name:'Identificate';}
+
+function renderAll(){renderHome();renderActive();renderReminders();renderPrev();updateTopbar();}
+
+function updateTopbar(){
+  const active=shared.filter(i=>!i.completed).length;
+  document.getElementById('topbar-sub').textContent=active>0?`${active} proceso${active>1?'s':''} en curso`:'Gestión de checklists';
+  const od=allOverdue();
+  document.getElementById('bnav-reminders').innerHTML=`<svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>${od>0?`<span class="bnav-badge">${od}</span>`:''}Avisos`;
+}
+
+function renderHome(){
+  const el=document.getElementById('home-content');
+  const tpls=APP.templates;
+  if(!tpls||!Object.keys(tpls).length)return;
+  const cnt={};shared.filter(i=>!i.completed).forEach(i=>{cnt[i.template]=(cnt[i.template]||0)+1;});
+  const od=allOverdue();
+  let html='';
+  if(od>0){
+    html+=`<div class="overdue-banner" onclick="showTab('reminders')"><span>⚠ Tenés ${od} aviso${od>1?'s':''} vencido${od>1?'s':''}</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg></div>`;
+  }
+  html+='<div class="section-label">Plantillas de proceso</div>';
+  html+=Object.entries(tpls).map(([k,t])=>{
+    const c=cnt[k]||0;
+    return`<div class="card" onclick="startNew('${k}')">
+      <div class="card-icon" style="background:${t.color}">${t.icon}</div>
+      <div class="card-body"><div class="card-title">${t.label}</div><div class="card-sub">${totalSteps(t)} pasos · ${t.sections.length} secciones</div></div>
+      ${c>0?`<span class="badge badge-accent">${c} activo${c>1?'s':''}</span>`:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>'}
+    </div>`;
+  }).join('');
+  el.innerHTML=html;
+}
+
+function renderActive(){
+  const el=document.getElementById('active-content');
+  const active=shared.filter(i=>!i.completed);
+  if(!active.length){el.innerHTML=`<div class="empty"><div class="empty-icon">📋</div><p>No hay checklists en curso.<br>Elegí un proceso para comenzar.</p></div>`;return;}
+  const totalPend=active.reduce((a,i)=>a+pendCount(i),0);
+  const totalOd=active.reduce((a,i)=>a+overdueCount(i),0);
+  let html=`<div class="stats-bar">
+    <div class="stat-box"><div class="stat-num">${active.length}</div><div class="stat-lbl">En curso</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--yellow)">${totalPend}</div><div class="stat-lbl">Pendientes</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--red)">${totalOd}</div><div class="stat-lbl">Vencidos</div></div>
+  </div><div class="section-label">En curso</div>`;
+  html+=active.map(instCard).join('');
+  el.innerHTML=html;
+}
+
+function instCard(inst){
+  const tpl=APP.templates[inst.template];if(!tpl)return'';
+  const total=totalSteps(tpl),done=doneCount(inst),pct=total>0?Math.round(done/total*100):0;
+  const od=overdueCount(inst),pend=pendCount(inst);
+  const badge=od>0?`<span class="badge badge-red">⚠ ${od}</span>`:pend>0?`<span class="badge badge-yellow">${pend} pend.</span>`:`<span class="badge badge-gray">${pct}%</span>`;
+  const who=inst.createdBy?` · <span style="color:var(--text3)">${inst.createdBy}</span>`:'';
+  return`<div class="card" onclick="openInst('${inst.id}')">
+    <div class="card-icon" style="background:${tpl.color}">${tpl.icon}</div>
+    <div class="card-body">
+      <div class="card-title">${inst.name}</div>
+      <div class="card-sub">${tpl.label} · ${done}/${total}${who}</div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${tpl.accent}"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">${badge}</div>
+  </div>`;
+}
+
+function renderPrev(){
+  const el=document.getElementById('prev-content');
+  const done=shared.filter(i=>i.completed);
+  if(!done.length){el.innerHTML=`<div class="empty"><div class="empty-icon">📁</div><p>Acá aparecen los procesos completados.</p></div>`;return;}
+  let html=`<div class="section-label">Procesos anteriores (${done.length})</div>`;
+  html+=done.map(inst=>{
+    const tpl=APP.templates[inst.template];if(!tpl)return'';
+    const date=new Date(inst.completedAt||inst.createdAt).toLocaleDateString('es-AR',{day:'numeric',month:'short',year:'numeric'});
+    return`<div class="card">
+      <div class="card-icon" style="background:${tpl.color};opacity:.6">${tpl.icon}</div>
+      <div class="card-body"><div class="card-title" style="color:var(--text2)">${inst.name}</div><div class="card-sub">${tpl.label} · completado ${date}</div></div>
+      <span class="badge badge-green">✓</span>
+    </div>`;
+  }).join('');
+  el.innerHTML=html;
+}
+
+function renderReminders(){
+  const el=document.getElementById('reminders-content');
+  const now=Date.now();let overdue=[],upcoming=[];
+  shared.filter(i=>!i.completed).forEach(inst=>{
+    const tpl=APP.templates[inst.template];if(!tpl)return;
+    tpl.sections.forEach(sec=>{
+      sec.steps.forEach((step,si)=>{
+        const key=`${sec.label}__${si}`;
+        const st=(inst.stepStatus||{})[key];
+        if(st&&st.status==='pending'&&st.snoozeUntil){
+          const item={inst,step,snoozeUntil:st.snoozeUntil};
+          st.snoozeUntil<=now?overdue.push(item):upcoming.push(item);
+        }
+      });
+    });
+  });
+  getAutoReminders().forEach(r=>{
+    const item={inst:r.inst,step:r.label,snoozeUntil:r.when,isAuto:true};
+    r.when<=now?overdue.push(item):upcoming.push(item);
+  });
+  overdue.sort((a,b)=>a.snoozeUntil-b.snoozeUntil);
+  upcoming.sort((a,b)=>a.snoozeUntil-b.snoozeUntil);
+  if(!overdue.length&&!upcoming.length){el.innerHTML=`<div class="empty"><div class="empty-icon">🔔</div><p>No hay avisos activos.</p></div>`;return;}
+  let html='';
+  if(overdue.length){
+    html+=`<div class="section-label" style="color:var(--red)">⚠ Vencidos (${overdue.length})</div>`;
+    html+=overdue.map(r=>`<div class="reminder-item" onclick="openInst('${r.inst.id}')">
+      <div class="reminder-dot" style="background:var(--red)"></div>
+      <div class="reminder-body"><div class="reminder-prop">${r.inst.name}</div><div class="reminder-step">${r.step}</div><div class="reminder-when" style="color:var(--red)">Venció ${fmtDate(r.snoozeUntil)}</div></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
+    </div>`).join('');
+  }
+  if(upcoming.length){
+    html+=`<div class="section-label">Próximos (${upcoming.length})</div>`;
+    html+=upcoming.map(r=>`<div class="reminder-item" onclick="openInst('${r.inst.id}')">
+      <div class="reminder-dot" style="background:${r.isAuto?'var(--accent)':'var(--yellow)'}"></div>
+      <div class="reminder-body"><div class="reminder-prop">${r.inst.name}</div><div class="reminder-step">${r.step}</div><div class="reminder-when" style="color:var(--yellow)">${fmtDate(r.snoozeUntil)}</div></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
+    </div>`).join('');
+  }
+  el.innerHTML=html;
+}
+
+// ── FORMS ───────────────────────────────────────────────────────────────────
+let parteCounters={vendedores:0,compradores:0};
+
+function req(label){return`${label}<span class="req">*</span>`;}
+
+function startNew(key){
+  APP.prevTab='home';
+  parteCounters={vendedores:0,compradores:0};
+  const tpl=APP.templates[key];
+  const hdr=`<div style="display:flex;align-items:center;gap:12px;padding:4px 0 20px">
+    <div style="font-size:32px">${tpl.icon}</div>
+    <div><div style="font-size:18px;font-weight:700">${tpl.label}</div><div style="font-size:12px;color:var(--text2)">${totalSteps(tpl)} pasos</div></div>
+  </div>`;
+  let form='';
+
+  if(key==='captacion'){
+    form=`${hdr}
+    <div class="input-wrap"><label class="input-label">${req('Dirección de la propiedad')}</label><input type="text" id="ni-name" placeholder="Ej: Viamonte 1234 piso 3A"></div>
+    <div class="input-wrap"><label class="input-label">Observaciones (opcional)</label><input type="text" id="ni-obs" placeholder="Ej: exclusiva, urgente..."></div>
+    <button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst('captacion')">Crear checklist</button>`;
+  }
+  else if(key==='reserva'){
+    form=`${hdr}
+    <div class="input-wrap"><label class="input-label">${req('Dirección de la propiedad')}</label><input type="text" id="ni-name" placeholder="Ej: Viamonte 1234 piso 3A"></div>
+    <div class="input-wrap"><label class="input-label">${req('Fecha de reserva')}</label><input type="date" id="ni-fecha-reserva" onchange="onFechaReservaChange()"></div>
+    <div id="ni-reserva-venc-info"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="input-wrap"><label class="input-label">${req('Valor de publicación')}</label><input type="text" id="ni-valor-pub" placeholder="Ej: USD 130.000"></div>
+      <div class="input-wrap"><label class="input-label">${req('Valor de oferta')}</label><input type="text" id="ni-valor-oferta" placeholder="Ej: USD 120.000"></div>
+    </div>
+    <div class="input-wrap"><label class="input-label">${req('Forma de pago')}</label>
+      <select id="ni-pago" onchange="onPagoChange()"><option value="">Seleccionar...</option><option value="efectivo">Efectivo</option><option value="transferencia">Transferencia</option><option value="credito">Crédito hipotecario</option></select>
+    </div>
+    <div id="ni-pago-extra"></div>
+    <div class="input-wrap"><label class="input-label">¿Hay agente implicado?</label>
+      <select id="ni-agente" onchange="onAgenteChange()"><option value="no">No</option><option value="si">Sí</option></select>
+    </div>
+    <div id="ni-agente-extra"></div>
+    <div class="partes-block"><div class="partes-title">Compradores</div><div id="compradores-list"></div><button class="add-parte-btn" onclick="addParte('compradores')">+ Agregar comprador</button></div>
+    <div class="input-wrap"><label class="input-label">Observaciones (opcional)</label><input type="text" id="ni-obs" placeholder=""></div>
+    <button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst('reserva')">Crear checklist</button>`;
+  }
+  else if(key==='escrituracion'){
+    form=`${hdr}
+    <div class="input-wrap"><label class="input-label">${req('Dirección de la propiedad')}</label><input type="text" id="ni-name" placeholder="Ej: Viamonte 1234 piso 3A"></div>
+    <div class="input-wrap"><label class="input-label">${req('Fecha de firma')}</label><input type="date" id="ni-fecha-firma" onchange="onFechaFirmaChange()"></div>
+    <div id="ni-firma-info"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="input-wrap"><label class="input-label">Horario de firma</label><input type="text" id="ni-horario" placeholder="Ej: 10:00 hs"></div>
+      <div class="input-wrap"><label class="input-label">Lugar</label><input type="text" id="ni-lugar" placeholder="Ej: Escribanía García"></div>
+    </div>
+    <div class="input-wrap"><label class="input-label">Observaciones (opcional)</label><input type="text" id="ni-obs" placeholder=""></div>
+    <button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst('escrituracion')">Crear checklist</button>`;
+  }
+  else if(key==='referido'){
+    form=`${hdr}
+    <div class="input-wrap"><label class="input-label">${req('Nombre del referido')}</label><input type="text" id="ni-name" placeholder="Ej: Juan Pérez"></div>
+    <div class="input-wrap"><label class="input-label">${req('Nombre del referidor')}</label><input type="text" id="ni-referidor" placeholder="Ej: María González"></div>
+    <div class="input-wrap"><label class="input-label">Observaciones (opcional)</label><input type="text" id="ni-obs" placeholder=""></div>
+    <button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst('referido')">Crear checklist</button>`;
+  }
+  else if(key==='modificacion'){
+    form=`${hdr}
+    <div class="input-wrap"><label class="input-label">${req('Dirección de la propiedad')}</label><input type="text" id="ni-name" placeholder="Ej: Viamonte 1234 piso 3A"></div>
+    <div class="input-wrap"><label class="input-label">${req('Fecha')}</label><input type="date" id="ni-fecha"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="input-wrap"><label class="input-label">${req('Valor publicado anterior')}</label><input type="text" id="ni-valor-anterior" placeholder="Ej: USD 150.000"></div>
+      <div class="input-wrap"><label class="input-label">${req('Nuevo valor')}</label><input type="text" id="ni-valor-nuevo" placeholder="Ej: USD 140.000"></div>
+    </div>
+    <div class="input-wrap"><label class="input-label">Observaciones (opcional)</label><input type="text" id="ni-obs" placeholder=""></div>
+    <button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst('modificacion')">Crear checklist</button>`;
+  }
+  else if(key==='baja'){
+    form=`${hdr}
+    <div class="input-wrap"><label class="input-label">${req('Dirección de la propiedad')}</label><input type="text" id="ni-name" placeholder="Ej: Viamonte 1234 piso 3A"></div>
+    <div class="input-wrap"><label class="input-label">${req('Fecha')}</label><input type="date" id="ni-fecha"></div>
+    <div class="input-wrap"><label class="input-label">Observaciones (opcional)</label><input type="text" id="ni-obs" placeholder=""></div>
+    <button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst('baja')">Crear checklist</button>`;
+  }
+  else if(key==='renovacion'){
+    form=`${hdr}
+    <div class="input-wrap"><label class="input-label">${req('Dirección de la propiedad')}</label><input type="text" id="ni-name" placeholder="Ej: Viamonte 1234 piso 3A"></div>
+    <div class="input-wrap"><label class="input-label">${req('Fecha')}</label><input type="date" id="ni-fecha"></div>
+    <div class="input-wrap"><label class="input-label">Observaciones (opcional)</label><input type="text" id="ni-obs" placeholder=""></div>
+    <button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst('renovacion')">Crear checklist</button>`;
+  }
+
+  document.getElementById('new-form-content').innerHTML=form;
+  if(key==='reserva'){addParte('compradores');}
+  showScreen('new');
+}
+
+function onFechaReservaChange(){
+  const fecha=document.getElementById('ni-fecha-reserva').value;
+  const el=document.getElementById('ni-reserva-venc-info');
+  if(!fecha){el.innerHTML='';return;}
+  const meses=2;
+  const venc=new Date(fecha+'T12:00:00');
+  venc.setMonth(venc.getMonth()+meses);
+  const aviso=new Date(venc);aviso.setDate(aviso.getDate()-7);
+  el.innerHTML=`<div class="info-box">La reserva vence el <strong>${fmtDateStr(venc.toISOString().slice(0,10))}</strong>. Te avisamos el ${fmtDateStr(aviso.toISOString().slice(0,10))} (1 semana antes).</div>
+  <div class="input-wrap"><label class="input-label">Duración de la reserva (meses)</label><input type="number" id="ni-meses-reserva" value="2" min="1" max="12" onchange="recalcReserva('${fecha}')"></div>`;
+}
+
+function recalcReserva(fecha){
+  const meses=parseInt(document.getElementById('ni-meses-reserva')?.value)||2;
+  const venc=new Date(fecha+'T12:00:00');
+  venc.setMonth(venc.getMonth()+meses);
+  const aviso=new Date(venc);aviso.setDate(aviso.getDate()-7);
+  const box=document.querySelector('.info-box');
+  if(box)box.innerHTML=`La reserva vence el <strong>${fmtDateStr(venc.toISOString().slice(0,10))}</strong>. Te avisamos el ${fmtDateStr(aviso.toISOString().slice(0,10))} (1 semana antes).`;
+}
+
+function onFechaFirmaChange(){
+  const fecha=document.getElementById('ni-fecha-firma').value;
+  const el=document.getElementById('ni-firma-info');
+  if(!fecha){el.innerHTML='';return;}
+  const f=new Date(fecha+'T12:00:00');
+  const r7=new Date(f);r7.setDate(r7.getDate()-7);
+  const r3=new Date(f);r3.setDate(r3.getDate()-3);
+  const r1=new Date(f);r1.setDate(r1.getDate()-1);
+  el.innerHTML=`<div class="info-box">Recordatorios automáticos:<br>• 7 días antes: ${fmtDateStr(r7.toISOString().slice(0,10))}<br>• 3 días antes: ${fmtDateStr(r3.toISOString().slice(0,10))}<br>• 1 día antes: ${fmtDateStr(r1.toISOString().slice(0,10))}</div>`;
+}
+
+function onPagoChange(){
+  const val=document.getElementById('ni-pago').value;
+  const el=document.getElementById('ni-pago-extra');
+  if(val==='efectivo'){
+    el.innerHTML=`<div class="input-wrap"><label class="input-label">¿Tiene cómo justificar los fondos?</label><select id="ni-justifica"><option value="si">Sí</option><option value="no">No</option></select></div>`;
+  } else if(val==='credito'){
+    el.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="input-wrap"><label class="input-label">Banco</label><input type="text" id="ni-banco" placeholder="Ej: Banco Nación"></div>
+      <div class="input-wrap"><label class="input-label">Dirección del banco</label><input type="text" id="ni-banco-dir" placeholder="Ej: Corrientes 1234"></div>
+    </div>`;
+  } else {el.innerHTML='';}
+}
+
+function onAgenteChange(){
+  const val=document.getElementById('ni-agente').value;
+  const el=document.getElementById('ni-agente-extra');
+  if(val==='si'){
+    el.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="input-wrap"><label class="input-label">Oficina</label><input type="text" id="ni-oficina" placeholder="Inmobiliaria"></div>
+      <div class="input-wrap"><label class="input-label">Martillero</label><input type="text" id="ni-martillero" placeholder="Nombre"></div>
+    </div>`;
+  } else {el.innerHTML='';}
+}
+
+function addParte(tipo){
+  parteCounters[tipo]++;
+  const id=`${tipo}_${parteCounters[tipo]}`;
+  const div=document.createElement('div');
+  div.id='row_'+id;
+  div.style.cssText='margin-bottom:10px;background:var(--bg4);border-radius:8px;padding:10px;';
+  div.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+    <span style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">${tipo==='vendedores'?'Vendedor':'Comprador'} ${parteCounters[tipo]}</span>
+    <button onclick="removeParte('${id}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px">✕</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <input type="text" id="${id}_nombre" placeholder="Nombre completo">
+    <input type="text" id="${id}_dni" placeholder="DNI">
+  </div>
+  ${tipo==='compradores'?`<input type="text" id="${id}_email" placeholder="Email" style="width:100%;margin-top:8px;padding:8px 12px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;font-family:var(--font);outline:none">`:''}`;
+  document.getElementById(tipo+'-list').appendChild(div);
+}
+
+function removeParte(id){const r=document.getElementById('row_'+id);if(r)r.remove();}
+
+function getPartes(tipo){
+  const list=document.getElementById(tipo+'-list');
+  if(!list)return[];
+  const rows=list.querySelectorAll('[id^="row_"]');
+  const result=[];
+  rows.forEach(row=>{
+    const id=row.id.replace('row_','');
+    const nombre=(document.getElementById(id+'_nombre')||{value:''}).value.trim();
+    const dni=(document.getElementById(id+'_dni')||{value:''}).value.trim();
+    const email=(document.getElementById(id+'_email')||{value:''}).value.trim();
+    if(nombre)result.push({nombre,dni,email});
+  });
+  return result;
+}
+
+function gval(id){return(document.getElementById(id)||{value:''}).value.trim();}
+
+async function createInst(key){
+  // Validate required fields
+  const nameEl=document.getElementById('ni-name');
+  const required=[];
+  if(nameEl&&!nameEl.value.trim()){nameEl.classList.add('error');required.push('dirección');}
+  if(key==='reserva'){
+    const fecha=document.getElementById('ni-fecha-reserva');
+    const pub=document.getElementById('ni-valor-pub');
+    const oferta=document.getElementById('ni-valor-oferta');
+    const pago=document.getElementById('ni-pago');
+    if(fecha&&!fecha.value){fecha.classList.add('error');required.push('fecha de reserva');}
+    if(pub&&!pub.value.trim()){pub.classList.add('error');required.push('valor de publicación');}
+    if(oferta&&!oferta.value.trim()){oferta.classList.add('error');required.push('valor de oferta');}
+    if(pago&&!pago.value){pago.classList.add('error');required.push('forma de pago');}
+  }
+  if(key==='escrituracion'){
+    const fecha=document.getElementById('ni-fecha-firma');
+    if(fecha&&!fecha.value){fecha.classList.add('error');required.push('fecha de firma');}
+  }
+  if(key==='referido'){
+    const ref=document.getElementById('ni-referidor');
+    if(ref&&!ref.value.trim()){ref.classList.add('error');required.push('nombre del referidor');}
+  }
+  if(key==='modificacion'){
+    const va=document.getElementById('ni-valor-anterior');
+    const vn=document.getElementById('ni-valor-nuevo');
+    if(va&&!va.value.trim()){va.classList.add('error');required.push('valor anterior');}
+    if(vn&&!vn.value.trim()){vn.classList.add('error');required.push('valor nuevo');}
+  }
+  if(required.length>0){toast('Completá: '+required.join(', '));return;}
+
+  const name=nameEl?nameEl.value.trim():'';
+  const inst={
+    id:'i_'+Date.now(),template:key,name,
+    obs:gval('ni-obs'),
+    createdAt:Date.now(),createdBy:APP.user?.name||'?',
+    completed:false,stepStatus:{}
+  };
+
+  if(key==='reserva'){
+    const fecha=gval('ni-fecha-reserva');
+    const meses=parseInt((document.getElementById('ni-meses-reserva')||{value:'2'}).value)||2;
+    inst.fechaReserva=fecha;
+    inst.mesesReserva=meses;
+    inst.valorPublicacion=gval('ni-valor-pub');
+    inst.valorOferta=gval('ni-valor-oferta');
+    inst.formaPago=gval('ni-pago');
+    if(inst.formaPago==='efectivo')inst.justificaFondos=gval('ni-justifica');
+    if(inst.formaPago==='credito'){inst.banco=gval('ni-banco');inst.bancoDir=gval('ni-banco-dir');}
+    inst.agenteImplicado=gval('ni-agente');
+    if(inst.agenteImplicado==='si'){inst.oficina=gval('ni-oficina');inst.martillero=gval('ni-martillero');}
+    inst.compradores=getPartes('compradores');
+    if(fecha){
+      const venc=new Date(fecha+'T12:00:00');
+      venc.setMonth(venc.getMonth()+meses);
+      venc.setDate(venc.getDate()-7);
+      inst.recordatorioVencimiento=venc.getTime();
+    }
+  }
+  if(key==='escrituracion'){
+    const fecha=gval('ni-fecha-firma');
+    inst.fechaFirma=fecha;
+    inst.horarioFirma=gval('ni-horario');
+    inst.lugarFirma=gval('ni-lugar');
+    if(fecha){
+      const f=new Date(fecha+'T12:00:00');
+      const r7=new Date(f);r7.setDate(r7.getDate()-7);
+      const r3=new Date(f);r3.setDate(r3.getDate()-3);
+      const r1=new Date(f);r1.setDate(r1.getDate()-1);
+      inst.recordatorio7=r7.getTime();
+      inst.recordatorio3=r3.getTime();
+      inst.recordatorio1=r1.getTime();
+    }
+  }
+  if(key==='referido')inst.referidor=gval('ni-referidor');
+  if(key==='modificacion'){inst.valorAnterior=gval('ni-valor-anterior');inst.valorNuevo=gval('ni-valor-nuevo');inst.fecha=gval('ni-fecha');}
+  if(key==='baja'||key==='renovacion'){inst.fecha=gval('ni-fecha');}
+
+  shared.unshift(inst);
+  await saveShared();renderAll();openInst(inst.id);
+}
+
+// ── CHECKLIST ────────────────────────────────────────────────────────────────
+function openInst(id){
+  APP.currentInstId=id;
+  APP.prevTab=document.querySelector('.bnav-btn.active')?.id?.replace('bnav-','')||'active';
+  renderCL(id);showScreen('checklist');
+}
+
+function buildHeaderChips(inst){
+  const chips=[];
+  if(inst.template==='reserva'){
+    if(inst.fechaReserva)chips.push(`<span class="parte-chip">📅 ${fmtDateStr(inst.fechaReserva)}</span>`);
+    if(inst.valorPublicacion)chips.push(`<span class="parte-chip">Pub: ${inst.valorPublicacion}</span>`);
+    if(inst.valorOferta)chips.push(`<span class="parte-chip">Oferta: ${inst.valorOferta}</span>`);
+    if(inst.formaPago){
+      const pLabel=inst.formaPago==='efectivo'?`Efectivo${inst.justificaFondos?' (justifica: '+inst.justificaFondos+')':''}`:inst.formaPago==='transferencia'?'Transferencia':`Crédito${inst.banco?' — '+inst.banco:''}${inst.bancoDir?' — '+inst.bancoDir:''}`;
+      chips.push(`<span class="parte-chip">${pLabel}</span>`);
+    }
+    if(inst.agenteImplicado==='si')chips.push(`<span class="parte-chip">🤝 ${inst.oficina||''} ${inst.martillero||''}</span>`);
+    if(inst.recordatorioVencimiento){
+      const od=inst.recordatorioVencimiento<Date.now();
+      chips.push(`<span class="parte-chip" style="color:${od?'var(--red)':'var(--yellow)'}">⏰ Vence ${fmtDate(inst.recordatorioVencimiento+7*24*60*60*1000)}${od?' — VENCIDA':''}</span>`);
+    }
+    (inst.compradores||[]).forEach(c=>chips.push(`<span class="parte-chip c">C: ${c.nombre}${c.dni?' · '+c.dni:''}</span>`));
+  }
+  else if(inst.template==='escrituracion'){
+    if(inst.fechaFirma)chips.push(`<span class="parte-chip">📅 Firma: ${fmtDateStr(inst.fechaFirma)}${inst.horarioFirma?' '+inst.horarioFirma:''}</span>`);
+    if(inst.lugarFirma)chips.push(`<span class="parte-chip">📍 ${inst.lugarFirma}</span>`);
+    const now=Date.now();
+    if(inst.recordatorio7&&inst.recordatorio7>now)chips.push(`<span class="parte-chip" style="color:var(--yellow)">⏰ 7d: ${fmtDate(inst.recordatorio7)}</span>`);
+    if(inst.recordatorio3&&inst.recordatorio3>now)chips.push(`<span class="parte-chip" style="color:var(--yellow)">⏰ 3d: ${fmtDate(inst.recordatorio3)}</span>`);
+    if(inst.recordatorio1&&inst.recordatorio1>now)chips.push(`<span class="parte-chip" style="color:var(--yellow)">⏰ 1d: ${fmtDate(inst.recordatorio1)}</span>`);
+  }
+  else if(inst.template==='referido'){
+    if(inst.referidor)chips.push(`<span class="parte-chip">👤 Referidor: ${inst.referidor}</span>`);
+  }
+  else if(inst.template==='modificacion'){
+    if(inst.valorAnterior)chips.push(`<span class="parte-chip">Anterior: ${inst.valorAnterior}</span>`);
+    if(inst.valorNuevo)chips.push(`<span class="parte-chip" style="color:var(--green)">Nuevo: ${inst.valorNuevo}</span>`);
+  }
+  else if(inst.template==='captacion'){
+    const props=(inst.propietarios||[]);
+    props.forEach(p=>chips.push(`<span class="parte-chip v">Prop: ${p.nombre}${p.dni?' · '+p.dni:''}</span>`));
+    if(inst.autorizacionVencimiento){
+      const od=inst.autorizacionVencimiento<Date.now();
+      chips.push(`<span class="parte-chip" style="color:${od?'var(--red)':'var(--yellow)'}">⏰ Autorizacion vence ${fmtDate(inst.autorizacionVencimiento)}${od?' — VENCIDA':''}</span>`);
+    }
+  }
+  return chips.length?`<div class="partes-display">${chips.join('')}</div>`:'';
+}
+
+// Special step keys that trigger extra panels
+const STEP_PROPIETARIOS_KEY='CAPTACIÓN__0'; // "Pedir DNI + Escritura"
+const STEP_AUTORIZACION_KEYS=['CAPTACIÓN__4']; // "Hacer autorización" - approximate
+
+function isAutorizacionStep(secLabel,stepText){
+  return secLabel.toUpperCase().includes('CAPTAC')&&stepText.toLowerCase().includes('autorización');
+}
+function isPropietariosStep(secLabel,stepText){
+  return secLabel.toUpperCase().includes('CAPTAC')&&stepText.toLowerCase().includes('dni');
+}
+
+function renderCL(id){
+  const inst=shared.find(i=>i.id===id);if(!inst)return;
+  const tpl=APP.templates[inst.template];if(!tpl)return;
+  const total=totalSteps(tpl),done=doneCount(inst),pct=total>0?Math.round(done/total*100):0,pend=pendCount(inst);
+  const badgeHtml=inst.completed?`<span class="badge badge-green">✓ Completado</span>`:pend>0?`<span class="badge badge-yellow">${pend} pendiente${pend>1?'s':''}</span>`:'';
+  const extraInfo=buildHeaderChips(inst);
+  let html=`<div class="cl-header">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <span style="font-size:28px">${tpl.icon}</span>
+      <div><div class="cl-header-title">${inst.name}</div><div class="cl-header-sub">${tpl.label}${inst.obs?' · '+inst.obs:''} · por ${inst.createdBy||'?'}</div></div>
+    </div>
+    ${extraInfo}
+    <div class="prog-bar" style="height:5px;margin-top:12px"><div class="prog-fill" style="width:${pct}%;background:${tpl.accent}"></div></div>
+    <div class="cl-stats">
+      <span style="font-size:12px;color:var(--text2)">${done} de ${total} pasos</span>
+      ${badgeHtml}
+      ${!inst.completed?`<button class="btn btn-sm" onclick="markComplete('${id}')" style="margin-left:auto">Marcar completo</button>`:''}
+    </div>
+  </div>`;
+  let num=1;
+  html+=tpl.sections.map(sec=>{
+    const sh=sec.steps.map((step,si)=>{
+      const key=`${sec.label}__${si}`;
+      const st=(inst.stepStatus||{})[key]||{};
+      const status=st.status||'none';
+      const spid=`sp_${id.slice(-6)}_${sec.label.replace(/\W/g,'').slice(0,8)}_${si}`;
+      const snoozeTag=st.snoozeUntil?`<div style="padding:0 14px 6px 48px"><span style="font-size:11px;color:${st.snoozeUntil<Date.now()?'var(--red)':'var(--yellow)'}">⏰ ${st.snoozeUntil<Date.now()?'Vencido — ':''}${fmtDate(st.snoozeUntil)}</span></div>`:'';
+      const n=num++;
+      const ek=key.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+      // Extra panels for special steps
+      const showPropPanel=inst.template==='captacion'&&isPropietariosStep(sec.label,step);
+      const showAutPanel=inst.template==='captacion'&&isAutorizacionStep(sec.label,step);
+      let extraPanel='';
+      if(showPropPanel){
+        const props=(inst.propietarios||[]);
+        const propHtml=props.map((p,pi)=>`<div style="font-size:12px;color:var(--text2);padding:4px 0">${p.nombre}${p.dni?' · DNI: '+p.dni:''}</div>`).join('');
+        extraPanel=`<div class="step-extra-panel${status==='done'?' open':''}" id="${spid}_prop">
+          <div class="step-extra-title">Propietarios</div>
+          ${propHtml}
+          <div id="${spid}_proplist"></div>
+          <button class="add-parte-btn" onclick="addPropietario('${id}','${spid}')">+ Agregar propietario</button>
+          <button class="btn btn-sm btn-primary" style="margin-top:8px" onclick="savePropietarios('${id}','${spid}')">Guardar</button>
+        </div>`;
+      }
+      if(showAutPanel){
+        extraPanel=`<div class="step-extra-panel${status==='done'&&inst.autorizacionVencimiento?'':''}" id="${spid}_aut">
+          <div class="step-extra-title">Datos de autorización</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+            <div class="input-wrap" style="margin-bottom:0"><label class="input-label">Fecha de vencimiento</label><input type="date" id="${spid}_autfecha" value="${inst.autorizacionFecha||''}"></div>
+            <div class="input-wrap" style="margin-bottom:0"><label class="input-label">Días hábiles pactados</label><input type="number" id="${spid}_autdias" placeholder="Ej: 90" value="${inst.autorizacionDias||''}"></div>
+          </div>
+          ${inst.autorizacionRecordatorio?`<div class="info-box">Recordatorio: ${fmtDate(inst.autorizacionRecordatorio)}</div>`:''}
+          <button class="btn btn-sm btn-primary" onclick="saveAutorizacion('${id}','${spid}')">Guardar y crear recordatorio</button>
+        </div>`;
+      }
+      return`<div class="step-item ${status}">
+        <div class="step-main">
+          <div class="step-num ${status}">${status==='done'?'✓':status==='skip'?'—':n}</div>
+          <div class="step-text${status==='done'?' done':''}">${step}</div>
+        </div>
+        ${snoozeTag}
+        <div class="step-actions">
+          <button class="step-act-btn ${status==='done'?'active-done':''}" onclick="setStep('${id}','${ek}','done','${spid}',${showAutPanel||showPropPanel})">✓ Hecho</button>
+          <button class="step-act-btn ${status==='pending'?'active-pend':''}" onclick="toggleSnooze('${spid}')">⏰ Reprogramar</button>
+          <button class="step-act-btn ${status==='skip'?'active-skip':''}" onclick="setStep('${id}','${ek}','skip','${spid}',false)">— No aplica</button>
+        </div>
+        <div class="snooze-panel" id="${spid}">
+          <div class="snooze-title">¿Cuándo volvés a este paso?</div>
+          <div class="snooze-input-wrap"><input type="number" min="1" max="90" value="${st.snoozeDays||3}" id="${spid}_d" oninput="updatePreview('${spid}')"><span>días hábiles</span></div>
+          <div class="snooze-presets">
+            <button class="snooze-preset" onclick="setPreset('${spid}',1)">Mañana</button>
+            <button class="snooze-preset" onclick="setPreset('${spid}',3)">3 días</button>
+            <button class="snooze-preset" onclick="setPreset('${spid}',5)">1 semana</button>
+            <button class="snooze-preset" onclick="setPreset('${spid}',10)">2 semanas</button>
+            <button class="snooze-preset" onclick="setPreset('${spid}',22)">1 mes</button>
+          </div>
+          <div class="snooze-date-preview" id="${spid}_p"></div>
+          <button class="btn btn-primary btn-sm" onclick="confirmSnooze('${id}','${ek}','${spid}')">Confirmar</button>
+        </div>
+        ${extraPanel}
+        <div class="step-note-area"><input type="text" placeholder="Nota..." value="${(st.note||'').replace(/"/g,'&quot;')}" onchange="setNote('${id}','${ek}',this.value)"></div>
+      </div>`;
+    }).join('');
+    return`<div class="sec-group"><div class="sec-title">${sec.label}</div>${sh}</div>`;
+  }).join('');
+  document.getElementById('cl-content').innerHTML=html;
+  tpl.sections.forEach(sec=>sec.steps.forEach((_,si)=>{
+    const spid=`sp_${id.slice(-6)}_${sec.label.replace(/\W/g,'').slice(0,8)}_${si}`;
+    updatePreview(spid);
+  }));
+}
+
+// Propietarios panel
+let propTempCounter=0;
+function addPropietario(instId,spid){
+  propTempCounter++;
+  const pid=`prop_${spid}_${propTempCounter}`;
+  const div=document.createElement('div');
+  div.id='prow_'+pid;
+  div.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px';
+  div.innerHTML=`<input type="text" id="${pid}_n" placeholder="Nombre"><input type="text" id="${pid}_d" placeholder="DNI">`;
+  document.getElementById(spid+'_proplist').appendChild(div);
+}
+async function savePropietarios(instId,spid){
+  const inst=shared.find(i=>i.id===instId);if(!inst)return;
+  const rows=document.getElementById(spid+'_proplist').querySelectorAll('[id^="prow_"]');
+  const props=[...(inst.propietarios||[])];
+  rows.forEach(row=>{
+    const pid=row.id.replace('prow_','');
+    const n=(document.getElementById(pid+'_n')||{value:''}).value.trim();
+    const d=(document.getElementById(pid+'_d')||{value:''}).value.trim();
+    if(n)props.push({nombre:n,dni:d});
+  });
+  inst.propietarios=props;
+  await saveShared();toast('Propietarios guardados');renderCL(instId);
+}
+
+// Autorizacion panel
+async function saveAutorizacion(instId,spid){
+  const inst=shared.find(i=>i.id===instId);if(!inst)return;
+  const fecha=(document.getElementById(spid+'_autfecha')||{value:''}).value;
+  const dias=parseInt((document.getElementById(spid+'_autdias')||{value:'90'}).value)||90;
+  inst.autorizacionFecha=fecha;
+  inst.autorizacionDias=dias;
+  if(fecha){
+    const aviso=new Date(fecha+'T12:00:00');
+    aviso.setDate(aviso.getDate()-7);
+    inst.autorizacionRecordatorio=aviso.getTime();
+    inst.autorizacionVencimiento=new Date(fecha+'T12:00:00').getTime();
+    toast(`Recordatorio: ${fmtDate(aviso.getTime())}`);
+  }
+  await saveShared();renderCL(instId);renderReminders();updateTopbar();
+}
+
+function toggleSnooze(spid){
+  const p=document.getElementById(spid);if(!p)return;
+  const open=p.classList.contains('open');
+  document.querySelectorAll('.snooze-panel.open').forEach(e=>e.classList.remove('open'));
+  if(!open){p.classList.add('open');updatePreview(spid);}
+}
+function setPreset(spid,days){const i=document.getElementById(spid+'_d');if(i){i.value=days;updatePreview(spid);}}
+function updatePreview(spid){
+  const i=document.getElementById(spid+'_d');const p=document.getElementById(spid+'_p');
+  if(!i||!p)return;
+  const days=parseInt(i.value)||1;
+  const t=addBizDays(new Date(),days);
+  const dow=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'][t.getDay()];
+  p.textContent=`→ ${dow} ${t.getDate()}/${t.getMonth()+1}/${t.getFullYear()}`;
+}
+async function confirmSnooze(instId,key,spid){
+  const i=document.getElementById(spid+'_d');
+  const days=parseInt(i?.value)||3;
+  const until=addBizDays(new Date(),days).getTime();
+  const inst=shared.find(i=>i.id===instId);
+  if(!inst.stepStatus)inst.stepStatus={};
+  inst.stepStatus[key]={...(inst.stepStatus[key]||{}),status:'pending',snoozeUntil:until,snoozeDays:days};
+  await saveShared();
+  document.getElementById(spid)?.classList.remove('open');
+  toast('Recordatorio: '+fmtDate(until));
+  renderCL(instId);renderActive();renderReminders();updateTopbar();
+}
+async function setStep(instId,key,status,spid,showExtra){
+  const inst=shared.find(i=>i.id===instId);
+  if(!inst.stepStatus)inst.stepStatus={};
+  const cur=inst.stepStatus[key]||{};
+  const ns=cur.status===status?'none':status;
+  inst.stepStatus[key]={...cur,status:ns};
+  if(ns==='done'){inst.stepStatus[key].snoozeUntil=null;inst.stepStatus[key].snoozeDays=null;}
+  checkCompletion(inst);
+  await saveShared();
+  renderCL(instId);renderActive();renderReminders();updateTopbar();
+  // Open extra panel if marking done
+  if(ns==='done'&&showExtra){
+    setTimeout(()=>{
+      const autEl=document.getElementById(spid+'_aut');
+      const propEl=document.getElementById(spid+'_prop');
+      if(autEl)autEl.classList.add('open');
+      if(propEl)propEl.classList.add('open');
+    },200);
+  }
+}
+async function setNote(instId,key,note){
+  const inst=shared.find(i=>i.id===instId);
+  if(!inst.stepStatus)inst.stepStatus={};
+  inst.stepStatus[key]={...(inst.stepStatus[key]||{}),note};
+  await saveShared();
+}
+async function markComplete(instId){
+  const inst=shared.find(i=>i.id===instId);
+  inst.completed=true;inst.completedAt=Date.now();
+  await saveShared();toast('¡Proceso completado! Pasó a "Anteriores".');
+  renderCL(instId);renderAll();
+}
+function checkCompletion(inst){
+  const tpl=APP.templates[inst.template];if(!tpl)return;
+  if(doneCount(inst)>=totalSteps(tpl)){inst.completed=true;inst.completedAt=Date.now();}
+}
+function showTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen-'+tab).classList.add('active');
+  document.getElementById('bnav-'+tab).classList.add('active');
+  if(tab==='active')renderActive();
+  if(tab==='reminders')renderReminders();
+  if(tab==='prev')renderPrev();
+}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');}
+function goBack(){renderActive();showTab(APP.prevTab||'home');}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+
+function getEmbedded(){return{
+  captacion:{...META.captacion,key:'captacion',sections:[
+    {label:'PRELISTING',steps:['Subir a Instagram y WhatsApp foto/video de "hoy visitamos"','Llevar hoja de Prelisting y completar','Enviar hoja completa de "Prelisting" a Lu','Cargar información de "Prelisting" en Excel de "ACM"','Hacer ACM','Cargar hoja de estadísticas de ACM','Entregar ACM (cargar OKR) + Agendar 1 semana después','Agregar al cliente a la Base']},
+    {label:'CAPTACIÓN',steps:['Pedir DNI + Escritura + Mails — Guardar en Drive','¿Es apto crédito? ¿Tiene planos? Calendarizar recordatorios semanales','Anotar cumpleaños en la Base','Hacer autorización (calculando cuándo estarían las fotos)','Agendar fecha para las fotos','Llenar Excel de estadísticas de ACM','Crear y completar el Excel de "Reportes" + Índice','Crear y completar el Excel de "Propiedades"','Agregar recordatorios una semana antes del vencimiento','Pedir redes sociales a los clientes','Ir armando publicación + Contactar al cliente para datos faltantes']},
+    {label:'FOTOS',steps:['¿Hacemos video? Armar guión','¿Ponemos cartel? ¿Qué tamaño?','Tomar medida de los ambientes + Ir haciendo plano','Descargar fotos/video del fotógrafo en Drive','¿Está el plano hecho? Guardar en Drive y cargar en RedRemax','Anotar en OKR como "Captación"','Enviar link a cliente + Referidor']},
+    {label:'DIFUSIÓN ENTRE COLEGAS',steps:['Averiguar inmobiliarias de la zona + oficinas de Remax','Consultar si tienen propiedades similares']},
+    {label:'PROMOCIÓN DIGITAL',steps:['Historia con Fer de "Hoy estamos en…"','Definir publicación: historias, feed o reels + CANVA','Agregar al catálogo de WhatsApp Business','Compartir ficha en grupos de WhatsApp de colegas','¿Hacemos video mostrando la propiedad?','Evaluar si conviene promocionar la publicación','¿Subir como "Superdestacado"?']},
+    {label:'PROMOCIÓN LOCAL',steps:['Carta a vecinos: "Puse a la venta mi propiedad"','Carta a vecinos: "Vendí en tu barrio y tenemos interesados"','¿Hay encargado? Conversar, dejar tarjeta']}
+  ]},
+  reserva:{...META.reserva,key:'reserva',sections:[
+    {label:'EN RESERVA',steps:['Redactar Reserva + Recibo de Reserva','¿Es a referéndum de compra/venta de otra propiedad?','¿Se requiere reubicación de propietarios?','¿Se hace escritura en simultáneo?']},
+    {label:'UNA VEZ CONFORMADA LA RESERVA',steps:['Calendarizar fecha de finalización de reserva','Redactar Aceptación + Notificación','Comentar reserva a Referidor (si lo hay)','Cargar montos de facturación en hoja "Cierres"','Pedir informes de Dominio e Inhibición','Poner fecha para el Refuerzo','Definir: Escritura / Boleto Compra-Venta','¿Se escritura al 100% o menos?','¿Se necesita comodato?','P/Compradora: ¿Tiene escribano?','¿Se requiere agrimensor?','¿Tienen mudanzero?','¿Hay cartel? ¿Ponemos franja "Reservado"?','Poner como "Reservada" en Red Remax','¿Propiedad en Superdestacados? Reemplazar','Anotar en OKR','Redes: foto de Reserva, historia "Reservada", sacar del catálogo Wpp']},
+    {label:'CON ESCRIBANÍA',steps:['Solicitar datos de escribanía','Contactar a la escribanía','Asegurarnos que escribanía tenga todos los datos','Pedir documentación a cliente','Definir monto de escritura, confirmar con escribana','Definir lugar de firma','Averiguar a nombre de quién van las facturas','Avisar dólares cara grande','Analizar regalos a clientes y referidor']}
+  ]},
+  escrituracion:{...META.escrituracion,key:'escrituracion',sections:[
+    {label:'DEFINICIONES INICIALES',steps:['Confirmar tipo de pago: Crédito, Transferencia y/o Efectivo','¿Hay reubicación? ¿Escritura en simultáneo?','Confirmar monto de escrituración con las partes']},
+    {label:'7 DÍAS ANTES',steps:['Pensar y comprar regalos','Escribir tarjetas','Preparar QR y llavero','¿Hay referidor? Comentar fecha + ¿Regalo? ¿Pagamos referido?']},
+    {label:'3 DÍAS ANTES',steps:['Avisar a Fran fecha de firma','Completar Excel "Facturación"','Comunicar montos de comisión a los clientes','Hacer facturas','Pedir facturas a Administración','Guardar facturas en Drive','Imprimir y llenar UIF','Armado carpeta Fer','Armado carpeta clientes','Pasar a buscar USD de la reserva']},
+    {label:'1 DÍA ANTES',steps:['Enviar mensaje recordatorio por WhatsApp a las partes','Armar posteo de "Vendimos" para redes']},
+    {label:'DURANTE / POST ESCRITURACIÓN',steps:['Sacar fotos y/o video del momento','Redes: historia, campanazo, "Vendida", modificar historias destacadas','Recordar pedir: referidos, opinión en Google, gastos de escribanía','Guardar fotos en Drive','Cambiar estado en Red de Remax','Agendar mensajes: 1 día después, 30 días después, mesiversario','¿Hubo agente implicado? Sumar a Base de Agentes','¿Planillas completas? Confirmar con oficina','Mover carpeta en Drive a "Antiguos"']}
+  ]},
+  referido:{...META.referido,key:'referido',sections:[
+    {label:'REGISTRO INICIAL',steps:['Cargar en OKR']},
+    {label:'SOBRE EL REFERIDOR',steps:['Verificar si ya está en la "Base de Relaciones"','Actualizar su categoría','Agregar al referido en columna correspondiente','Hacerle un regalo y visitar + Anotar en la base','Mantenerlo al tanto sobre avances']},
+    {label:'SOBRE EL REFERIDO',steps:['Cargar en la "Base de Relaciones" (vincular con referidor)','Cargar hoja "Referidos" (en Team Bolten)','Registrar información post contacto en la "Base"']}
+  ]},
+  modificacion:{...META.modificacion,key:'modificacion',sections:[
+    {label:'MODIFICACIÓN DE VALOR',steps:['Modificar en Red Remax','Anotar en Reporte','Hacer historia para Instagram de BAJA DE VALOR + Destacar','Modificar en Catálogo de WhatsApp','Mandar mensaje a todos los interesados']}
+  ]},
+  baja:{...META.baja,key:'baja',sections:[
+    {label:'BAJA DE PROPIEDAD',steps:['Modificar en Red Remax','Anotar en Reporte','Eliminar del Catálogo WhatsApp','Eliminar de Historias Destacadas de Instagram + Feed']}
+  ]},
+  renovacion:{...META.renovacion,key:'renovacion',sections:[
+    {label:'RENOVACIÓN DE PROPIEDAD',steps:['Comunicarse con propietarios con reporte "final" (junto con sus conclusiones)','Corregir en autorización: fecha, precio (en caso de modificacion), dias habiles de duracion','Cambiar en Red de Remax','Anotar en Reporte','Hacer historia para Instagram de BAJA DE VALOR + Destacar','Modificar en Catálogo de WhatsApp','Cambiar fecha de vencimiento en calendario']}
+  ]}
+};}
+
+init();
+</script>
+
+
+</body></html>
