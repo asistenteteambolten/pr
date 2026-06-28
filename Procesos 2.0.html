@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Procesos">
+<meta name="theme-color" content="#0f0f0f">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxYTFhMWEiLz48dGV4dCB4PSIzMiIgeT0iNDYiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjQyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2U4ZDVhMyIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UDwvdGV4dD48L3N2Zz4=">
+<title>Procesos</title>
+<style>
+:root{--bg:#0f0f0f;--bg2:#1a1a1a;--bg3:#242424;--bg4:#2e2e2e;--border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.16);--text:#f0f0f0;--text2:#999;--text3:#666;--accent:#e8d5a3;--accent2:#c4a96b;--green:#4caf7d;--green-bg:rgba(76,175,125,0.12);--yellow:#f0c060;--yellow-bg:rgba(240,192,96,0.12);--red:#e05555;--red-bg:rgba(224,85,85,0.12);--blue:#6ab0e8;--radius:12px;--radius-sm:8px;--font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px}
+body{display:flex;flex-direction:column;min-height:100vh}
+.app-shell{display:flex;flex-direction:column;width:100%;min-height:100vh;position:relative}
+@media(min-width:768px){.card{margin:0 24px 10px}.step-item{margin:0 24px 8px}.section-label{padding:20px 24px 10px}.sec-title{padding:14px 24px 8px}.cl-header{padding:0 24px 20px}.new-form{padding:0 24px}.topbar{padding:20px 24px 12px}.back-btn{padding:16px 24px 12px}.stats-bar{padding:16px 24px}}
+.topbar{padding:16px 20px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:50}
+.topbar-title{font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.4px}
+.topbar-sub{font-size:12px;color:var(--text3);margin-top:2px}
+.bottom-nav{display:flex;background:var(--bg2);border-top:0.5px solid var(--border);position:sticky;bottom:0;z-index:50}
+.bnav-btn{flex:1;padding:10px 2px 14px;display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;color:var(--text3);font-size:9px;font-family:var(--font);position:relative}
+.bnav-btn.active{color:var(--accent)}
+.bnav-btn svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bnav-badge{position:absolute;top:6px;right:calc(50% - 18px);background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;min-width:16px;text-align:center}
+.screen{display:none;flex:1;overflow-y:auto;padding-bottom:20px}
+.screen.active{display:block}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);padding:18px 20px 8px}
+.card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);margin:0 16px 8px;padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px}
+.card:hover{background:var(--bg3)}
+.card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.card-body{flex:1;min-width:0}
+.card-title{font-size:14px;font-weight:500;color:var(--text)}
+.card-sub{font-size:12px;color:var(--text2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;flex-shrink:0}
+.badge-green{background:var(--green-bg);color:var(--green)}
+.badge-yellow{background:var(--yellow-bg);color:var(--yellow)}
+.badge-red{background:var(--red-bg);color:var(--red)}
+.badge-gray{background:var(--bg3);color:var(--text2)}
+.badge-accent{background:rgba(232,213,163,0.15);color:var(--accent)}
+.prog-bar{height:3px;background:var(--bg4);border-radius:2px;overflow:hidden;margin-top:8px}
+.prog-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font);cursor:pointer;border:0.5px solid var(--border2);background:var(--bg3);color:var(--text)}
+.btn:hover{background:var(--bg4)}
+.btn-primary{background:var(--accent);color:#0f0f0f;border-color:transparent;font-weight:600}
+.btn-primary:hover{background:var(--accent2)}
+.btn-full{width:100%;justify-content:center}
+.btn-sm{padding:7px 12px;font-size:12px}
+.input-wrap{margin-bottom:14px}
+.input-label{font-size:12px;color:var(--text2);margin-bottom:6px;display:block;font-weight:500}
+.input-label .req{color:var(--red);margin-left:2px}
+input[type=text],input[type=number],input[type=date],select,textarea{width:100%;padding:11px 14px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:14px;font-family:var(--font);outline:none;-webkit-appearance:none;appearance:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+input::placeholder,textarea::placeholder{color:var(--text3)}
+.back-btn{display:flex;align-items:center;gap:6px;color:var(--accent);font-size:14px;cursor:pointer;padding:14px 20px 10px;background:none;border:none;font-family:var(--font)}
+.back-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+.cl-header{padding:0 20px 16px;border-bottom:0.5px solid var(--border);margin-bottom:4px}
+.cl-header-title{font-size:20px;font-weight:700;letter-spacing:-0.4px}
+.cl-header-sub{font-size:13px;color:var(--text2);margin-top:3px}
+.partes-block{background:var(--bg3);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:10px}
+.partes-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:8px}
+.add-parte-btn{background:none;border:0.5px dashed var(--border2);border-radius:var(--radius-sm);padding:7px 12px;color:var(--text3);font-size:12px;cursor:pointer;width:100%;font-family:var(--font)}
+.add-parte-btn:hover{color:var(--accent);border-color:var(--accent)}
+.sec-group{border-top:0.5px solid var(--border);margin-top:16px}
+.sec-group:first-child{border-top:none;margin-top:0}
+.sec-title{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--text3);padding:14px 20px 8px}
+.step-item{margin:0 16px 6px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.step-item.done{border-color:rgba(76,175,125,0.25)}
+.step-item.pending{border-color:rgba(240,192,96,0.25)}
+.step-item.skip{opacity:.5}
+.step-main{padding:12px 14px;display:flex;gap:10px;align-items:flex-start}
+.step-num{width:24px;height:24px;border-radius:50%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--text3);flex-shrink:0}
+.step-num.done{background:var(--green-bg);color:var(--green)}
+.step-num.pending{background:var(--yellow-bg);color:var(--yellow)}
+.step-text{flex:1;font-size:13px;line-height:1.5}
+.step-text.done{text-decoration:line-through;color:var(--text3)}
+.step-actions{display:flex;gap:6px;padding:0 14px 12px 48px;flex-wrap:wrap}
+.step-act-btn{padding:5px 11px;font-size:12px;font-family:var(--font);border-radius:20px;border:0.5px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:4px}
+.step-act-btn:hover{background:var(--bg4)}
+.step-act-btn.active-done{background:var(--green-bg);color:var(--green);border-color:rgba(76,175,125,0.3)}
+.step-act-btn.active-pend{background:var(--yellow-bg);color:var(--yellow);border-color:rgba(240,192,96,0.3)}
+.step-act-btn.active-skip{background:var(--bg4);color:var(--text3);border-color:transparent}
+.step-note-area{padding:0 14px 10px 48px}
+.step-note-area input{font-size:12px;padding:7px 10px}
+.snooze-panel{display:none;padding:10px 14px 14px 48px;background:rgba(240,192,96,0.05);border-top:0.5px solid rgba(240,192,96,0.15)}
+.snooze-panel.open{display:block}
+.snooze-title{font-size:11px;color:var(--yellow);margin-bottom:8px;font-weight:600}
+.snooze-input-wrap{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.snooze-input-wrap input{width:64px;text-align:center;padding:7px 8px}
+.snooze-input-wrap span{font-size:12px;color:var(--text2)}
+.snooze-presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.snooze-preset{padding:5px 11px;font-size:12px;border-radius:20px;border:0.5px solid rgba(240,192,96,0.25);background:transparent;color:var(--yellow);cursor:pointer;font-family:var(--font)}
+.snooze-preset:hover{background:var(--yellow-bg)}
+.snooze-date-preview{font-size:11px;color:var(--text2);margin-bottom:10px;min-height:16px;font-weight:500}
+.empty{text-align:center;padding:60px 30px 40px;color:var(--text3)}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.empty p{font-size:14px;line-height:1.6}
+.reminder-item{display:flex;align-items:flex-start;gap:12px;padding:13px 20px;border-bottom:0.5px solid var(--border);cursor:pointer}
+.reminder-item:hover{background:var(--bg2)}
+.reminder-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.reminder-body{flex:1}
+.reminder-prop{font-size:13px;font-weight:600}
+.reminder-step{font-size:12px;color:var(--text2);margin-top:2px}
+.reminder-when{font-size:11px;margin-top:4px;font-weight:600}
+.new-form{padding:0 20px}
+.loading{display:flex;align-items:center;justify-content:center;gap:10px;padding:40px 20px;color:var(--text3);font-size:13px}
+.spinner{width:18px;height:18px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.user-pill{padding:5px 14px;background:var(--bg3);border-radius:20px;font-size:12px;color:var(--accent);border:0.5px solid var(--border2);cursor:pointer;font-weight:600}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-overlay.scroll-modal{align-items:flex-start;overflow-y:auto;padding:20px 0}
+.modal-box{background:var(--bg2);border-radius:var(--radius) var(--radius) 0 0;border-top:0.5px solid var(--border2);padding:20px 20px 40px;width:100%;max-width:600px;margin:0 auto;transform:translateY(30px);transition:transform .2s}
+.modal-overlay.open .modal-box{transform:translateY(0)}
+.modal-overlay.scroll-modal .modal-box{border-radius:var(--radius);margin:auto;max-height:90vh;overflow-y:auto;transform:none}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:16px}
+.modal-close-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.sheet-status{display:flex;align-items:center;gap:6px;font-size:11px;padding:6px 16px;color:var(--text3)}
+.sheet-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.sheet-dot.error{background:var(--red)}
+.sheet-dot.loading{background:var(--yellow);animation:pulse .8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:10px 18px;font-size:13px;z-index:300;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.stats-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 16px}
+.stat-box{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;text-align:center}
+.stat-num{font-size:22px;font-weight:700}
+.stat-lbl{font-size:10px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+.partes-display{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.parte-chip{background:var(--bg3);border:0.5px solid var(--border2);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--text2)}
+.info-box{background:rgba(232,213,163,0.08);border:0.5px solid rgba(232,213,163,0.2);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:12px;font-size:12px;color:var(--accent);line-height:1.5}
+.overdue-banner{margin:10px 16px 0;background:var(--red-bg);border:0.5px solid rgba(224,85,85,0.3);border-radius:var(--radius-sm);padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.overdue-banner span{font-size:13px;color:var(--red);flex:1}
+.time-input-wrap{position:relative;width:100%}
+.time-suggestions{position:absolute;top:100%;left:0;right:0;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);z-index:100;display:none;max-height:200px;overflow-y:auto}
+.time-suggestions.open{display:block}
+.time-opt{padding:9px 14px;cursor:pointer;font-size:13px}
+.time-opt:hover{background:var(--bg4)}
+.ef-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+.ef-table th{font-size:11px;color:var(--text3);padding:4px 6px;text-align:left;font-weight:500;border-bottom:0.5px solid var(--border)}
+.ef-table td{padding:3px 4px}
+.ef-table input{padding:7px 10px;font-size:13px}
+/* Selection mode */
+.sel-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg2);border-bottom:0.5px solid var(--border);position:sticky;top:0;z-index:40}
+.sel-bar .btn{flex-shrink:0}
+.sel-count{font-size:13px;color:var(--text2);flex:1}
+.sel-check{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--bg3)}
+.sel-check.checked{background:var(--accent);border-color:var(--accent);color:#0f0f0f;font-weight:700}
+.card.selectable{cursor:pointer}
+.reminder-item.selectable .sel-check{margin-top:0}
+/* Ficha */
+.ficha-section{margin:0 16px 12px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.ficha-sec-head{padding:12px 14px;background:var(--bg3);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);display:flex;justify-content:space-between;align-items:center}
+.ficha-sec-body{padding:12px 14px}
+.ficha-row{display:grid;gap:8px;margin-bottom:8px}
+.ficha-field{margin-bottom:8px}
+.ficha-field label{font-size:11px;color:var(--text3);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.03em}
+.ficha-field input,.ficha-field select,.ficha-field textarea{font-size:13px;padding:8px 10px}
+.ficha-card{background:var(--bg3);border-radius:var(--radius-sm);padding:10px;margin-bottom:8px;border:0.5px solid var(--border)}
+.ficha-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.ficha-card-title{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em}
+.urg-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:600}
+.urg-1{background:var(--green-bg);color:var(--green)}
+.urg-2{background:var(--yellow-bg);color:var(--yellow)}
+.urg-3{background:var(--red-bg);color:var(--red)}
+.doc-estado-tag{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600}
+.doc-tenemos{background:var(--green-bg);color:var(--green)}
+.doc-falta{background:var(--red-bg);color:var(--red)}
+.ficha-card.removing{transition:opacity .2s;opacity:0}
+.add-row-btn{background:none;border:0.5px dashed var(--border2);border-radius:var(--radius-sm);padding:8px 12px;color:var(--text3);font-size:12px;cursor:pointer;width:100%;font-family:var(--font);margin-top:4px}
+.add-row-btn:hover{color:var(--accent);border-color:var(--accent)}
+@media print{@page{size:A4;margin:10mm}body>*:not(#print-area){display:none!important}#print-area{display:block!important;font-family:Arial,sans-serif;font-size:10px;color:#000;padding:0}#print-area h2{font-size:14px;text-align:center;margin-bottom:8px;border-bottom:2px solid #000;padding-bottom:4px}#print-area .p-section{margin-bottom:6px;border:1px solid #ccc;padding:5px;page-break-inside:avoid}#print-area .p-section h3{font-size:10px;font-weight:bold;margin-bottom:4px;border-bottom:1px solid #eee;padding-bottom:2px}#print-area .p-row{display:flex;gap:8px;margin-bottom:2px;flex-wrap:wrap}#print-area .p-field{flex:1;min-width:80px}#print-area .p-label{font-size:8px;color:#666;text-transform:uppercase}#print-area .p-val{font-size:10px;font-weight:500;border-bottom:1px solid #ddd;min-height:14px}#print-area table{width:100%;border-collapse:collapse;margin-top:2px}#print-area th{background:#f0f0f0;font-size:9px;padding:2px 4px;border:1px solid #ddd}#print-area td{font-size:10px;padding:2px 4px;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="app-shell">
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:10px">
+    <button id="topbar-back-btn" onclick="handleTopBack()" style="display:none;background:none;border:none;cursor:pointer;color:var(--accent);font-size:24px;line-height:1;padding:0 8px 0 0;font-family:var(--font)">&#8249;</button>
+    <div><div class="topbar-title">Procesos</div><div class="topbar-sub" id="topbar-sub">Gestión de checklists</div></div>
+  </div>
+  <div class="user-pill" id="user-pill" onclick="showUserModal()">&#183;&#183;&#183;</div>
+</div>
+<div class="screen active" id="screen-home">
+  <div class="sheet-status"><div class="sheet-dot loading" id="sheet-dot"></div><span id="sheet-status-txt">Sincronizando...</span></div>
+  <div id="home-content"><div class="loading"><div class="spinner"></div>Cargando...</div></div>
+</div>
+<div class="screen" id="screen-active"><div id="active-content"></div></div>
+<div class="screen" id="screen-reminders"><div id="reminders-content"></div></div>
+<div class="screen" id="screen-prev"><div id="prev-content"></div></div>
+<div class="screen" id="screen-seguimiento"><div id="seguimiento-content"></div></div>
+<div class="screen" id="screen-new">
+  <button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>volver</button>
+  <div class="new-form" id="new-form-content"></div>
+</div>
+<div class="screen" id="screen-checklist">
+  <button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>volver</button>
+  <div id="cl-content"></div>
+</div>
+<div class="screen" id="screen-ficha">
+  <button class="back-btn" onclick="goBackFicha()"><svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>volver</button>
+  <div id="ficha-content"></div>
+</div>
+<div class="bottom-nav">
+  <button class="bnav-btn active" id="bnav-home" onclick="showTab('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>Procesos</button>
+  <button class="bnav-btn" id="bnav-active" onclick="showTab('active')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>En curso</button>
+  <button class="bnav-btn" id="bnav-seguimiento" onclick="showTab('seguimiento')"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Seguimiento</button>
+  <button class="bnav-btn" id="bnav-reminders" onclick="showTab('reminders')"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>Avisos</button>
+  <button class="bnav-btn" id="bnav-prev" onclick="showTab('prev')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Anteriores</button>
+</div>
+</div>
+<div id="print-area" style="display:none;"></div>
+<div class="modal-overlay" id="user-modal"><div class="modal-box"><div class="modal-close-row"><div class="modal-title">Tu perfil</div><button class="btn btn-sm" onclick="closeModal('user-modal')">cerrar</button></div><div class="input-wrap"><label class="input-label">Tu nombre</label><input type="text" id="user-name-input" placeholder="Ej: Lu, Fer..."></div><p style="font-size:12px;color:var(--text3);margin-bottom:16px">Se guarda en este dispositivo.</p><button class="btn btn-primary btn-full" onclick="saveUser()">Guardar</button></div></div>
+<div class="modal-overlay" id="edit-modal"><div class="modal-box"><div id="modal-content"></div></div></div>
+<div class="modal-overlay scroll-modal" id="escrit-modal"><div class="modal-box"><div id="escrit-modal-content"></div></div></div>
+<div class="modal-overlay scroll-modal" id="mensaje-modal"><div class="modal-box"><div id="mensaje-modal-content"></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+// CONFIG
+const SHEET_ID='1N6Df_cg1-WmX2HwXwh6uCL7xrUT7OcCjhz199pfYdiA';
+const TABS=[{key:'captacion',gid:'966815152'},{key:'reserva',gid:'1126633349'},{key:'escrituracion',gid:'1906328336'},{key:'referido',gid:'2030526856'},{key:'modificacion',gid:'1010521982'},{key:'baja',gid:'2002116076'},{key:'renovacion',gid:'1653314650'}];
+const JSONBIN_ID='6a2be721f5f4af5e29e5b9b1';
+const JSONBIN_KEY='$2a$10$KiDRPsMXHs6NSaLfPi/gfu3TXHAQPOo34UpOlLN6dgbqCavMBTMmO';
+const JSONBIN_URL='https://api.jsonbin.io/v3/b/'+JSONBIN_ID;
+const META={captacion:{icon:'🏠',label:'Captación',color:'#1a2e1a',accent:'#4caf7d'},reserva:{icon:'📋',label:'Reserva',color:'#1a1e2e',accent:'#6ab0e8'},escrituracion:{icon:'📜',label:'Escrituración',color:'#2e2a1a',accent:'#f0c060'},referido:{icon:'👥',label:'Referido',color:'#2e1a2a',accent:'#d08ec0'},modificacion:{icon:'📉',label:'Modificación de Valor',color:'#2e1a1a',accent:'#e05555'},baja:{icon:'🔴',label:'Baja de Propiedad',color:'#2e1818',accent:'#e07755'},renovacion:{icon:'🔄',label:'Renovación de Propiedad',color:'#1a1e2e',accent:'#7ab0e8'}};
+const FERIADOS=['2025-01-01','2025-03-24','2025-04-02','2025-04-18','2025-05-01','2025-05-25','2025-06-20','2025-07-09','2025-08-17','2025-10-12','2025-11-20','2025-12-08','2025-12-25','2026-01-01','2026-03-24','2026-04-02','2026-04-03','2026-05-01','2026-05-25','2026-06-19','2026-07-09','2026-08-17','2026-10-12','2026-11-20','2026-12-08','2026-12-25'];
+const FERIADOS_SET=new Set(FERIADOS);
+let APP={user:null,templates:{},prevTab:'home',currentInstId:null};
+let shared=[];
+let fichas=[];
+let selMode=false;
+let selected={};
+let currentFichaId=null;
+let dismissedReminders={};
+let DOC_OPTIONS=['DNI','Escritura','Planos','Reglamento de Copropiedad','DH','Sucesión','Servicios','Impuestos','Estado Parcelario','Informes de Dom. e Inh.','Poder','Boleto Compra-Venta','Crédito Hipotecario'];
+let PROF_OPTIONS=['Entidad bancaria','Abogado','Agrimensor','Escribano','Gestor'];
+
+// STORAGE
+function loadUser(){try{const u=localStorage.getItem('re_user_v3');if(u)APP.user=JSON.parse(u);}catch(e){}}
+function saveUserLocal(){try{localStorage.setItem('re_user_v3',JSON.stringify(APP.user));}catch(e){}}
+async function loadShared(){
+  try{const r=await fetch(JSONBIN_URL+'/latest',{headers:{'X-Master-Key':JSONBIN_KEY,'X-Bin-Meta':'false'}});
+    if(r.ok){const data=await r.json();
+      if(Array.isArray(data)){shared=data.filter(i=>i&&i.id&&i.template&&i.name);}
+      else if(data&&typeof data==='object'){
+        shared=Array.isArray(data.procesos)?data.procesos.filter(i=>i&&i.id&&i.template&&i.name):[];
+        fichas=Array.isArray(data.fichas)?data.fichas.filter(f=>f&&f.id):[];
+        if(Array.isArray(data.docOptions)&&data.docOptions.length)DOC_OPTIONS=data.docOptions;
+        if(Array.isArray(data.profOptions)&&data.profOptions.length)PROF_OPTIONS=data.profOptions;
+        if(data.dismissedReminders)dismissedReminders=data.dismissedReminders;
+      }
+      try{localStorage.setItem('re_shared_backup',JSON.stringify({procesos:shared,fichas,docOptions:DOC_OPTIONS,profOptions:PROF_OPTIONS}));}catch(e){}
+      return;
+    }}catch(e){}
+  try{const s=localStorage.getItem('re_shared_backup');if(s){const p=JSON.parse(s);if(Array.isArray(p)){shared=p.filter(i=>i&&i.id&&i.template&&i.name);}else if(p&&typeof p==='object'){shared=Array.isArray(p.procesos)?p.procesos:[];fichas=Array.isArray(p.fichas)?p.fichas:[];if(p.docOptions)DOC_OPTIONS=p.docOptions;if(p.profOptions)PROF_OPTIONS=p.profOptions;}}}catch(e){}
+}
+async function saveShared(){
+  const payload={procesos:shared,fichas,docOptions:DOC_OPTIONS,profOptions:PROF_OPTIONS,dismissedReminders};
+  const data=JSON.stringify(payload);
+  try{localStorage.setItem('re_shared_backup',data);}catch(e){}
+  try{await fetch(JSONBIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY},body:data});}catch(e){}
+}
+
+// TEMPLATES
+function setSheetStatus(st,txt){document.getElementById('sheet-dot').className='sheet-dot'+(st==='loading'?' loading':st==='error'?' error':'');document.getElementById('sheet-status-txt').textContent=txt;}
+async function fetchTemplates(){
+  setSheetStatus('loading','Sincronizando con Google Sheets...');
+  APP.templates=getEmbedded();let ok=0;
+  try{
+    const results=await Promise.allSettled(TABS.map(async t=>{const url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:csv&gid='+t.gid;const r=await fetch(url);if(!r.ok)throw new Error('fail');return{key:t.key,csv:await r.text()};}));
+    results.forEach(res=>{if(res.status==='fulfilled'&&parseCSV(res.value.key,res.value.csv))ok++;});
+    setSheetStatus(ok?'ok':'error',ok?ok+' plantilla'+(ok>1?'s':'')+' sincronizada'+(ok>1?'s':'')+' desde Google Sheets':'Sin acceso — usando plantillas locales');
+  }catch(e){setSheetStatus('error','Sin acceso — usando plantillas locales');}
+}
+function parseCSV(key,csv){
+  if(!META[key])return false;
+  const lines=csv.split('\n');const sections=[];let cur=null;
+  for(const line of lines){
+    const cols=[];let field='',inQ=false;
+    for(let ci=0;ci<line.length;ci++){const ch=line[ci];if(ch==='"'){inQ=!inQ;}else if(ch===','&&!inQ){cols.push(field.trim());field='';}else{field+=ch;}}
+    cols.push(field.trim());
+    const isCheckbox=v=>/^(☐|TRUE|FALSE|true|false)$/.test(v.trim())||v.trim()===''||v.trim()==='☑';
+    const textCols=cols.map((c,i)=>({i,v:c})).filter(({v})=>!isCheckbox(v)&&v.length>0);
+    if(textCols.length===0)continue;
+    const firstText=textCols[0].v;
+    if(/^(CHECK|SI$|NO$|TAREA|NOTAS|Propiedad|Fecha|Horario|DNI|Email|Valor|Forma|¿Hay)/i.test(firstText))continue;
+    const hasCheckbox=cols.slice(0,3).some(v=>isCheckbox(v)&&v.trim()!=='');
+    if(hasCheckbox&&firstText.length>3){if(cur)cur.steps.push(firstText);}
+    else if(firstText.length>1&&firstText.length<100){cur={label:firstText,steps:[]};sections.push(cur);}
+  }
+  const filtered=sections.filter(s=>s.steps.length>0);
+  if(filtered.length>0){APP.templates[key]={...META[key],key,sections:filtered};return true;}
+  return false;
+}
+
+// HELPERS
+function addBizDays(from,days){let d=new Date(from);let n=0;while(n<days){d.setDate(d.getDate()+1);const iso=d.toISOString().slice(0,10),dow=d.getDay();if(dow!==0&&dow!==6&&!FERIADOS_SET.has(iso))n++;}return d;}
+function fmtDate(ts){const d=new Date(ts);return d.toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short'});}
+function fmtDateStr(s){if(!s)return'';const d=new Date(s+'T12:00:00');return d.toLocaleDateString('es-AR',{day:'numeric',month:'short',year:'numeric'});}
+function totalSteps(tpl){return tpl.sections.reduce((a,s)=>a+s.steps.length,0);}
+function doneCount(inst){return Object.values(inst.stepStatus||{}).filter(s=>s.status==='done'||s.status==='skip').length;}
+function pendCount(inst){return Object.values(inst.stepStatus||{}).filter(s=>s.status==='pending').length;}
+function overdueCount(inst){const now=Date.now();return Object.values(inst.stepStatus||{}).filter(s=>s.status==='pending'&&s.snoozeUntil&&s.snoozeUntil<now).length;}
+function allOverdue(){return shared.filter(i=>!i.completed).reduce((a,i)=>a+overdueCount(i),0)+getAutoReminders().filter(r=>r.when<Date.now()).length;}
+function gval(id){return(document.getElementById(id)||{value:''}).value.trim();}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function getAutoReminders(){
+  const rem=[];
+  shared.filter(i=>!i.completed).forEach(inst=>{
+    if(inst.template==='reserva'&&inst.recordatorioVencimiento)rem.push({inst,label:'Vencimiento de reserva',when:inst.recordatorioVencimiento});
+    if(inst.template==='escrituracion'){if(inst.recordatorio7)rem.push({inst,label:'Escrituración — 7 días antes',when:inst.recordatorio7});if(inst.recordatorio3)rem.push({inst,label:'Escrituración — 3 días antes',when:inst.recordatorio3});if(inst.recordatorio1)rem.push({inst,label:'Escrituración — 1 día antes',when:inst.recordatorio1});}
+  });
+  fichas.filter(f=>f.estado!=='Cerrada').forEach(f=>{(f.docReminders||[]).forEach(dr=>{const pseudoInst={id:f.id,name:f.propiedad||'Ficha',isFicha:true};rem.push({inst:pseudoInst,label:'Documento "'+dr.doc+'" — 7 días antes',when:dr.aviso7});rem.push({inst:pseudoInst,label:'Documento "'+dr.doc+'" — fecha estimada',when:dr.fecha});});});
+  return rem;
+}
+function copyMsg(id){const el=document.getElementById(id);if(!el)return;navigator.clipboard.writeText(el.value).then(()=>toast('¡Copiado!')).catch(()=>{el.select();document.execCommand('copy');toast('¡Copiado!');});}
+
+// USER
+function showUserModal(force){if(!force&&APP.user)document.getElementById('user-name-input').value=APP.user.name||'';document.getElementById('user-modal').classList.add('open');}
+function saveUser(){const name=document.getElementById('user-name-input').value.trim();if(!name)return;APP.user={id:'u_'+name.toLowerCase().replace(/\s/g,'_'),name};saveUserLocal();document.getElementById('user-pill').textContent=APP.user.name;closeModal('user-modal');toast('Hola, '+name+'!');renderAll();}
+
+// INIT
+async function init(){loadUser();document.getElementById('user-pill').textContent=APP.user?APP.user.name:'Identificate';if(!APP.user)showUserModal(true);await Promise.all([loadShared(),fetchTemplates()]);renderAll();}
+
+// RENDER
+function renderAll(){renderHome();renderActive();renderReminders();renderPrev();renderSeguimiento();updateTopbar();}
+function updateTopbar(){
+  const active=shared.filter(i=>!i.completed).length;
+  document.getElementById('topbar-sub').textContent=active>0?active+' proceso'+(active>1?'s':'')+' en curso':'Gestión de checklists';
+  const od=allOverdue();
+  document.getElementById('bnav-reminders').innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>'+(od>0?'<span class="bnav-badge">'+od+'</span>':'')+'Avisos';
+}
+function renderHome(){
+  const el=document.getElementById('home-content');const tpls=APP.templates;
+  if(!tpls||!Object.keys(tpls).length)return;
+  const cnt={};shared.filter(i=>!i.completed).forEach(i=>{cnt[i.template]=(cnt[i.template]||0)+1;});
+  const od=allOverdue();let html='';
+  if(od>0)html+='<div class="overdue-banner" onclick="showTab(\'reminders\')"><span>⚠ Tenés '+od+' aviso'+(od>1?'s':'')+' vencido'+(od>1?'s':'')+'</span></div>';
+  html+='<div class="section-label">Plantillas de proceso</div>';
+  html+=Object.entries(tpls).map(([k,t])=>{const c=cnt[k]||0;return'<div class="card" onclick="startNew(\''+k+'\')"><div class="card-icon" style="background:'+t.color+'">'+t.icon+'</div><div class="card-body"><div class="card-title">'+t.label+'</div><div class="card-sub">'+totalSteps(t)+' pasos · '+t.sections.length+' secciones</div></div>'+(c>0?'<span class="badge badge-accent">'+c+' activo'+(c>1?'s':'')+'</span>':'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>')+'</div>';}).join('');
+  el.innerHTML=html;
+}
+function renderActive(){
+  const el=document.getElementById('active-content');const active=shared.filter(i=>!i.completed);
+  if(!active.length){el.innerHTML='<div class="empty"><div class="empty-icon">📋</div><p>No hay checklists en curso.</p></div>';return;}
+  const totalPend=active.reduce((a,i)=>a+pendCount(i),0);const totalOd=active.reduce((a,i)=>a+overdueCount(i),0);
+  let html='';
+  if(selMode){
+    const n=Object.values(selected).filter(Boolean).length;
+    html+='<div class="sel-bar"><button class="btn btn-sm" onclick="toggleSelMode()">Cancelar</button><span class="sel-count">'+n+' seleccionado'+(n!==1?'s':'')+'</span>'+(n>0?'<button class="btn btn-sm" style="background:var(--green-bg);color:var(--green);border-color:rgba(76,175,125,0.3)" onclick="bulkFinalize()">✓ Finalizar</button><button class="btn btn-sm" style="background:var(--red-bg);color:var(--red);border-color:rgba(224,85,85,0.2)" onclick="bulkDelete()">Eliminar</button>':'')+'</div>';
+  }else{
+    html+='<div class="stats-bar"><div class="stat-box"><div class="stat-num">'+active.length+'</div><div class="stat-lbl">En curso</div></div><div class="stat-box"><div class="stat-num" style="color:var(--yellow)">'+totalPend+'</div><div class="stat-lbl">Pendientes</div></div><div class="stat-box"><div class="stat-num" style="color:var(--red)">'+totalOd+'</div><div class="stat-lbl">Vencidos</div></div></div>';
+    html+='<div style="display:flex;justify-content:space-between;align-items:center"><div class="section-label">En curso</div><button class="btn btn-sm" style="margin-right:16px" onclick="toggleSelMode()">Seleccionar</button></div>';
+  }
+  html+=active.map(inst=>{const tpl=APP.templates[inst.template];if(!tpl)return'';const total=totalSteps(tpl),done=doneCount(inst),pct=total>0?Math.round(done/total*100):0;const od=overdueCount(inst),pend=pendCount(inst);const badge=od>0?'<span class="badge badge-red">⚠ '+od+'</span>':pend>0?'<span class="badge badge-yellow">'+pend+' pend.</span>':'<span class="badge badge-gray">'+pct+'%</span>';
+    if(selMode){const ck=selected[inst.id];return'<div class="card selectable" onclick="toggleSelect(\''+inst.id+'\')"><div class="sel-check'+(ck?' checked':'')+'">'+(ck?'✓':'')+'</div><div class="card-icon" style="background:'+tpl.color+'">'+tpl.icon+'</div><div class="card-body"><div class="card-title">'+inst.name+'</div><div class="card-sub">'+tpl.label+' · '+done+'/'+total+'</div></div></div>';}
+    return'<div class="card" onclick="openInst(\''+inst.id+'\')"><div class="card-icon" style="background:'+tpl.color+'">'+tpl.icon+'</div><div class="card-body"><div class="card-title">'+inst.name+'</div><div class="card-sub">'+tpl.label+' · '+done+'/'+total+(inst.createdBy?' · '+inst.createdBy:'')+'</div><div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:'+tpl.accent+'"></div></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">'+badge+'</div></div>';}).join('');
+  el.innerHTML=html;
+}
+function toggleSelMode(){selMode=!selMode;selected={};const t=document.querySelector('.bnav-btn.active')?.id?.replace('bnav-','');if(t==='active')renderActive();else if(t==='reminders')renderReminders();}
+function toggleSelect(id){selected[id]=!selected[id];const t=document.querySelector('.bnav-btn.active')?.id?.replace('bnav-','');if(t==='active')renderActive();else if(t==='reminders')renderReminders();}
+async function bulkFinalize(){const ids=Object.keys(selected).filter(k=>selected[k]);ids.forEach(id=>{const inst=shared.find(i=>i.id===id);if(inst){inst.completed=true;inst.completedAt=Date.now();}});await saveShared();selMode=false;selected={};toast(ids.length+' proceso'+(ids.length>1?'s':'')+' finalizado'+(ids.length>1?'s':''));renderAll();}
+async function bulkDelete(){const ids=Object.keys(selected).filter(k=>selected[k]);shared=shared.filter(i=>!ids.includes(i.id));await saveShared();selMode=false;selected={};toast(ids.length+' proceso'+(ids.length>1?'s':'')+' eliminado'+(ids.length>1?'s':''));renderAll();}
+function renderPrev(){
+  const el=document.getElementById('prev-content');const done=shared.filter(i=>i.completed);
+  if(!done.length){el.innerHTML='<div class="empty"><div class="empty-icon">📁</div><p>Acá aparecen los procesos completados.</p></div>';return;}
+  let html='<div class="section-label">Procesos anteriores ('+done.length+')</div>';
+  html+=done.map(inst=>{const tpl=APP.templates[inst.template];if(!tpl)return'';const date=new Date(inst.completedAt||inst.createdAt).toLocaleDateString('es-AR',{day:'numeric',month:'short',year:'numeric'});const total=totalSteps(tpl),d2=doneCount(inst);return'<div class="card" onclick="openInst(\''+inst.id+'\')"><div class="card-icon" style="background:'+tpl.color+';opacity:.6">'+tpl.icon+'</div><div class="card-body"><div class="card-title" style="color:var(--text2)">'+inst.name+'</div><div class="card-sub">'+tpl.label+' · completado '+date+' · '+d2+'/'+total+' pasos</div></div><span class="badge badge-green">✓</span></div>';}).join('');
+  el.innerHTML=html;
+}
+function renderReminders(){
+  const el=document.getElementById('reminders-content');const now=Date.now();let overdue=[],upcoming=[];
+  shared.filter(i=>!i.completed).forEach(inst=>{const tpl=APP.templates[inst.template];if(!tpl)return;tpl.sections.forEach(sec=>{sec.steps.forEach((step,si)=>{const key=sec.label+'__'+si;const st=(inst.stepStatus||{})[key];if(st&&st.status==='pending'&&st.snoozeUntil){const selId=inst.id+'|'+key;if(dismissedReminders[selId])return;const item={inst,step,snoozeUntil:st.snoozeUntil,key,selId};st.snoozeUntil<=now?overdue.push(item):upcoming.push(item);}});});});
+  getAutoReminders().forEach(r=>{const selId='auto|'+r.inst.id+'|'+r.label;if(dismissedReminders[selId])return;const item={inst:r.inst,step:r.label,snoozeUntil:r.when,isAuto:true,selId};r.when<=now?overdue.push(item):upcoming.push(item);});
+  overdue.sort((a,b)=>a.snoozeUntil-b.snoozeUntil);upcoming.sort((a,b)=>a.snoozeUntil-b.snoozeUntil);
+  if(!overdue.length&&!upcoming.length){el.innerHTML='<div class="empty"><div class="empty-icon">🔔</div><p>No hay avisos activos.</p></div>';return;}
+  let html='';
+  if(selMode){
+    const n=Object.values(selected).filter(Boolean).length;
+    html+='<div class="sel-bar"><button class="btn btn-sm" onclick="toggleSelMode()">Cancelar</button><span class="sel-count">'+n+' seleccionado'+(n!==1?'s':'')+'</span>'+(n>0?'<button class="btn btn-sm" style="background:var(--green-bg);color:var(--green);border-color:rgba(76,175,125,0.3)" onclick="bulkResolve()">✓ Dar por leído</button>':'')+'</div>';
+  }else{
+    html+='<div style="display:flex;justify-content:space-between;align-items:center"><div class="section-label">Avisos</div><button class="btn btn-sm" style="margin-right:16px" onclick="toggleSelMode()">Seleccionar</button></div>';
+  }
+  const renderItem=(r,color)=>{
+    if(selMode){const ck=selected[r.selId];return'<div class="reminder-item selectable" onclick="toggleSelectRem(\''+r.selId+'\')"><div class="sel-check'+(ck?' checked':'')+'">'+(ck?'✓':'')+'</div><div class="reminder-body"><div class="reminder-prop">'+r.inst.name+'</div><div class="reminder-step">'+r.step+(r.isAuto?' (automático)':'')+'</div></div></div>';}
+    return'<div class="reminder-item" onclick="openInst(\''+r.inst.id+'\')"><div class="reminder-dot" style="background:'+color+'"></div><div class="reminder-body"><div class="reminder-prop">'+r.inst.name+'</div><div class="reminder-step">'+r.step+'</div><div class="reminder-when" style="color:'+color+'">'+(r.snoozeUntil<now?'Venció ':'')+fmtDate(r.snoozeUntil)+'</div></div></div>';
+  };
+  if(overdue.length){html+='<div class="section-label" style="color:var(--red)">⚠ Vencidos ('+overdue.length+')</div>';html+=overdue.map(r=>renderItem(r,'var(--red)')).join('');}
+  if(upcoming.length){html+='<div class="section-label">Próximos ('+upcoming.length+')</div>';html+=upcoming.map(r=>renderItem(r,r.isAuto?'var(--accent)':'var(--yellow)')).join('');}
+  el.innerHTML=html;
+}
+function toggleSelectRem(selId){selected[selId]=!selected[selId];renderReminders();}
+async function bulkResolve(){
+  const ids=Object.keys(selected).filter(k=>selected[k]);
+  ids.forEach(selId=>{
+    if(selId.startsWith('auto|')){dismissedReminders[selId]=true;}
+    else{const[instId,key]=selId.split('|');const inst=shared.find(i=>i.id===instId);if(inst&&inst.stepStatus&&inst.stepStatus[key]){inst.stepStatus[key].snoozeUntil=null;if(inst.stepStatus[key].status==='pending')inst.stepStatus[key].status='done';}dismissedReminders[selId]=true;}
+  });
+  await saveShared();selMode=false;selected={};toast(ids.length+' aviso'+(ids.length>1?'s':'')+' marcado'+(ids.length>1?'s':'')+' como leído'+(ids.length>1?'s':''));renderAll();
+}
+
+// FORMS
+let parteCounters={vendedores:0,compradores:0};
+function req(label){return label+'<span class="req">*</span>';}
+function makeTimeInput(id,value){
+  const times=['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00'];
+  return '<div class="time-input-wrap"><input type="text" id="'+id+'" placeholder="HH:MM" value="'+(value||'')+'" oninput="filterTime(\''+id+'\')" onfocus="filterTime(\''+id+'\')" autocomplete="off"><div class="time-suggestions" id="'+id+'_sugg">'+times.map(t=>'<div class="time-opt" onclick="selectTime(\''+id+'\',\''+t+'\')">'+t+'</div>').join('')+'</div></div>';
+}
+function selectTime(id,val){const inp=document.getElementById(id);if(inp)inp.value=val;const s=document.getElementById(id+'_sugg');if(s)s.classList.remove('open');}
+function filterTime(id){const inp=document.getElementById(id);const s=document.getElementById(id+'_sugg');if(!inp||!s)return;const v=inp.value.replace(':','');let any=false;s.querySelectorAll('.time-opt').forEach(o=>{const show=v===''||o.textContent.replace(':','').startsWith(v);o.style.display=show?'block':'none';if(show)any=true;});s.classList.toggle('open',any||v==='');}
+document.addEventListener('click',function(e){if(!e.target.closest('.time-input-wrap'))document.querySelectorAll('.time-suggestions.open').forEach(s=>s.classList.remove('open'));});
+document.addEventListener('change',function(e){if(e.target&&e.target.type==='date')e.target.blur();});
+document.addEventListener('keydown',function(e){if(e.key!=='Enter')return;const tag=e.target.tagName.toLowerCase();if(tag!=='input'&&tag!=='select')return;e.preventDefault();const container=e.target.closest('.modal-box,.new-form,.screen.active')||document;const inputs=Array.from(container.querySelectorAll('input:not([type=hidden]):not([disabled]),select:not([disabled])'));const idx=inputs.indexOf(e.target);if(idx>=0&&idx<inputs.length-1)inputs[idx+1].focus();});
+
+function startNew(key){
+  APP.prevTab='home';parteCounters={vendedores:0,compradores:0};
+  const tpl=APP.templates[key];
+  const hdr='<div style="display:flex;align-items:center;gap:12px;padding:4px 0 20px"><div style="font-size:32px">'+tpl.icon+'</div><div><div style="font-size:18px;font-weight:700">'+tpl.label+'</div><div style="font-size:12px;color:var(--text2)">'+totalSteps(tpl)+' pasos</div></div></div>';
+  let form='';
+  if(key==='captacion'){form=hdr+'<div class="input-wrap"><label class="input-label">'+req('Dirección')+'</label><input type="text" id="ni-name" placeholder="Ej: Viamonte 1234 piso 3A"></div><div class="input-wrap"><label class="input-label">Observaciones</label><input type="text" id="ni-obs"></div><button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst(\'captacion\')">Crear checklist</button>';}
+  else if(key==='reserva'){form=hdr+'<div class="input-wrap"><label class="input-label">'+req('Dirección')+'</label><input type="text" id="ni-name" placeholder="Ej: Viamonte 1234 piso 3A"></div><div class="input-wrap"><label class="input-label">'+req('Fecha de reserva')+'</label><input type="date" id="ni-fecha-reserva" onchange="onFechaReservaChange()"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="input-wrap"><label class="input-label">Duración reserva</label><input type="number" id="ni-dias-reserva" value="30" min="1" onchange="onFechaReservaChange()" oninput="onFechaReservaChange()"></div><div class="input-wrap"><label class="input-label">Tipo de días</label><select id="ni-tipo-dias" onchange="onFechaReservaChange()"><option value="corridos">Días corridos</option><option value="habiles">Días hábiles</option></select></div></div><div id="ni-reserva-venc-info"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="input-wrap"><label class="input-label">Valor publicación</label><input type="text" id="ni-valor-pub" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div><div class="input-wrap"><label class="input-label">Valor oferta</label><input type="text" id="ni-valor-oferta" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div></div><div class="input-wrap"><label class="input-label">Forma de pago</label><select id="ni-pago" onchange="onPagoChange()"><option value="">Seleccionar...</option><option value="efectivo">Efectivo</option><option value="transferencia">Transferencia</option><option value="credito">Crédito hipotecario</option></select></div><div id="ni-pago-extra"></div><div class="input-wrap"><label class="input-label">¿Hay agente implicado?</label><select id="ni-agente" onchange="onAgenteChange()"><option value="no">No</option><option value="si">Sí</option></select></div><div id="ni-agente-extra"></div><div class="partes-block"><div class="partes-title">Compradores</div><div id="compradores-list"></div><button class="add-parte-btn" onclick="addParte(\'compradores\')">+ Agregar comprador</button></div><div class="input-wrap"><label class="input-label">Observaciones</label><input type="text" id="ni-obs"></div><button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst(\'reserva\')">Crear checklist</button>';}
+  else if(key==='escrituracion'){form=hdr+'<div class="input-wrap"><label class="input-label">'+req('Dirección')+'</label><input type="text" id="ni-name" placeholder="Ej: Viamonte 1234 piso 3A"></div><div class="input-wrap"><label class="input-label">'+req('Fecha de firma')+'</label><input type="date" id="ni-fecha-firma" onchange="onFechaFirmaChange()"></div><div id="ni-firma-info"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="input-wrap"><label class="input-label">Horario</label>'+makeTimeInput('ni-horario','')+'</div><div class="input-wrap"><label class="input-label">Forma de pago</label><select id="ni-pago-escrit" onchange="onPagoEscritChange()"><option value="">Seleccionar...</option><option value="efectivo">Efectivo</option><option value="transferencia">Transferencia</option><option value="credito">Crédito hipotecario</option></select></div></div><div id="ni-banco-escrit-wrap" style="display:none"><div class="input-wrap"><label class="input-label">Banco</label><input type="text" id="ni-banco-escrit"></div></div><div class="partes-block"><div class="partes-title">Escribanía</div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Nombre escribanía</label><input type="text" id="ni-escribania"></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Nombre escribano</label><input type="text" id="ni-escribano"></div><div class="input-wrap" style="margin-bottom:0"><label class="input-label">Dirección de la firma</label><input type="text" id="ni-lugar"></div></div><div class="input-wrap"><label class="input-label">Observaciones</label><input type="text" id="ni-obs"></div><button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst(\'escrituracion\')">Crear checklist</button>';}
+  else if(key==='referido'){form=hdr+'<div class="input-wrap"><label class="input-label">'+req('Nombre del referido')+'</label><input type="text" id="ni-name"></div><div class="input-wrap"><label class="input-label">Nombre del referidor</label><input type="text" id="ni-referidor"></div><div class="input-wrap"><label class="input-label">Observaciones</label><input type="text" id="ni-obs"></div><button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst(\'referido\')">Crear checklist</button>';}
+  else if(key==='modificacion'){form=hdr+'<div class="input-wrap"><label class="input-label">'+req('Dirección')+'</label><input type="text" id="ni-name"></div><div class="input-wrap"><label class="input-label">Fecha</label><input type="date" id="ni-fecha"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="input-wrap"><label class="input-label">Valor anterior</label><input type="text" id="ni-valor-anterior" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div><div class="input-wrap"><label class="input-label">Nuevo valor</label><input type="text" id="ni-valor-nuevo" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div></div><div class="input-wrap"><label class="input-label">Observaciones</label><input type="text" id="ni-obs"></div><button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst(\'modificacion\')">Crear checklist</button>';}
+  else if(key==='baja'){form=hdr+'<div class="input-wrap"><label class="input-label">'+req('Dirección')+'</label><input type="text" id="ni-name"></div><div class="input-wrap"><label class="input-label">Fecha</label><input type="date" id="ni-fecha"></div><div class="input-wrap"><label class="input-label">Observaciones</label><input type="text" id="ni-obs"></div><button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst(\'baja\')">Crear checklist</button>';}
+  else if(key==='renovacion'){form=hdr+'<div class="input-wrap"><label class="input-label">'+req('Dirección')+'</label><input type="text" id="ni-name"></div><div class="input-wrap"><label class="input-label">Fecha</label><input type="date" id="ni-fecha"></div><div class="input-wrap"><label class="input-label">Observaciones</label><input type="text" id="ni-obs"></div><button class="btn btn-primary btn-full" style="margin-top:8px" onclick="createInst(\'renovacion\')">Crear checklist</button>';}
+  document.getElementById('new-form-content').innerHTML=form;
+  if(key==='reserva')addParte('compradores');
+  showScreen('new');
+}
+function onFechaReservaChange(){const fecha=document.getElementById('ni-fecha-reserva').value;const el=document.getElementById('ni-reserva-venc-info');if(!fecha){el.innerHTML='';return;}const dias=parseInt(document.getElementById('ni-dias-reserva')?.value)||30;const tipo=document.getElementById('ni-tipo-dias')?.value||'corridos';let venc;if(tipo==='habiles')venc=addBizDays(new Date(fecha+'T12:00:00'),dias);else{venc=new Date(fecha+'T12:00:00');venc.setDate(venc.getDate()+dias);}const aviso=new Date(venc);aviso.setDate(aviso.getDate()-7);el.innerHTML='<div class="info-box">Vence el <strong>'+fmtDateStr(venc.toISOString().slice(0,10))+'</strong> ('+dias+' días '+(tipo==='habiles'?'hábiles':'corridos')+'). Aviso 1 semana antes: '+fmtDateStr(aviso.toISOString().slice(0,10))+'</div>';}
+function onFechaFirmaChange(){const fecha=document.getElementById('ni-fecha-firma').value;const el=document.getElementById('ni-firma-info');if(!fecha){el.innerHTML='';return;}const f=new Date(fecha+'T12:00:00');const r7=new Date(f);r7.setDate(r7.getDate()-7);const r3=new Date(f);r3.setDate(r3.getDate()-3);const r1=new Date(f);r1.setDate(r1.getDate()-1);el.innerHTML='<div class="info-box">Recordatorios: 7d→'+fmtDateStr(r7.toISOString().slice(0,10))+' · 3d→'+fmtDateStr(r3.toISOString().slice(0,10))+' · 1d→'+fmtDateStr(r1.toISOString().slice(0,10))+'</div>';}
+function onPagoChange(){const val=document.getElementById('ni-pago').value;const el=document.getElementById('ni-pago-extra');if(val==='efectivo')el.innerHTML='<div class="input-wrap"><label class="input-label">¿Justifica fondos?</label><select id="ni-justifica"><option value="si">Sí</option><option value="no">No</option></select></div>';else if(val==='credito')el.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="input-wrap"><label class="input-label">Banco</label><input type="text" id="ni-banco"></div><div class="input-wrap"><label class="input-label">Dirección banco</label><input type="text" id="ni-banco-dir"></div></div>';else el.innerHTML='';}
+function onAgenteChange(){const val=document.getElementById('ni-agente').value;const el=document.getElementById('ni-agente-extra');if(val==='si')el.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="input-wrap"><label class="input-label">Oficina</label><input type="text" id="ni-oficina"></div><div class="input-wrap"><label class="input-label">Martillero</label><input type="text" id="ni-martillero"></div></div>';else el.innerHTML='';}
+function onPagoEscritChange(){const val=document.getElementById('ni-pago-escrit')?.value;const wrap=document.getElementById('ni-banco-escrit-wrap');if(wrap)wrap.style.display=val==='credito'?'block':'none';}
+function addParte(tipo){parteCounters[tipo]++;const id=tipo+'_'+parteCounters[tipo];const div=document.createElement('div');div.id='row_'+id;div.style.cssText='margin-bottom:10px;background:var(--bg4);border-radius:8px;padding:10px';const label=tipo==='vendedores'?'Vendedor':'Comprador';div.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-size:11px;color:var(--text3);text-transform:uppercase">'+label+' '+parteCounters[tipo]+'</span><button onclick="document.getElementById(\'row_'+id+'\').remove()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px">✕</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input type="text" id="'+id+'_nombre" placeholder="Nombre"><input type="text" id="'+id+'_apellido" placeholder="Apellido"></div>';document.getElementById(tipo+'-list').appendChild(div);}
+function getPartes(tipo){const list=document.getElementById(tipo+'-list');if(!list)return[];const result=[];list.querySelectorAll('[id^="row_"]').forEach(row=>{const id=row.id.replace('row_','');const nombre=(document.getElementById(id+'_nombre')||{value:''}).value.trim();const apellido=(document.getElementById(id+'_apellido')||{value:''}).value.trim();if(nombre||apellido)result.push({nombre,apellido,dni:''});});return result;}
+
+async function createInst(key){
+  const nameEl=document.getElementById('ni-name');
+  if(nameEl&&!nameEl.value.trim()){nameEl.style.borderColor='var(--red)';toast('Completá la dirección');return;}
+  const inst={id:'i_'+Date.now(),template:key,name:nameEl?nameEl.value.trim():'',obs:gval('ni-obs'),createdAt:Date.now(),createdBy:APP.user?.name||'?',completed:false,stepStatus:{}};
+  if(key==='reserva'){const fecha=gval('ni-fecha-reserva');if(!fecha){toast('Completá la fecha');return;}inst.fechaReserva=fecha;inst.diasReserva=parseInt(document.getElementById('ni-dias-reserva')?.value)||30;inst.tipoDiasReserva=document.getElementById('ni-tipo-dias')?.value||'corridos';inst.valorPublicacion=gval('ni-valor-pub');inst.valorOferta=gval('ni-valor-oferta');inst.formaPago=gval('ni-pago');if(inst.formaPago==='efectivo')inst.justificaFondos=gval('ni-justifica');if(inst.formaPago==='credito'){inst.banco=gval('ni-banco');inst.bancoDir=gval('ni-banco-dir');}inst.agenteImplicado=gval('ni-agente');if(inst.agenteImplicado==='si'){inst.oficina=gval('ni-oficina');inst.martillero=gval('ni-martillero');}inst.compradores=getPartes('compradores');let venc;if(inst.tipoDiasReserva==='habiles')venc=addBizDays(new Date(fecha+'T12:00:00'),inst.diasReserva);else{venc=new Date(fecha+'T12:00:00');venc.setDate(venc.getDate()+inst.diasReserva);}inst.fechaVencimientoReserva=venc.getTime();venc.setDate(venc.getDate()-7);inst.recordatorioVencimiento=venc.getTime();}
+  if(key==='escrituracion'){const fecha=gval('ni-fecha-firma');if(!fecha){toast('Completá la fecha');return;}inst.fechaFirma=fecha;inst.horarioFirma=(document.getElementById('ni-horario')||{value:''}).value.trim();inst.escribania=gval('ni-escribania');inst.escribano=gval('ni-escribano');inst.lugarFirma=gval('ni-lugar');inst.formaPago=gval('ni-pago-escrit');inst.banco=gval('ni-banco-escrit');const f=new Date(fecha+'T12:00:00');const r7=new Date(f);r7.setDate(r7.getDate()-7);const r3=new Date(f);r3.setDate(r3.getDate()-3);const r1=new Date(f);r1.setDate(r1.getDate()-1);inst.recordatorio7=r7.getTime();inst.recordatorio3=r3.getTime();inst.recordatorio1=r1.getTime();}
+  if(key==='referido')inst.referidor=gval('ni-referidor');
+  if(key==='modificacion'){inst.valorAnterior=gval('ni-valor-anterior');inst.valorNuevo=gval('ni-valor-nuevo');inst.fecha=gval('ni-fecha');}
+  if(key==='baja'||key==='renovacion')inst.fecha=gval('ni-fecha');
+  shared.unshift(inst);await saveShared();renderAll();openInst(inst.id);
+}
+
+// CHECKLIST
+function openInst(id){const f=fichas.find(x=>x.id===id);if(f){openFicha(id);return;}APP.currentInstId=id;APP.prevTab=document.querySelector('.bnav-btn.active')?.id?.replace('bnav-','')||'active';renderCL(id);showScreen('checklist');}
+function buildHeaderChips(inst){
+  const chips=[];
+  if(inst.template==='reserva'){if(inst.fechaReserva)chips.push('<span class="parte-chip">📅 '+fmtDateStr(inst.fechaReserva)+'</span>');if(inst.valorPublicacion)chips.push('<span class="parte-chip">Pub: '+inst.valorPublicacion+'</span>');if(inst.valorOferta)chips.push('<span class="parte-chip">Oferta: '+inst.valorOferta+'</span>');if(inst.formaPago)chips.push('<span class="parte-chip">'+inst.formaPago+(inst.banco?' — '+inst.banco:'')+'</span>');(inst.compradores||[]).forEach(c=>chips.push('<span class="parte-chip">C: '+(c.nombre||c)+' '+(c.apellido||'')+'</span>'));}
+  else if(inst.template==='escrituracion'){if(inst.fechaFirma)chips.push('<span class="parte-chip">📅 Firma: '+fmtDateStr(inst.fechaFirma)+(inst.horarioFirma?' '+inst.horarioFirma:'')+'</span>');if(inst.lugarFirma)chips.push('<span class="parte-chip">📍 '+inst.lugarFirma+'</span>');if(inst.escribania)chips.push('<span class="parte-chip">🏛 '+inst.escribania+'</span>');if(inst.escribano)chips.push('<span class="parte-chip">✍️ '+inst.escribano+'</span>');}
+  else if(inst.template==='referido'){if(inst.referidor)chips.push('<span class="parte-chip">👤 Ref: '+inst.referidor+'</span>');}
+  else if(inst.template==='modificacion'){if(inst.fecha)chips.push('<span class="parte-chip">📅 '+fmtDateStr(inst.fecha)+'</span>');if(inst.valorAnterior)chips.push('<span class="parte-chip">Ant: '+inst.valorAnterior+'</span>');if(inst.valorNuevo)chips.push('<span class="parte-chip" style="color:var(--green)">Nuevo: '+inst.valorNuevo+'</span>');}
+  else if(inst.template==='baja'||inst.template==='renovacion'){if(inst.fecha)chips.push('<span class="parte-chip">📅 '+fmtDateStr(inst.fecha)+'</span>');}
+  return chips.length?'<div class="partes-display">'+chips.join('')+'</div>':'';
+}
+function isArmarCarpetaStep(s){const t=s.toLowerCase();return(t.includes('armado carpeta fer')||t.includes('hoja física'))&&!t.includes('cliente');}
+function isMensajeClientesStep(s){const t=s.toLowerCase();return t.includes('mensaje')&&t.includes('partes')&&(t.includes('whatsapp')||t.includes('recordatorio'));}
+function isMensajeFerStep(s){const t=s.toLowerCase();return t.includes('mensaje')&&t.includes('fer')&&(t.includes('whatsapp')||t.includes('prediseñado'));}
+function isFichaStep(s){const t=s.toLowerCase();return t.includes('procesos en curso')||(t.includes('cargar')&&t.includes('propiedad')&&t.includes('implicados'));}
+function renderCL(id){
+  const inst=shared.find(i=>i.id===id);if(!inst)return;
+  const tpl=APP.templates[inst.template];if(!tpl)return;
+  const total=totalSteps(tpl),done=doneCount(inst),pct=total>0?Math.round(done/total*100):0,pend=pendCount(inst);
+  const badgeHtml=inst.completed?'<span class="badge badge-green">✓ Completado</span>':pend>0?'<span class="badge badge-yellow">'+pend+' pendiente'+(pend>1?'s':'')+'</span>':'';
+  let html='<div class="cl-header"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:28px">'+tpl.icon+'</span><div><div class="cl-header-title">'+inst.name+'</div><div class="cl-header-sub">'+tpl.label+(inst.obs?' · '+inst.obs:'')+' · por '+(inst.createdBy||'?')+'</div></div><button class="btn btn-sm" onclick="editInstHeader(\''+id+'\')" style="margin-left:auto">✏️</button></div>'+buildHeaderChips(inst)+'<div class="prog-bar" style="height:5px;margin-top:12px"><div class="prog-fill" style="width:'+pct+'%;background:'+tpl.accent+'"></div></div><div style="display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap"><span style="font-size:12px;color:var(--text2)">'+done+' de '+total+' pasos</span>'+badgeHtml+(inst.completed?'<button class="btn btn-sm" onclick="reactivateInst(\''+id+'\')" style="margin-left:auto">Reactivar</button>':'<button class="btn btn-sm" onclick="markComplete(\''+id+'\')" style="margin-left:auto">Marcar completo</button><button class="btn btn-sm" onclick="deleteInst(\''+id+'\')" style="background:var(--red-bg);color:var(--red);border-color:rgba(224,85,85,0.2)">Eliminar</button>')+'</div></div>';
+  let num=1;
+  html+=tpl.sections.map(sec=>{
+    const sh=sec.steps.map((step,si)=>{
+      const key=sec.label+'__'+si;const st=(inst.stepStatus||{})[key]||{};const status=st.status||'none';
+      const spid='sp_'+id.slice(-6)+'_'+sec.label.replace(/\W/g,'').slice(0,8)+'_'+si;
+      const ek=key.replace(/'/g,"\\'");
+      const snoozeTag=st.snoozeUntil?'<div style="padding:0 14px 6px 48px"><span style="font-size:11px;color:'+(st.snoozeUntil<Date.now()?'var(--red)':'var(--yellow)')+'">⏰ '+(st.snoozeUntil<Date.now()?'Vencido — ':'')+fmtDate(st.snoozeUntil)+'</span></div>':'';
+      const n=num++;
+      const escritBtn=inst.template==='escrituracion'&&isArmarCarpetaStep(step)?'<button class="step-act-btn" data-inst="'+id+'" onclick="openEscritForm(this.dataset.inst)" style="background:rgba(106,176,232,0.12);color:var(--blue);border-color:rgba(106,176,232,0.3)">📋 '+(inst.escrituracionForm?'Ver planilla':'Completar planilla')+'</button>':'';
+      const msgClientesBtn=inst.template==='escrituracion'&&isMensajeClientesStep(step)?'<button class="step-act-btn" data-inst="'+id+'" onclick="openMensajeClientes(this.dataset.inst)" style="background:var(--green-bg);color:var(--green);border-color:rgba(76,175,125,0.3)">💬 Mensajes partes</button>':'';
+      const msgFerBtn=inst.template==='escrituracion'&&isMensajeFerStep(step)?'<button class="step-act-btn" data-inst="'+id+'" onclick="openMensajeFer(this.dataset.inst)" style="background:rgba(232,213,163,0.15);color:var(--accent);border-color:rgba(232,213,163,0.3)">📱 Mensaje Fer</button>':'';
+      const fichaBtn=inst.template==='reserva'&&isFichaStep(step)?'<button class="step-act-btn" data-inst="'+id+'" onclick="openFichaFromInst(this.dataset.inst)" style="background:rgba(208,142,192,0.15);color:#d08ec0;border-color:rgba(208,142,192,0.3)">📑 Ficha de seguimiento</button>':'';
+      return'<div class="step-item '+status+'"><div class="step-main"><div class="step-num '+status+'">'+(status==='done'?'✓':status==='skip'?'—':n)+'</div><div class="step-text'+(status==='done'?' done':'')+'">'+step+'</div></div>'+snoozeTag+'<div class="step-actions"><button class="step-act-btn '+(status==='done'?'active-done':'')+'" onclick="setStep(\''+id+'\',\''+ek+'\',\'done\',\''+spid+'\')">✓ Hecho</button><button class="step-act-btn '+(status==='pending'?'active-pend':'')+'" onclick="toggleSnooze(\''+spid+'\')">⏰ Reprogramar</button><button class="step-act-btn '+(status==='skip'?'active-skip':'')+'" onclick="setStep(\''+id+'\',\''+ek+'\',\'skip\',\''+spid+'\')">— No aplica</button>'+escritBtn+msgClientesBtn+msgFerBtn+fichaBtn+'</div><div class="snooze-panel" id="'+spid+'"><div class="snooze-title">¿Cuándo volvés a este paso?</div><div class="snooze-input-wrap"><input type="number" min="1" max="90" value="'+(st.snoozeDays||3)+'" id="'+spid+'_d" oninput="updatePreview(\''+spid+'\')"><span>días hábiles</span></div><div class="snooze-presets"><button class="snooze-preset" onclick="setPreset(\''+spid+'\',1)">Mañana</button><button class="snooze-preset" onclick="setPreset(\''+spid+'\',3)">3 días</button><button class="snooze-preset" onclick="setPreset(\''+spid+'\',5)">1 semana</button><button class="snooze-preset" onclick="setPreset(\''+spid+'\',10)">2 semanas</button><button class="snooze-preset" onclick="setPreset(\''+spid+'\',22)">1 mes</button></div><div class="snooze-date-preview" id="'+spid+'_p"></div><button class="btn btn-primary btn-sm" onclick="confirmSnooze(\''+id+'\',\''+ek+'\',\''+spid+'\')">Confirmar</button></div><div class="step-note-area"><input type="text" placeholder="Nota..." value="'+(st.note||'').replace(/"/g,'&quot;')+'" onchange="setNote(\''+id+'\',\''+ek+'\',this.value)"></div></div>';
+    }).join('');
+    return'<div class="sec-group"><div class="sec-title">'+sec.label+'</div>'+sh+'</div>';
+  }).join('');
+  document.getElementById('cl-content').innerHTML=html;
+  tpl.sections.forEach(sec=>sec.steps.forEach((_,si)=>{const spid='sp_'+id.slice(-6)+'_'+sec.label.replace(/\W/g,'').slice(0,8)+'_'+si;updatePreview(spid);}));
+}
+function toggleSnooze(spid){const p=document.getElementById(spid);if(!p)return;const open=p.classList.contains('open');document.querySelectorAll('.snooze-panel.open').forEach(e=>e.classList.remove('open'));if(!open){p.classList.add('open');updatePreview(spid);}}
+function setPreset(spid,days){const i=document.getElementById(spid+'_d');if(i){i.value=days;updatePreview(spid);}}
+function updatePreview(spid){const i=document.getElementById(spid+'_d');const p=document.getElementById(spid+'_p');if(!i||!p)return;const days=parseInt(i.value)||1;const t=addBizDays(new Date(),days);const dow=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'][t.getDay()];p.textContent='→ '+dow+' '+t.getDate()+'/'+(t.getMonth()+1)+'/'+t.getFullYear();}
+async function confirmSnooze(instId,key,spid){const i=document.getElementById(spid+'_d');const days=parseInt(i?.value)||3;const until=addBizDays(new Date(),days).getTime();const inst=shared.find(i=>i.id===instId);if(!inst.stepStatus)inst.stepStatus={};inst.stepStatus[key]={...(inst.stepStatus[key]||{}),status:'pending',snoozeUntil:until,snoozeDays:days};await saveShared();document.getElementById(spid)?.classList.remove('open');toast('Recordatorio: '+fmtDate(until));renderCL(instId);renderActive();renderReminders();updateTopbar();}
+async function setStep(instId,key,status,spid){const inst=shared.find(i=>i.id===instId);if(!inst.stepStatus)inst.stepStatus={};const cur=inst.stepStatus[key]||{};const ns=cur.status===status?'none':status;inst.stepStatus[key]={...cur,status:ns};if(ns==='done')inst.stepStatus[key].snoozeUntil=null;checkCompletion(inst);await saveShared();renderCL(instId);renderActive();renderReminders();updateTopbar();}
+async function setNote(instId,key,note){const inst=shared.find(i=>i.id===instId);if(!inst.stepStatus)inst.stepStatus={};inst.stepStatus[key]={...(inst.stepStatus[key]||{}),note};await saveShared();}
+async function markComplete(instId){const inst=shared.find(i=>i.id===instId);inst.completed=true;inst.completedAt=Date.now();await saveShared();toast('¡Proceso completado!');renderCL(instId);renderAll();}
+async function deleteInst(id){shared=shared.filter(i=>i.id!==id);await saveShared();toast('Proceso eliminado');renderAll();showTab(APP.prevTab||'active');}
+async function reactivateInst(id){const inst=shared.find(i=>i.id===id);if(!inst)return;inst.completed=false;inst.completedAt=null;await saveShared();toast('Proceso reactivado');renderAll();showTab('active');}
+function checkCompletion(inst){const tpl=APP.templates[inst.template];if(!tpl)return;if(doneCount(inst)>=totalSteps(tpl)){inst.completed=true;inst.completedAt=Date.now();}}
+function editInstHeader(id){
+  const inst=shared.find(i=>i.id===id);if(!inst)return;
+  let fields='<div class="input-wrap"><label class="input-label">Nombre / Dirección</label><input type="text" id="eh-name" value="'+inst.name.replace(/"/g,'&quot;')+'"></div>';
+  if(inst.obs!==undefined)fields+='<div class="input-wrap"><label class="input-label">Observaciones</label><input type="text" id="eh-obs" value="'+(inst.obs||'').replace(/"/g,'&quot;')+'"></div>';
+  if(inst.template==='escrituracion'){fields+='<div class="input-wrap"><label class="input-label">Fecha de firma</label><input type="date" id="eh-fecha-firma" value="'+(inst.fechaFirma||'')+'"></div><div class="input-wrap"><label class="input-label">Horario</label><input type="text" id="eh-horario" value="'+(inst.horarioFirma||'')+'"></div><div class="input-wrap"><label class="input-label">Lugar</label><input type="text" id="eh-lugar" value="'+(inst.lugarFirma||'')+'"></div>';}
+  if(inst.template==='modificacion'){fields+='<div class="input-wrap"><label class="input-label">Fecha</label><input type="date" id="eh-fecha" value="'+(inst.fecha||'')+'"></div><div class="input-wrap"><label class="input-label">Valor anterior</label><input type="text" id="eh-valor-anterior" value="'+(inst.valorAnterior||'')+'"></div><div class="input-wrap"><label class="input-label">Valor nuevo</label><input type="text" id="eh-valor-nuevo" value="'+(inst.valorNuevo||'')+'"></div>';}
+  if(inst.template==='referido')fields+='<div class="input-wrap"><label class="input-label">Referidor</label><input type="text" id="eh-referidor" value="'+(inst.referidor||'')+'"></div>';
+  document.getElementById('modal-content').innerHTML='<div class="modal-close-row"><div class="modal-title">Editar información</div><button class="btn btn-sm" onclick="closeModal(\'edit-modal\')">cerrar</button></div>'+fields+'<button class="btn btn-primary btn-full" onclick="saveInstHeader(\''+id+'\')">Guardar cambios</button>';
+  document.getElementById('edit-modal').classList.add('open');
+}
+async function saveInstHeader(id){
+  const inst=shared.find(i=>i.id===id);if(!inst)return;
+  const name=document.getElementById('eh-name')?.value.trim();if(name)inst.name=name;
+  const obs=document.getElementById('eh-obs')?.value;if(obs!==undefined)inst.obs=obs.trim();
+  if(inst.template==='escrituracion'){const fecha=document.getElementById('eh-fecha-firma')?.value;if(fecha){inst.fechaFirma=fecha;const f=new Date(fecha+'T12:00:00');const r7=new Date(f);r7.setDate(r7.getDate()-7);const r3=new Date(f);r3.setDate(r3.getDate()-3);const r1=new Date(f);r1.setDate(r1.getDate()-1);inst.recordatorio7=r7.getTime();inst.recordatorio3=r3.getTime();inst.recordatorio1=r1.getTime();}inst.horarioFirma=document.getElementById('eh-horario')?.value.trim()||inst.horarioFirma;inst.lugarFirma=document.getElementById('eh-lugar')?.value.trim()||inst.lugarFirma;}
+  if(inst.template==='modificacion'){inst.fecha=document.getElementById('eh-fecha')?.value||inst.fecha;inst.valorAnterior=document.getElementById('eh-valor-anterior')?.value.trim()||inst.valorAnterior;inst.valorNuevo=document.getElementById('eh-valor-nuevo')?.value.trim()||inst.valorNuevo;}
+  if(inst.template==='referido')inst.referidor=document.getElementById('eh-referidor')?.value.trim()||inst.referidor;
+  await saveShared();closeModal('edit-modal');toast('Cambios guardados');renderCL(id);renderActive();
+}
+
+// ESCRITURACION FORM
+function openEscritForm(instId){
+  const inst=shared.find(i=>i.id===instId);if(!inst)return;
+  const ef=inst.escrituracionForm||{};
+  let html='<div class="modal-close-row"><div class="modal-title">📋 '+inst.name+' — Día de Escrituración</div><button class="btn btn-sm" onclick="closeModal(\'escrit-modal\')">cerrar</button></div>'
+    +'<div class="partes-block"><div class="partes-title">Datos generales</div>'
+    +'<div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Tipo de acto</label><select id="ef-tipo-acto"><option value="escritura" '+((!ef.tipoActo||ef.tipoActo==='escritura')?'selected':'')+'>Escritura</option><option value="boleto" '+(ef.tipoActo==='boleto'?'selected':'')+'>Boleto de compraventa</option></select></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Fecha</label><input type="date" id="ef-fecha" value="'+(ef.fecha||inst.fechaFirma||'')+'"></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Hora</label>'+makeTimeInput('ef-hora',ef.hora||inst.horarioFirma||'')+'</div></div>'
+    +'<div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Dirección del inmueble</label><input type="text" id="ef-dir-inmueble" value="'+(ef.dirInmueble||inst.name||'')+'"></div>'
+    +'<div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Dirección de la firma</label><input type="text" id="ef-dir-firma" value="'+(ef.dirFirma||inst.lugarFirma||'')+'"></div>'
+    +'<div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Escribanía</label><input type="text" id="ef-escribania" value="'+(ef.escribania||inst.escribania||'')+'"></div>'
+    +'<div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Escribano</label><input type="text" id="ef-escribano" value="'+(ef.escribano||inst.escribano||'')+'"></div>'
+    +'<div class="input-wrap" style="margin-bottom:0"><label class="input-label">¿Simultáneo?</label><select id="ef-simultaneo"><option value="no" '+(ef.simultaneo!=='si'?'selected':'')+'>No</option><option value="si" '+(ef.simultaneo==='si'?'selected':'')+'>Sí</option></select></div></div>'
+    +'<div class="partes-block"><div class="partes-title">Operación</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Monto operación</label><input type="text" id="ef-monto" value="'+(ef.monto||'')+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Valor escrituración</label><input type="text" id="ef-valor-escrit" value="'+(ef.valorEscrit||'')+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div></div>'
+    +'<div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Forma de pago</label><select id="ef-forma-pago" onchange="toggleEfBanco()"><option value="" '+(!(ef.formaPago||inst.formaPago)?'selected':'')+'>Seleccionar...</option><option value="efectivo" '+((ef.formaPago||inst.formaPago)==='efectivo'?'selected':'')+'>Efectivo</option><option value="transferencia" '+((ef.formaPago||inst.formaPago)==='transferencia'?'selected':'')+'>Transferencia</option><option value="credito" '+((ef.formaPago||inst.formaPago)==='credito'?'selected':'')+'>Crédito hipotecario</option></select></div>'
+    +'<div id="ef-banco-wrap" style="'+((ef.formaPago||inst.formaPago)==='credito'?'':'display:none')+'"><div class="input-wrap" style="margin-bottom:0"><label class="input-label">Banco</label><input type="text" id="ef-banco" value="'+(ef.banco||inst.banco||'')+'"></div></div></div>'
+    +'<div class="partes-block"><div class="partes-title">Compradores</div><table class="ef-table" id="ef-compradores-table"><tr><th>Nombre</th><th>Apellido</th><th>DNI</th><th style="width:30px"></th></tr></table><button class="add-parte-btn" onclick="addEfRow(\'compradores\')">+ Agregar comprador</button></div>'
+    +'<div class="partes-block"><div class="partes-title">Vendedores</div><table class="ef-table" id="ef-vendedores-table"><tr><th>Nombre</th><th>Apellido</th><th>DNI</th><th style="width:30px"></th></tr></table><button class="add-parte-btn" onclick="addEfRow(\'vendedores\')">+ Agregar vendedor</button></div>'
+    +'<div class="partes-block"><div class="partes-title">¿Operación compartida?</div><div class="input-wrap" style="margin-bottom:8px"><select id="ef-compartida" onchange="toggleEfAgente()"><option value="no" '+(ef.compartida!=='si'?'selected':'')+'>No</option><option value="si" '+(ef.compartida==='si'?'selected':'')+'>Sí</option></select></div><div id="ef-agente-section" style="'+(ef.compartida==='si'?'':'display:none')+'"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Nombre</label><input type="text" id="ef-agente-nombre" value="'+(ef.agenteNombre||'')+'"></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Apellido</label><input type="text" id="ef-agente-apellido" value="'+(ef.agenteApellido||'')+'"></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Inmobiliaria / Oficina</label><input type="text" id="ef-agente-oficina" value="'+(ef.agenteOficina||inst.oficina||'')+'"></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Martillero</label><input type="text" id="ef-agente-martillero" value="'+(ef.agenteMartillero||inst.martillero||'')+'"></div><div class="input-wrap" style="margin-bottom:0"><label class="input-label">Matrícula</label><input type="text" id="ef-agente-matricula" value="'+(ef.agenteMatricula||'')+'"></div></div></div></div>'
+    +'<div class="partes-block"><div class="partes-title">Gastos y comisiones</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Comisión comp %</label><input type="text" id="ef-com-comp-pct" value="'+(ef.comCompPct||'')+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Comisión comp $</label><input type="text" id="ef-com-comp-val" value="'+(ef.comCompVal||'')+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Escrib. comp USD</label><input type="text" id="ef-escrib-comp-usd" value="'+(ef.escribCompUsd||'')+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div><div class="input-wrap" style="margin-bottom:0"><label class="input-label">Comisión vend %</label><input type="text" id="ef-com-vend-pct" value="'+(ef.comVendPct||'')+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div><div class="input-wrap" style="margin-bottom:0"><label class="input-label">Comisión vend $</label><input type="text" id="ef-com-vend-val" value="'+(ef.comVendVal||'')+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div><div class="input-wrap" style="margin-bottom:0"><label class="input-label">Escrib. vend USD</label><input type="text" id="ef-escrib-vend-usd" value="'+(ef.escribVendUsd||'')+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div></div></div>'
+    +'<div class="partes-block"><div class="partes-title">Historial de la operación</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Fecha reserva</label><input type="date" id="ef-res-fecha" value="'+(ef.resFecha||'')+'"></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Monto reserva</label><input type="text" id="ef-res-valor" value="'+(ef.resValor||'')+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\');calcTotalReserva()"></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Fecha aceptación</label><input type="date" id="ef-acep-fecha" value="'+(ef.acepFecha||'')+'"></div><div></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Fecha refuerzo</label><input type="date" id="ef-ref-fecha" value="'+(ef.refFecha||'')+'"></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Monto refuerzo</label><input type="text" id="ef-ref-valor" value="'+(ef.refValor||'')+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\');calcTotalReserva()"></div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">Fecha notificación</label><input type="date" id="ef-not-fecha" value="'+(ef.notFecha||'')+'"></div><div></div></div><div style="background:var(--bg4);border-radius:8px;padding:10px"><label class="input-label">Total reserva (auto)</label><input type="text" id="ef-total-reserva" value="'+(ef.totalReserva||'')+'" placeholder="Se calcula automáticamente"></div></div>'
+    +'<div class="partes-block"><div class="partes-title">Comodato y llaves</div><div class="input-wrap" style="margin-bottom:8px"><label class="input-label">¿Hay comodato?</label><select id="ef-comodato" onchange="toggleEfComodato()"><option value="no" '+(ef.comodato!=='si'?'selected':'')+'>No</option><option value="si" '+(ef.comodato==='si'?'selected':'')+'>Sí</option></select></div><div id="ef-comodato-wrap" style="'+(ef.comodato==='si'?'':'display:none')+'"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="input-wrap" style="margin-bottom:0"><label class="input-label">¿Cuánto tiempo?</label><input type="text" id="ef-comodato-tiempo" value="'+(ef.comodatoTiempo||'')+'"></div><div class="input-wrap" style="margin-bottom:0"><label class="input-label">Fecha entrega llaves</label><input type="date" id="ef-llaves-fecha" value="'+(ef.llavesFecha||'')+'"></div></div></div></div>'
+    +'<div style="display:flex;gap:10px;padding-bottom:8px"><button class="btn" style="flex:1" onclick="saveEscritForm(\''+instId+'\',false)">💾 Guardar</button><button class="btn" style="flex:1;background:var(--green-bg);color:var(--green);border-color:rgba(76,175,125,0.3)" onclick="saveEscritForm(\''+instId+'\',true)">🖨️ Imprimir</button></div>';
+  document.getElementById('escrit-modal-content').innerHTML=html;
+  document.getElementById('escrit-modal').classList.add('open');
+  const comps=ef.compradores&&ef.compradores.length?ef.compradores:[{}];
+  const vends=ef.vendedores&&ef.vendedores.length?ef.vendedores:[{}];
+  comps.forEach(c=>addEfRow('compradores',c));
+  vends.forEach(v=>addEfRow('vendedores',v));
+  setTimeout(calcTotalReserva,50);
+}
+function addEfRow(tipo,data){
+  const tbl=document.getElementById('ef-'+tipo+'-table');if(!tbl)return;
+  const d=data||{};const tr=document.createElement('tr');
+  const IS='width:100%;padding:7px 10px;background:var(--bg3);border:0.5px solid rgba(255,255,255,0.16);border-radius:6px;color:var(--text);font-size:13px;font-family:var(--font);outline:none';
+  ['nombre','apellido'].forEach(field=>{const td=document.createElement('td');td.style.padding='3px 4px';const inp=document.createElement('input');inp.type='text';inp.dataset.field=field;inp.placeholder=field.charAt(0).toUpperCase()+field.slice(1);inp.value=d[field]||'';inp.style.cssText=IS;td.appendChild(inp);tr.appendChild(td);});
+  const tdDni=document.createElement('td');tdDni.style.padding='3px 4px';const inpDni=document.createElement('input');inpDni.type='text';inpDni.dataset.field='dni';inpDni.placeholder='DNI';inpDni.value=d.dni||'';inpDni.style.cssText=IS;inpDni.addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g,'');});tdDni.appendChild(inpDni);tr.appendChild(tdDni);
+  const tdBtn=document.createElement('td');tdBtn.style.cssText='padding:3px 4px;width:30px';const btn=document.createElement('button');btn.type='button';btn.textContent='✕';btn.style.cssText='background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:0 4px';btn.onclick=function(){tr.remove();};tdBtn.appendChild(btn);tr.appendChild(tdBtn);
+  tbl.appendChild(tr);
+}
+function getEfRows(tipo){const tbl=document.getElementById('ef-'+tipo+'-table');if(!tbl)return[];return Array.from(tbl.querySelectorAll('tr')).slice(1).map(tr=>{const inputs=tr.querySelectorAll('input');return{nombre:(inputs[0]||{value:''}).value.trim(),apellido:(inputs[1]||{value:''}).value.trim(),dni:(inputs[2]||{value:''}).value.trim()};}).filter(p=>p.nombre||p.apellido||p.dni);}
+function toggleEfBanco(){const val=document.getElementById('ef-forma-pago')?.value;const wrap=document.getElementById('ef-banco-wrap');if(wrap)wrap.style.display=val==='credito'?'block':'none';}
+function toggleEfAgente(){const val=document.getElementById('ef-compartida')?.value;const s=document.getElementById('ef-agente-section');if(s)s.style.display=val==='si'?'block':'none';}
+function toggleEfComodato(){const val=document.getElementById('ef-comodato')?.value;const w=document.getElementById('ef-comodato-wrap');if(w)w.style.display=val==='si'?'block':'none';}
+function calcTotalReserva(){const r=parseFloat((document.getElementById('ef-res-valor')?.value||'0').replace(',','.'))||0;const rf=parseFloat((document.getElementById('ef-ref-valor')?.value||'0').replace(',','.'))||0;const t=document.getElementById('ef-total-reserva');if(t&&(r||rf))t.value=(r+rf).toLocaleString('es-AR');}
+async function saveEscritForm(instId,print){
+  const inst=shared.find(i=>i.id===instId);if(!inst)return;
+  inst.escrituracionForm={tipoActo:(document.getElementById('ef-tipo-acto')||{value:'escritura'}).value,fecha:gval('ef-fecha'),hora:(document.getElementById('ef-hora')||{value:''}).value.trim(),dirInmueble:gval('ef-dir-inmueble'),dirFirma:gval('ef-dir-firma'),escribania:gval('ef-escribania'),escribano:gval('ef-escribano'),simultaneo:gval('ef-simultaneo'),monto:gval('ef-monto'),valorEscrit:gval('ef-valor-escrit'),formaPago:gval('ef-forma-pago'),banco:gval('ef-banco'),compartida:gval('ef-compartida'),agenteNombre:gval('ef-agente-nombre'),agenteApellido:gval('ef-agente-apellido'),agenteOficina:gval('ef-agente-oficina'),agenteMartillero:gval('ef-agente-martillero'),agenteMatricula:gval('ef-agente-matricula'),compradores:getEfRows('compradores'),vendedores:getEfRows('vendedores'),comCompPct:gval('ef-com-comp-pct'),comCompVal:gval('ef-com-comp-val'),escribCompUsd:gval('ef-escrib-comp-usd'),comVendPct:gval('ef-com-vend-pct'),comVendVal:gval('ef-com-vend-val'),escribVendUsd:gval('ef-escrib-vend-usd'),resFecha:gval('ef-res-fecha'),resValor:gval('ef-res-valor'),acepFecha:gval('ef-acep-fecha'),refFecha:gval('ef-ref-fecha'),refValor:gval('ef-ref-valor'),notFecha:gval('ef-not-fecha'),totalReserva:gval('ef-total-reserva'),comodato:gval('ef-comodato'),comodatoTiempo:gval('ef-comodato-tiempo'),llavesFecha:gval('ef-llaves-fecha')};
+  await saveShared();
+  if(print){closeModal('escrit-modal');printEscritForm(inst);}else{toast('Guardado');closeModal('escrit-modal');renderCL(instId);}
+}
+function printEscritForm(inst){
+  const ef=inst.escrituracionForm||{};const v=s=>s||'—';
+  const fmtD=s=>{if(!s)return'—';const d=new Date(s+'T12:00:00');return d.toLocaleDateString('es-AR',{day:'numeric',month:'short',year:'numeric'});};
+  const comps=(ef.compradores||[]).map(c=>'<tr><td>'+v(c.nombre)+'</td><td>'+v(c.apellido)+'</td><td>'+v(c.dni)+'</td></tr>').join('');
+  const vends=(ef.vendedores||[]).map(c=>'<tr><td>'+v(c.nombre)+'</td><td>'+v(c.apellido)+'</td><td>'+v(c.dni)+'</td></tr>').join('');
+  document.getElementById('print-area').innerHTML='<h2>'+(ef.tipoActo||'ESCRITURA').toUpperCase()+' — '+inst.name+'</h2>'
+    +'<div class="p-section"><h3>Datos generales</h3><div class="p-row"><div class="p-field"><div class="p-label">Fecha</div><div class="p-val">'+fmtD(ef.fecha)+'</div></div><div class="p-field"><div class="p-label">Hora</div><div class="p-val">'+v(ef.hora)+'</div></div><div class="p-field"><div class="p-label">Simultáneo</div><div class="p-val">'+v(ef.simultaneo)+'</div></div><div class="p-field"><div class="p-label">Forma de pago</div><div class="p-val">'+v(ef.formaPago)+(ef.banco?' — '+ef.banco:'')+'</div></div></div><div class="p-row"><div class="p-field"><div class="p-label">Dir. inmueble</div><div class="p-val">'+v(ef.dirInmueble)+'</div></div><div class="p-field"><div class="p-label">Dir. firma</div><div class="p-val">'+v(ef.dirFirma)+'</div></div><div class="p-field"><div class="p-label">Escribanía</div><div class="p-val">'+v(ef.escribania)+'</div></div><div class="p-field"><div class="p-label">Escribano</div><div class="p-val">'+v(ef.escribano)+'</div></div></div></div>'
+    +(ef.compartida==='si'?'<div class="p-section"><h3>Agente implicado</h3><div class="p-row"><div class="p-field"><div class="p-label">Nombre</div><div class="p-val">'+v(ef.agenteNombre)+' '+v(ef.agenteApellido)+'</div></div><div class="p-field"><div class="p-label">Oficina</div><div class="p-val">'+v(ef.agenteOficina)+'</div></div><div class="p-field"><div class="p-label">Martillero</div><div class="p-val">'+v(ef.agenteMartillero)+'</div></div><div class="p-field"><div class="p-label">Matrícula</div><div class="p-val">'+v(ef.agenteMatricula)+'</div></div></div></div>':'')
+    +'<div class="p-section"><h3>Compradores</h3><table><tr><th>Nombre</th><th>Apellido</th><th>DNI</th></tr>'+(comps||'<tr><td colspan="3">—</td></tr>')+'</table></div>'
+    +'<div class="p-section"><h3>Vendedores</h3><table><tr><th>Nombre</th><th>Apellido</th><th>DNI</th></tr>'+(vends||'<tr><td colspan="3">—</td></tr>')+'</table></div>'
+    +'<div class="p-section"><h3>Operación</h3><div class="p-row"><div class="p-field"><div class="p-label">Monto</div><div class="p-val">'+v(ef.monto)+'</div></div><div class="p-field"><div class="p-label">Valor escrituración</div><div class="p-val">'+v(ef.valorEscrit)+'</div></div></div></div>'
+    +'<div class="p-section"><h3>Gastos</h3><table><tr><th></th><th>Comisión %</th><th>Comisión $</th><th>Escribanía USD</th></tr><tr><td>Compradores</td><td>'+v(ef.comCompPct)+'</td><td>'+v(ef.comCompVal)+'</td><td>'+v(ef.escribCompUsd)+'</td></tr><tr><td>Vendedores</td><td>'+v(ef.comVendPct)+'</td><td>'+v(ef.comVendVal)+'</td><td>'+v(ef.escribVendUsd)+'</td></tr></table></div>'
+    +'<div class="p-section"><h3>Historial</h3><table><tr><th>Instancia</th><th>Fecha</th><th>Monto</th></tr><tr><td>Reserva</td><td>'+fmtD(ef.resFecha)+'</td><td>'+v(ef.resValor)+'</td></tr><tr><td>Aceptación</td><td>'+fmtD(ef.acepFecha)+'</td><td>—</td></tr><tr><td>Refuerzo</td><td>'+fmtD(ef.refFecha)+'</td><td>'+v(ef.refValor)+'</td></tr><tr><td>Notificación</td><td>'+fmtD(ef.notFecha)+'</td><td>—</td></tr><tr style="font-weight:bold"><td>Total reserva</td><td>—</td><td>'+v(ef.totalReserva)+'</td></tr></table></div>'
+    +(ef.comodato==='si'?'<div class="p-section"><h3>Comodato</h3><div class="p-row"><div class="p-field"><div class="p-label">Tiempo</div><div class="p-val">'+v(ef.comodatoTiempo)+'</div></div><div class="p-field"><div class="p-label">Entrega llaves</div><div class="p-val">'+fmtD(ef.llavesFecha)+'</div></div></div></div>':'');
+  document.getElementById('print-area').style.display='block';
+  const oldTitle=document.title;document.title=inst.name+' — '+(ef.tipoActo||'Escrituración');
+  setTimeout(()=>{window.print();setTimeout(()=>{document.title=oldTitle;document.getElementById('print-area').style.display='none';},500);},100);
+}
+
+// MENSAJES
+function openMensajeFer(instId){
+  const msg='*DIA DE ESCRITURACIÓN* 🏠\n\n📁 *Llevar:*\n- 📄 Carpeta tuya: Hoja de Escrituración + UIF de más\n- 🧾 Carpeta clientes: UIF completadas + Facturas\n- 💵 Dólares de la reserva + Cambio\n- 🔑 Llaves del inmueble\n- 🎁 Regalos\n\n✅ *En el momento...*\n- 📸 Sacar fotos y/o video con el cliente\n- ⭐ Pedir referidos\n- 👥 Evaluar entorno familiar y laboral — ¿les entregamos tarjetas?\n- 🔍 Opinión en Google\n- 🧾 Gastos de escribanía\n- 📱 Redes sociales';
+  document.getElementById('mensaje-modal-content').innerHTML='<div class="modal-close-row"><div class="modal-title">📱 Mensaje para Fer</div><button class="btn btn-sm" onclick="closeModal(\'mensaje-modal\')">cerrar</button></div><div class="partes-block"><div class="partes-title">Mensaje</div><textarea id="msg-fer-txt" style="width:100%;min-height:320px;padding:12px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:monospace;line-height:1.6;resize:vertical">'+msg+'</textarea><button class="btn btn-primary btn-full" style="margin-top:10px" onclick="copyMsg(\'msg-fer-txt\')">📋 Copiar</button></div>';
+  document.getElementById('mensaje-modal').classList.add('open');
+}
+function openMensajeClientes(instId){
+  const inst=shared.find(i=>i.id===instId);if(!inst)return;
+  const ef=inst.escrituracionForm||{};
+  const lugar=ef.dirFirma||inst.lugarFirma||'';
+  const hora=ef.hora||inst.horarioFirma||'';
+  const IS='width:100%;padding:9px 12px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;font-family:var(--font);outline:none';
+  const LS='font-size:12px;color:var(--text2);margin-bottom:5px;display:block;font-weight:500';
+  const TA='width:100%;min-height:220px;padding:12px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:monospace;line-height:1.6;resize:vertical';
+  document.getElementById('mensaje-modal-content').innerHTML='<div class="modal-close-row"><div class="modal-title">💬 Mensajes para las partes</div><button class="btn btn-sm" onclick="closeModal(\'mensaje-modal\')">cerrar</button></div>'
+    +'<div class="partes-block"><div class="partes-title">🏠 Parte compradora</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px"><div><label style="'+LS+'">Lugar</label><input id="mc-lugar" type="text" value="'+lugar+'" style="'+IS+'"></div><div><label style="'+LS+'">Horario</label><input id="mc-hora" type="text" value="'+hora+'" style="'+IS+'"></div><div><label style="'+LS+'">Comisión USD</label><input id="mc-comision" type="text" placeholder="16000" style="'+IS+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div><div><label style="'+LS+'">Reserva USD</label><input id="mc-reserva" type="text" placeholder="10000" style="'+IS+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div><div><label style="'+LS+'">Refuerzo USD</label><input id="mc-refuerzo" type="text" placeholder="5000" style="'+IS+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div><div><label style="'+LS+'">Diferencia USD</label><input id="mc-diferencia" type="text" placeholder="1000" style="'+IS+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div></div><div style="margin-bottom:8px"><label style="'+LS+'">¿Por abonar o por devolver?</label><select id="mc-resultado" style="'+IS+'"><option value="abonar">_por abonar_</option><option value="devolver">_por devolver_</option></select></div><div style="margin-bottom:8px"><label style="'+LS+'">Texto libre (opcional)</label><input id="mc-extra" type="text" style="'+IS+'"></div><button class="btn btn-full" style="margin-bottom:8px" onclick="generarMsgComp()">⚡ Generar mensaje compradora</button><textarea id="msg-comp" style="'+TA+'"></textarea><button class="btn btn-primary btn-full" style="margin-top:8px" onclick="copyMsg(\'msg-comp\')">📋 Copiar mensaje compradora</button></div>'
+    +'<div class="partes-block"><div class="partes-title">🏠 Parte vendedora</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px"><div><label style="'+LS+'">Lugar</label><input id="mv-lugar" type="text" value="'+lugar+'" style="'+IS+'"></div><div><label style="'+LS+'">Horario</label><input id="mv-hora" type="text" value="'+hora+'" style="'+IS+'"></div><div><label style="'+LS+'">Monto comisión USD</label><input id="mv-monto" type="text" placeholder="6000" style="'+IS+'" oninput="this.value=this.value.replace(/[^0-9.,]/g,\'\')"></div><div><label style="'+LS+'">¿Por abonar o devolver?</label><select id="mv-resultado" style="'+IS+'"><option value="abonar">_por abonar_</option><option value="devolver">_por devolver_</option></select></div></div><div style="margin-bottom:8px"><label style="'+LS+'">Documentación original (una por línea)</label><textarea id="mv-docs" style="width:100%;height:70px;padding:8px 10px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;font-family:var(--font);resize:none" placeholder="Escritura"></textarea></div><div style="margin-bottom:8px"><label style="'+LS+'">Texto libre (opcional)</label><input id="mv-extra" type="text" style="'+IS+'"></div><button class="btn btn-full" style="margin-bottom:8px" onclick="generarMsgVend()">⚡ Generar mensaje vendedora</button><textarea id="msg-vend" style="'+TA+'"></textarea><button class="btn btn-primary btn-full" style="margin-top:8px" onclick="copyMsg(\'msg-vend\')">📋 Copiar mensaje vendedora</button></div>';
+  document.getElementById('mensaje-modal').classList.add('open');
+}
+function generarMsgComp(){
+  const l=document.getElementById('mc-lugar')?.value||'[lugar]';
+  const h=document.getElementById('mc-hora')?.value||'[hora]';
+  const com=document.getElementById('mc-comision')?.value||'[comisión]';
+  const res=document.getElementById('mc-reserva')?.value||'[reserva]';
+  const ref=document.getElementById('mc-refuerzo')?.value||'[refuerzo]';
+  const dif=document.getElementById('mc-diferencia')?.value||'[diferencia]';
+  const resultado=document.getElementById('mc-resultado')?.value==='devolver'?'_por devolver_':'_por abonar_';
+  const extra=document.getElementById('mc-extra')?.value||'';
+  const lines=['*ESCRITURACIÓN*','','📍 *Lugar:* '+l,'🕐 *Horario:* '+h+' hs','','💰 *Comisión a abonar:*','- Comisión: '+com+' USD','- Reserva: '+res+' USD','- Refuerzo: '+ref+' USD','- '+dif+' USD '+resultado,'','📄 *Cosas por llevar:*','• DNI físico vigente','• Copias de reserva y refuerzo vigentes que puedan tener en su poder'];
+  if(extra)lines.push('',extra);
+  lines.push('','_Si es posible, les pedimos que luego nos compartan los valores finales de escribanía, a fin de poder sumar la información a nuestras estadísticas internas._');
+  const el=document.getElementById('msg-comp');if(el)el.value=lines.join('\n');
+}
+function generarMsgVend(){
+  const l=document.getElementById('mv-lugar')?.value||'[lugar]';
+  const h=document.getElementById('mv-hora')?.value||'[hora]';
+  const monto=document.getElementById('mv-monto')?.value||'[monto]';
+  const resultado=document.getElementById('mv-resultado')?.value==='devolver'?'_por devolver_':'_por abonar_';
+  const docsRaw=document.getElementById('mv-docs')?.value||'Escritura';
+  const docs=docsRaw.split('\n').filter(d=>d.trim()).map(d=>'  - '+d.trim());
+  const extra=document.getElementById('mv-extra')?.value||'';
+  const lines=['*ESCRITURACIÓN*','','📍 *Lugar:* '+l,'🕐 *Horario:* '+h+' hs','','💰 *Comisión a abonar:*','- '+monto+' USD '+resultado,'','📄 *Cosas por llevar:*','• DNI físico vigente','• Llaves del inmueble','• Copias de reserva y refuerzo vigentes que puedan tener en su poder','• Documentación original a presentar:'].concat(docs);
+  if(extra)lines.push('',extra);
+  lines.push('','_Si es posible, les pedimos que luego nos compartan los valores finales de escribanía, a fin de poder sumar la información a nuestras estadísticas internas._');
+  const el=document.getElementById('msg-vend');if(el)el.value=lines.join('\n');
+}
+
+// NAV
+function showTab(tab){selMode=false;selected={};document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('screen-'+tab).classList.add('active');document.getElementById('bnav-'+tab).classList.add('active');document.getElementById('topbar-back-btn').style.display='none';if(tab==='active')renderActive();if(tab==='reminders')renderReminders();if(tab==='prev')renderPrev();if(tab==='seguimiento')renderSeguimiento();}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');document.getElementById('topbar-back-btn').style.display=['home','active','reminders','prev','seguimiento'].includes(id)?'none':'block';}
+function goBack(){renderActive();showTab(APP.prevTab||'home');}
+function handleTopBack(){goBack();}
+
+// SEGUIMIENTO
+function renderSeguimiento(){
+  const el=document.getElementById('seguimiento-content');
+  const abiertas=fichas.filter(f=>f.estado!=='Cerrada');
+  let html='';
+  if(selMode){
+    const n=Object.values(selected).filter(Boolean).length;
+    html+='<div class="sel-bar"><button class="btn btn-sm" onclick="toggleSelModeSeg()">Cancelar</button><span class="sel-count">'+n+' seleccionada'+(n!==1?'s':'')+'</span>'+(n>0?'<button class="btn btn-sm" style="background:var(--green-bg);color:var(--green);border-color:rgba(76,175,125,0.3)" onclick="bulkCloseFichas()">Cerrar</button><button class="btn btn-sm" style="background:var(--red-bg);color:var(--red);border-color:rgba(224,85,85,0.2)" onclick="bulkDeleteFichas()">Eliminar</button>':'')+'</div>';
+  }else{
+    html+='<div style="display:flex;justify-content:space-between;align-items:center;padding-right:16px"><div class="section-label">Seguimiento de propiedades</div>'+(fichas.length?'<button class="btn btn-sm" onclick="toggleSelModeSeg()">Seleccionar</button>':'')+'</div>';
+    html+='<div style="padding:0 16px 12px"><button class="btn btn-primary btn-full" onclick="newFicha()">+ Nueva ficha</button></div>';
+  }
+  if(!fichas.length){html+='<div class="empty"><div class="empty-icon">📑</div><p>No hay fichas de seguimiento.<br>Creá una para hacer seguimiento de propiedades post-reserva.</p></div>';el.innerHTML=html;return;}
+  const cerradas=fichas.filter(f=>f.estado==='Cerrada');
+  const renderFichaCard=(f)=>{
+    const urg=maxUrgencia(f);
+    const urgDot=urg?'<span class="urg-badge urg-'+urg+'" style="margin-left:6px">'+(urg===1?'Baja':urg===2?'Media':'Alta')+'</span>':'';
+    const opColor=f.operacion==='COMPRA'?'var(--blue)':'var(--green)';
+    const docFalta=(f.documentacion||[]).filter(d=>d.estado==='falta').length;
+    if(selMode){const ck=selected[f.id];return'<div class="card selectable" onclick="toggleSelectFicha(\''+f.id+'\')"><div class="sel-check'+(ck?' checked':'')+'">'+(ck?'✓':'')+'</div><div class="card-body"><div class="card-title">'+(f.propiedad||'Sin nombre')+'</div><div class="card-sub">'+(f.operacion||'')+' · '+(f.estado||'En Proceso')+'</div></div></div>';}
+    return'<div class="card" onclick="openFicha(\''+f.id+'\')"><div class="card-icon" style="background:var(--bg4)">📑</div><div class="card-body"><div class="card-title">'+(f.propiedad||'Sin nombre')+urgDot+'</div><div class="card-sub"><span style="color:'+opColor+'">'+(f.operacion||'—')+'</span> · '+(f.tipo||'')+(docFalta?' · '+docFalta+' doc. falta':'')+'</div></div><span class="badge '+(f.estado==='Cerrada'?'badge-gray':'badge-yellow')+'">'+(f.estado||'En Proceso')+'</span></div>';
+  };
+  if(abiertas.length){html+=abiertas.map(renderFichaCard).join('');}
+  if(cerradas.length&&!selMode){html+='<div class="section-label" style="margin-top:8px;color:var(--text3)">Cerradas ('+cerradas.length+')</div>';html+=cerradas.map(renderFichaCard).join('');}
+  else if(cerradas.length&&selMode){html+=cerradas.map(renderFichaCard).join('');}
+  el.innerHTML=html;
+}
+function maxUrgencia(f){let max=0;['vendedora','compradora'].forEach(p=>{(f[p]||[]).forEach(x=>{const u=parseInt(x.urgencia)||0;if(u>max)max=u;});});return max;}
+function toggleSelModeSeg(){selMode=!selMode;selected={};renderSeguimiento();}
+function toggleSelectFicha(id){selected[id]=!selected[id];renderSeguimiento();}
+async function bulkCloseFichas(){const ids=Object.keys(selected).filter(k=>selected[k]);ids.forEach(id=>{const f=fichas.find(x=>x.id===id);if(f)f.estado='Cerrada';});await saveShared();selMode=false;selected={};toast(ids.length+' ficha'+(ids.length>1?'s':'')+' cerrada'+(ids.length>1?'s':''));renderSeguimiento();}
+async function bulkDeleteFichas(){const ids=Object.keys(selected).filter(k=>selected[k]);fichas=fichas.filter(f=>!ids.includes(f.id));await saveShared();selMode=false;selected={};toast(ids.length+' ficha'+(ids.length>1?'s':'')+' eliminada'+(ids.length>1?'s':''));renderSeguimiento();}
+
+async function newFicha(linkedInst){
+  const f={id:'f_'+Date.now(),propiedad:linkedInst?linkedInst.name:'',operacion:'VENTA',estado:'En Proceso',tipo:'Depto',caracteristicas:'',porqueVende:'',situacionLegal:'',observaciones:'',riesgos:'',soluciones:'',documentacion:[],vendedora:[],compradora:[],linkedInstId:linkedInst?linkedInst.id:null};
+  fichas.unshift(f);await saveShared();
+  currentFichaId=f.id;APP.fichaPrevTab=linkedInst?'checklist':'seguimiento';renderFicha(f.id);showScreen('ficha');
+}
+function openFicha(id){currentFichaId=id;APP.fichaPrevTab=document.querySelector('.bnav-btn.active')?.id?.replace('bnav-','')||'seguimiento';renderFicha(id);showScreen('ficha');}
+function goBackFicha(){saveFichaFromForm();const t=APP.fichaPrevTab||'seguimiento';if(t==='checklist'&&APP.currentInstId){renderCL(APP.currentInstId);showScreen('checklist');}else{showTab(t);}}
+async function openFichaFromInst(instId){
+  const inst=shared.find(i=>i.id===instId);if(!inst)return;
+  let f=fichas.find(x=>x.linkedInstId===instId);
+  if(!f){await newFicha(inst);return;}
+  APP.fichaPrevTab='checklist';
+  currentFichaId=f.id;renderFicha(f.id);showScreen('ficha');
+}
+
+function optionsHTML(opts,sel){return opts.map(o=>'<option value="'+o.replace(/"/g,'&quot;')+'"'+(o===sel?' selected':'')+'>'+o+'</option>').join('')+'<option value="__otro__"'+(sel&&!opts.includes(sel)?' selected':'')+'>➕ Otro...</option>';}
+
+function renderFicha(id){
+  const f=fichas.find(x=>x.id===id);if(!f)return;
+  let html='<div class="cl-header"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:28px">📑</span><div><div class="cl-header-title">'+(f.propiedad||'Nueva ficha')+'</div><div class="cl-header-sub">Ficha de seguimiento</div></div></div></div>';
+  // SEGUIMIENTO SEMANAL ARRIBA (lo más importante para revisar)
+  html+='<div class="ficha-section" style="border-color:rgba(232,213,163,0.3)"><div class="ficha-sec-head" style="background:rgba(232,213,163,0.1)">🗓️ Seguimiento semanal</div><div class="ficha-sec-body">'
+    +'<div style="background:var(--bg3);border-radius:8px;padding:10px;margin-bottom:10px"><div class="ficha-card-title" style="margin-bottom:8px;color:var(--green)">▼ Parte vendedora</div>'
+    +'<div class="ficha-field"><label>Último contacto</label><input type="date" id="f-vend-contacto" value="'+(f.vendSeguimiento?.ultimoContacto||'')+'"></div>'
+    +'<div class="ficha-field"><label>Qué sabemos / averiguamos</label><textarea id="f-vend-sabemos" style="height:55px;resize:none">'+(f.vendSeguimiento?.sabemos||'')+'</textarea></div>'
+    +'<div class="ficha-field" style="margin-bottom:0"><label>Qué falta por saber / averiguar</label><textarea id="f-vend-falta" style="height:55px;resize:none">'+(f.vendSeguimiento?.falta||'')+'</textarea></div></div>'
+    +'<div style="background:var(--bg3);border-radius:8px;padding:10px"><div class="ficha-card-title" style="margin-bottom:8px;color:var(--blue)">▼ Parte compradora</div>'
+    +'<div class="ficha-field"><label>Último contacto</label><input type="date" id="f-comp-contacto" value="'+(f.compSeguimiento?.ultimoContacto||'')+'"></div>'
+    +'<div class="ficha-field"><label>Qué sabemos / averiguamos</label><textarea id="f-comp-sabemos" style="height:55px;resize:none">'+(f.compSeguimiento?.sabemos||'')+'</textarea></div>'
+    +'<div class="ficha-field" style="margin-bottom:0"><label>Qué falta por saber / averiguar</label><textarea id="f-comp-falta" style="height:55px;resize:none">'+(f.compSeguimiento?.falta||'')+'</textarea></div></div>'
+    +'</div></div>';
+  // PROPIEDAD
+  html+='<div class="ficha-section"><div class="ficha-sec-head">Propiedad</div><div class="ficha-sec-body">'
+    +'<div class="ficha-field"><label>Propiedad / Dirección</label><input type="text" id="f-propiedad" value="'+(f.propiedad||'').replace(/"/g,'&quot;')+'"></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">'
+    +'<div class="ficha-field"><label>Operación</label><select id="f-operacion"><option'+(f.operacion==='VENTA'?' selected':'')+'>VENTA</option><option'+(f.operacion==='COMPRA'?' selected':'')+'>COMPRA</option></select></div>'
+    +'<div class="ficha-field"><label>Estado</label><select id="f-estado"><option'+(f.estado==='En Proceso'?' selected':'')+'>En Proceso</option><option'+(f.estado==='Cerrada'?' selected':'')+'>Cerrada</option></select></div>'
+    +'<div class="ficha-field"><label>Tipo</label><select id="f-tipo"><option'+(f.tipo==='Casa'?' selected':'')+'>Casa</option><option'+(f.tipo==='PH'?' selected':'')+'>PH</option><option'+(f.tipo==='Depto'?' selected':'')+'>Depto</option></select></div>'
+    +'</div>'
+    +'<div class="ficha-field"><label>Características</label><input type="text" id="f-caracteristicas" value="'+(f.caracteristicas||'').replace(/"/g,'&quot;')+'"></div>'
+    +'<div class="ficha-field"><label>¿Por qué se vende?</label><input type="text" id="f-porque" value="'+(f.porqueVende||'').replace(/"/g,'&quot;')+'"></div>'
+    +'<div class="ficha-field"><label>Situación legal</label><input type="text" id="f-legal" value="'+(f.situacionLegal||'').replace(/"/g,'&quot;')+'"></div>'
+    +'<div class="ficha-field"><label>Observaciones</label><input type="text" id="f-obs" value="'+(f.observaciones||'').replace(/"/g,'&quot;')+'"></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
+    +'<div class="ficha-field"><label>Riesgos</label><input type="text" id="f-riesgos" value="'+(f.riesgos||'').replace(/"/g,'&quot;')+'"></div>'
+    +'<div class="ficha-field"><label>Soluciones</label><input type="text" id="f-soluciones" value="'+(f.soluciones||'').replace(/"/g,'&quot;')+'"></div>'
+    +'</div></div></div>';
+  // DOCUMENTACION - dos listas separadas
+  html+='<div class="ficha-section"><div class="ficha-sec-head">Documentación</div><div class="ficha-sec-body">'
+    +'<div style="margin-bottom:12px"><div class="ficha-card-title" style="color:var(--green);margin-bottom:8px">✅ Lo que tenemos</div><div id="f-doc-tenemos"></div><button class="add-row-btn" onclick="addDocRow(null,\'tenemos\')">+ Agregar documento que tenemos</button></div>'
+    +'<div><div class="ficha-card-title" style="color:var(--red);margin-bottom:8px">⏳ Lo que falta</div><div id="f-doc-falta"></div><button class="add-row-btn" onclick="addDocRow(null,\'falta\')">+ Agregar documento que falta</button></div>'
+    +'</div></div>';
+  // PARTE VENDEDORA
+  html+='<div class="ficha-section"><div class="ficha-sec-head">Parte vendedora — detalle</div><div class="ficha-sec-body"><div id="f-vendedora-list"></div><button class="add-row-btn" onclick="addParteFichaRow(\'vendedora\')">+ Agregar persona</button></div></div>';
+  // PARTE COMPRADORA
+  html+='<div class="ficha-section"><div class="ficha-sec-head">Parte compradora — detalle</div><div class="ficha-sec-body"><div id="f-compradora-list"></div><button class="add-row-btn" onclick="addParteFichaRow(\'compradora\')">+ Agregar persona</button></div></div>';
+  html+='<div style="padding:0 16px 20px;display:flex;gap:10px"><button class="btn btn-primary" style="flex:1" onclick="saveFichaFromForm(true)">💾 Guardar ficha</button><button class="btn" style="background:var(--red-bg);color:var(--red);border-color:rgba(224,85,85,0.2)" onclick="deleteFicha(\''+id+'\')">Eliminar</button></div>';
+  document.getElementById('ficha-content').innerHTML=html;
+  // Populate docs by estado
+  const docs=f.documentacion&&f.documentacion.length?f.documentacion:[];
+  const tenemos=docs.filter(d=>d.estado!=='falta');
+  const faltan=docs.filter(d=>d.estado==='falta');
+  if(tenemos.length)tenemos.forEach(d=>addDocRow(d,'tenemos'));else addDocRow(null,'tenemos');
+  if(faltan.length)faltan.forEach(d=>addDocRow(d,'falta'));else addDocRow(null,'falta');
+  (f.vendedora&&f.vendedora.length?f.vendedora:[{}]).forEach(p=>addParteFichaRow('vendedora',p));
+  (f.compradora&&f.compradora.length?f.compradora:[{}]).forEach(p=>addParteFichaRow('compradora',p));
+}
+
+function addDocRow(data,estadoFijo){
+  const estado=estadoFijo||(data&&data.estado)||'tenemos';
+  const listId=estado==='falta'?'f-doc-falta':'f-doc-tenemos';
+  const list=document.getElementById(listId);if(!list)return;
+  const d=data||{};
+  const card=document.createElement('div');card.className='ficha-card';card.dataset.estado=estado;
+  const docOpts=optionsHTML(DOC_OPTIONS,d.documento);
+  const profOpts=optionsHTML(PROF_OPTIONS,d.encargado&&d.encargado!=='Cliente'?d.encargado:null);
+  let inner='<div class="ficha-card-head"><select class="doc-documento" style="flex:1;font-size:13px;padding:7px 10px" onchange="checkOtro(this)">'+docOpts+'</select><button type="button" onclick="this.closest(\'.ficha-card\').remove()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;margin-left:8px">✕</button></div>'
+    +'<input type="text" class="doc-documento-otro" placeholder="Especificar documento" value="'+((d.documento&&!DOC_OPTIONS.includes(d.documento))?d.documento.replace(/"/g,'&quot;'):'')+'" style="font-size:13px;padding:7px 10px;margin-bottom:8px;display:'+((d.documento&&!DOC_OPTIONS.includes(d.documento))?'block':'none')+'">'
+    +'<div class="ficha-field" style="margin-bottom:'+(estado==='falta'?'8px':'0')+'"><label>Observaciones</label><input type="text" class="doc-obs" value="'+(d.observaciones||'').replace(/"/g,'&quot;')+'" style="font-size:13px;padding:7px 10px"></div>';
+  if(estado==='falta'){
+    inner+='<div class="ficha-field" style="margin-bottom:8px"><label>¿Quién se encarga?</label><select class="doc-encargado" style="font-size:13px;padding:7px 10px" onchange="checkEncargado(this)"><option value="Cliente"'+(d.encargado==='Cliente'?' selected':'')+'>Cliente</option>'+profOpts+'</select></div>'
+      +'<input type="text" class="doc-encargado-otro" placeholder="Especificar profesional" value="'+((d.encargado&&d.encargado!=='Cliente'&&!PROF_OPTIONS.includes(d.encargado))?d.encargado.replace(/"/g,'&quot;'):'')+'" style="font-size:13px;padding:7px 10px;margin-bottom:8px;display:'+((d.encargado&&d.encargado!=='Cliente'&&!PROF_OPTIONS.includes(d.encargado))?'block':'none')+'">'
+      +'<div class="doc-prof-extra" style="display:'+((d.encargado&&d.encargado!=='Cliente')?'block':'none')+'">'
+      +'<div class="ficha-field" style="margin-bottom:8px"><label>¿Por qué?</label><input type="text" class="doc-porque" value="'+(d.porque||'').replace(/"/g,'&quot;')+'" style="font-size:13px;padding:7px 10px"></div>'
+      +'<div class="ficha-field" style="margin-bottom:8px"><label>¿Cómo son?</label><input type="text" class="doc-comoson" value="'+(d.comoSon||'').replace(/"/g,'&quot;')+'" style="font-size:13px;padding:7px 10px"></div>'
+      +'<div class="ficha-field" style="margin-bottom:8px"><label>Costos estimados</label><input type="text" class="doc-costos" value="'+(d.costos||'').replace(/"/g,'&quot;')+'" style="font-size:13px;padding:7px 10px"></div>'
+      +'<div class="ficha-field" style="margin-bottom:8px"><label>Acciones por realizar</label><input type="text" class="doc-acciones" value="'+(d.acciones||'').replace(/"/g,'&quot;')+'" style="font-size:13px;padding:7px 10px"></div>'
+      +'</div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="ficha-field" style="margin-bottom:0"><label>Tiempo estimado</label><input type="number" class="doc-tiempo-num" value="'+(d.tiempoNum||'')+'" min="1" style="font-size:13px;padding:7px 10px"></div><div class="ficha-field" style="margin-bottom:0"><label>Unidad</label><select class="doc-tiempo-unidad" style="font-size:13px;padding:7px 10px"><option value="dias"'+(d.tiempoUnidad==='dias'?' selected':'')+'>Días hábiles</option><option value="corridos"'+(d.tiempoUnidad==='corridos'?' selected':'')+'>Días corridos</option><option value="meses"'+(d.tiempoUnidad==='meses'?' selected':'')+'>Meses</option></select></div></div>'
+      +'<div class="doc-fecha-preview" style="font-size:11px;color:var(--accent);margin-top:6px"></div>';
+  }
+  card.innerHTML=inner;
+  list.appendChild(card);
+  if(estado==='falta'){
+    updateDocFechaPreview(card);
+    const numInp=card.querySelector('.doc-tiempo-num');const unitInp=card.querySelector('.doc-tiempo-unidad');
+    if(numInp)numInp.addEventListener('input',()=>updateDocFechaPreview(card));
+    if(unitInp)unitInp.addEventListener('change',()=>updateDocFechaPreview(card));
+  }
+}
+function updateDocFechaPreview(card){
+  const num=parseInt(card.querySelector('.doc-tiempo-num')?.value)||0;
+  const unit=card.querySelector('.doc-tiempo-unidad')?.value||'dias';
+  const prev=card.querySelector('.doc-fecha-preview');
+  if(!prev)return;
+  if(num<=0){prev.textContent='';return;}
+  let d;
+  if(unit==='dias')d=addBizDays(new Date(),num);
+  else{d=new Date();if(unit==='corridos')d.setDate(d.getDate()+num);else d.setMonth(d.getMonth()+num);}
+  prev.textContent='📅 Fecha estimada: '+fmtDateStr(d.toISOString().slice(0,10))+' · avisos: 7 días antes y el día';
+}
+function checkOtro(sel){const card=sel.closest('.ficha-card');const otroInp=card.querySelector('.doc-documento-otro');if(sel.value==='__otro__'){otroInp.style.display='block';otroInp.focus();}else{otroInp.style.display='none';}}
+function checkEncargado(sel){const card=sel.closest('.ficha-card');const otroInp=card.querySelector('.doc-encargado-otro');const profExtra=card.querySelector('.doc-prof-extra');const isCliente=sel.value==='Cliente';const isOtro=sel.value==='__otro__';otroInp.style.display=isOtro?'block':'none';profExtra.style.display=isCliente?'none':'block';if(isOtro)otroInp.focus();}
+
+function addParteFichaRow(parte,data){
+  const list=document.getElementById('f-'+parte+'-list');if(!list)return;
+  const p=data||{};const urg=p.urgencia||'1';
+  const card=document.createElement('div');card.className='ficha-card';
+  card.innerHTML='<div class="ficha-card-head"><select class="pf-origen" style="font-size:12px;padding:5px 8px;width:auto"><option'+(p.origen==='Cliente'?' selected':'')+'>Cliente</option><option'+(p.origen==='Agente'?' selected':'')+'>Agente</option></select><button type="button" onclick="this.closest(\'.ficha-card\').remove()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px">✕</button></div>'
+    +'<div class="ficha-field" style="margin-bottom:8px"><label>Nombre</label><input type="text" class="pf-nombre" value="'+(p.nombre||'').replace(/"/g,'&quot;')+'" style="font-size:13px;padding:7px 10px"></div>'
+    +'<div class="ficha-field" style="margin-bottom:8px"><label>Observaciones</label><input type="text" class="pf-obs" value="'+(p.observaciones||'').replace(/"/g,'&quot;')+'" style="font-size:13px;padding:7px 10px"></div>'
+    +'<div class="ficha-field" style="margin-bottom:8px"><label>¿Cómo son?</label><input type="text" class="pf-comoson" value="'+(p.comoSon||'').replace(/"/g,'&quot;')+'" style="font-size:13px;padding:7px 10px"></div>'
+    +'<div class="ficha-field" style="margin-bottom:8px"><label>¿Qué esperan?</label><input type="text" class="pf-esperan" value="'+(p.esperan||'').replace(/"/g,'&quot;')+'" style="font-size:13px;padding:7px 10px"></div>'
+    +'<div class="ficha-field" style="margin-bottom:8px"><label>Urgencia</label><select class="pf-urgencia" onchange="updateUrgColor(this)" style="font-size:13px;padding:7px 10px"><option value="1"'+(urg==='1'?' selected':'')+'>1 — Nula (verde)</option><option value="2"'+(urg==='2'?' selected':'')+'>2 — Media (amarillo)</option><option value="3"'+(urg==='3'?' selected':'')+'>3 — Tope (rojo)</option></select></div>'
+    +'<div class="ficha-field" style="margin-bottom:0"><label>Acciones por realizar</label><input type="text" class="pf-acciones" value="'+(p.acciones||'').replace(/"/g,'&quot;')+'" style="font-size:13px;padding:7px 10px"></div>';
+  list.appendChild(card);
+  updateUrgColor(card.querySelector('.pf-urgencia'));
+}
+function updateUrgColor(sel){const v=sel.value;const c=v==='3'?'var(--red)':v==='2'?'var(--yellow)':'var(--green)';sel.style.borderColor=c;sel.style.color=c;}
+
+function getDocRows(){
+  const result=[];
+  ['f-doc-tenemos','f-doc-falta'].forEach(listId=>{
+    const list=document.getElementById(listId);if(!list)return;
+    Array.from(list.querySelectorAll('.ficha-card')).forEach(card=>{
+      const estado=card.dataset.estado||'tenemos';
+      let documento=card.querySelector('.doc-documento')?.value||'';
+      if(documento==='__otro__'){const otro=card.querySelector('.doc-documento-otro')?.value.trim();if(otro){documento=otro;if(!DOC_OPTIONS.includes(otro))DOC_OPTIONS.push(otro);}}
+      if(!documento||documento==='__otro__')return;
+      const row={documento,estado,observaciones:card.querySelector('.doc-obs')?.value.trim()||''};
+      if(estado==='falta'){
+        let encargado=card.querySelector('.doc-encargado')?.value||'';
+        if(encargado==='__otro__'){const otro=card.querySelector('.doc-encargado-otro')?.value.trim();if(otro){encargado=otro;if(!PROF_OPTIONS.includes(otro))PROF_OPTIONS.push(otro);}}
+        row.encargado=encargado;row.porque=card.querySelector('.doc-porque')?.value.trim()||'';row.comoSon=card.querySelector('.doc-comoson')?.value.trim()||'';row.costos=card.querySelector('.doc-costos')?.value.trim()||'';row.acciones=card.querySelector('.doc-acciones')?.value.trim()||'';row.tiempoNum=card.querySelector('.doc-tiempo-num')?.value||'';row.tiempoUnidad=card.querySelector('.doc-tiempo-unidad')?.value||'dias';
+      }
+      result.push(row);
+    });
+  });
+  return result;
+}
+function getParteFichaRows(parte){
+  const list=document.getElementById('f-'+parte+'-list');if(!list)return[];
+  return Array.from(list.querySelectorAll('.ficha-card')).map(card=>({origen:card.querySelector('.pf-origen')?.value||'Cliente',nombre:card.querySelector('.pf-nombre')?.value.trim()||'',observaciones:card.querySelector('.pf-obs')?.value.trim()||'',comoSon:card.querySelector('.pf-comoson')?.value.trim()||'',esperan:card.querySelector('.pf-esperan')?.value.trim()||'',urgencia:card.querySelector('.pf-urgencia')?.value||'1',acciones:card.querySelector('.pf-acciones')?.value.trim()||''})).filter(p=>p.nombre);
+}
+
+async function saveFichaFromForm(showToast){
+  const f=fichas.find(x=>x.id===currentFichaId);if(!f)return;
+  f.propiedad=gval('f-propiedad');f.operacion=gval('f-operacion');f.estado=gval('f-estado');f.tipo=gval('f-tipo');
+  f.caracteristicas=gval('f-caracteristicas');f.porqueVende=gval('f-porque');f.situacionLegal=gval('f-legal');f.observaciones=gval('f-obs');f.riesgos=gval('f-riesgos');f.soluciones=gval('f-soluciones');
+  f.documentacion=getDocRows();f.vendedora=getParteFichaRows('vendedora');f.compradora=getParteFichaRows('compradora');
+  f.vendSeguimiento={ultimoContacto:gval('f-vend-contacto'),sabemos:(document.getElementById('f-vend-sabemos')||{value:''}).value.trim(),falta:(document.getElementById('f-vend-falta')||{value:''}).value.trim()};
+  f.compSeguimiento={ultimoContacto:gval('f-comp-contacto'),sabemos:(document.getElementById('f-comp-sabemos')||{value:''}).value.trim(),falta:(document.getElementById('f-comp-falta')||{value:''}).value.trim()};
+  // Generate notifications from documentation deadlines
+  f.docReminders=[];
+  (f.documentacion||[]).forEach(d=>{if(d.estado==='falta'&&d.tiempoNum){const num=parseInt(d.tiempoNum);if(num>0){let dt;if(d.tiempoUnidad==='dias')dt=addBizDays(new Date(),num);else{dt=new Date();if(d.tiempoUnidad==='corridos')dt.setDate(dt.getDate()+num);else dt.setMonth(dt.getMonth()+num);}const fecha=dt.getTime();const aviso7=fecha-7*86400000;f.docReminders.push({doc:d.documento,fecha,aviso7});}}});
+  await saveShared();
+  if(showToast)toast('Ficha guardada');
+}
+async function deleteFicha(id){fichas=fichas.filter(f=>f.id!==id);await saveShared();toast('Ficha eliminada');showTab('seguimiento');}
+
+// EMBEDDED TEMPLATES
+function getEmbedded(){return{
+  captacion:{...META.captacion,key:'captacion',sections:[
+    {label:'PRELISTING',steps:['Subir a Instagram y WhatsApp foto/video de "hoy visitamos"','Llevar hoja de Prelisting y completar','Enviar hoja completa de "Prelisting" a Lu','Cargar información de "Prelisting" en Excel de "ACM"','Hacer ACM','Cargar hoja de estadísticas de ACM','Entregar ACM (cargar OKR) + Agendar 1 semana después','Agregar al cliente a la Base']},
+    {label:'CAPTACIÓN',steps:['Pedir DNI + Escritura + Mails — Guardar en Drive','¿Es apto crédito? ¿Tiene planos? Calendarizar recordatorios semanales','Anotar cumpleaños en la Base','Hacer autorización','Agendar fecha para las fotos','Llenar Excel de estadísticas de ACM','Crear y completar el Excel de "Reportes" + Índice','Crear y completar el Excel de "Propiedades"','Agregar recordatorios una semana antes del vencimiento','Pedir redes sociales a los clientes']},
+    {label:'FOTOS',steps:['¿Hacemos video? Armar guión','¿Ponemos cartel? ¿Qué tamaño?','Tomar medida de los ambientes + Plano','Descargar fotos/video del fotógrafo en Drive','Guardar plano en Drive y cargar en RedRemax','Anotar en OKR como "Captación"','Enviar link a cliente + Referidor']},
+    {label:'DIFUSIÓN ENTRE COLEGAS',steps:['Averiguar inmobiliarias de la zona + oficinas de Remax','Consultar si tienen propiedades similares']},
+    {label:'PROMOCIÓN DIGITAL',steps:['Historia con Fer de "Hoy estamos en…"','Definir publicación + CANVA','Agregar al catálogo de WhatsApp Business','Compartir ficha en grupos de WhatsApp de colegas','¿Hacemos video mostrando la propiedad?','Evaluar si conviene promocionar la publicación','¿Subir como "Superdestacado"?']},
+    {label:'PROMOCIÓN LOCAL',steps:['Carta a vecinos: "Puse a la venta mi propiedad"','Carta a vecinos: "Vendí en tu barrio y tenemos interesados"','¿Hay encargado? Conversar, dejar tarjeta']}
+  ]},
+  reserva:{...META.reserva,key:'reserva',sections:[
+    {label:'EN RESERVA',steps:['Redactar Reserva + Recibo de Reserva','¿Es a referéndum de la compra o venta de otra propiedad? Si / No','¿Se requiere reubicación de propietarios? Si / No — ¿Antes / Después?','¿Se hace escritura en simultáneo? Si / No','Poner como "En Negociación" en Red Remax - Si se requiere']},
+    {label:'UNA VEZ CONFORMADA LA RESERVA',steps:['Anotar en OKR','Calendarizar fecha de finalización de reserva — Posterior se hace prórroga','Redactar Aceptación + Notificación','¿Hay agente implicado? ¿Comparte comisión? ¿Tenemos info del martillero? - Comentar/Consultar % de comisión','Comentar reserva a Referidor (si lo hay)','Cargar montos de facturación estimados en hoja "Cierres" de planilla de "Facturación"','Cargar información de propiedad e implicados en solapa "Seguimiento"','Pedir informes de Dominio e Inhibición — Calendarizar posible entrega de los mismos','Poner fecha para el Refuerzo (una vez que tenga los informes) — Calendarizar','Definir si se realiza: Escritura / Boleto Compra-Venta (calendarizar para armarlo)','¿Se escritura al 100% o menos?','¿Se necesita comodato? ¿Cuánto tiempo? ¿Días para la mudanza?','P/Compradora: ¿Tiene escribano?','¿Se requiere agrimensor para el estado parcelario? — Calcular tiempos','¿Tienen mudanzero?','¿Hay cartel en la propiedad? ¿Ponemos franja de "Reservado" o retiramos?','Poner como "Reservada" en Red Remax','¿Propiedad en Superdestacados? Reemplazar']},
+    {label:'PREPARACIÓN DIGITAL Y EDICIÓN',steps:['Agendar editar video o imágenes','IG: Historia de hoja de reserva con datos sensibles tapados','IG: Historia de cartel con franja de reservado','IG: Si hay reel, se sube a historias con fondo blanco y negro y "Reservado" cruzado y llamativo','IG: Historia con placa de reservado','WPP: Cambiar o eliminar de tablero en catálogo']},
+    {label:'CON ESCRIBANÍA',steps:['Solicitar datos de escribanía','Contactar a la escribanía (usar borrador de email)','Asegurarnos que escribanía tenga todos los datos necesarios de las partes','Pedir documentación a cliente para la escribanía','Definir monto de escritura, confirmar con escribana','Definir lugar de firma','Averiguar a nombre de quién van las facturas','Avisar dólares cara grande','Analizar regalos a clientes y referidor, llaveros, carta, etc.']}
+  ]},
+  escrituracion:{...META.escrituracion,key:'escrituracion',sections:[
+    {label:'DEFINICIONES INICIALES',steps:['Confirmar tipo de pago: Crédito, Transferencia y/o Efectivo (recordar dólar cara grande)','¿Hay reubicación? Si / No — ¿Escritura en simultáneo? Antes / Después','Confirmar con las partes el monto de escrituración']},
+    {label:'7 DÍAS ANTES',steps:['Pensar y comprar regalos','Escribir tarjetas','¿Hay referidor? Comentar fecha + ¿Compramos regalo? ¿Pagamos referido?']},
+    {label:'3 DÍAS ANTES',steps:['Avisar a Fran fecha de firma','Completar Excel "Facturación"','Comunicar a los clientes: Montos de comisión + Solicitar: DNI (frente y dorso), CUIL/CUIT, Email y Celular','Hacer facturas','Pedir facturas a Administración','Guardar facturas en la carpeta Drive de la propiedad','Pasar a buscar USD de la reserva','Completar UIF','Armado carpeta Fer: Hoja física de "Escrituración" + UIF (imprimir)','Armado carpeta clientes: UIF llenadas + Facturas (imprimir)']},
+    {label:'1 DÍA ANTES',steps:['Enviar mensaje prediseñado por WhatsApp a las partes con recordatorio completo','Armar posteo de "Vendimos" para redes (mes y año)','Entregamos regalos en escrituración o posterior?']},
+    {label:'DÍA DE ESCRITURACIÓN',steps:['Enviar mensaje prediseñado por WhatsApp a Fer','Sacar fotos y/o video del momento con el cliente','REDES: Historia en escrituración, campanazo, "Vendida", modificar historias destacadas','Recordar pedir: REF - Evaluar persona: entorno familiar y laboral (podemos entregar tarjetas?) - Opinión de Google - Gastos de escribanía - Redes Sociales','Guardar fotos en Drive','Cambiar estado en Red de Remax','Cargar datos de fecha, dirección y características en Base de Relaciones','¿Hubo agente implicado? Sumar a Base de Agentes','¿Planilla de Facturación, Gastos y Cierres completas? Confirmar montos con oficina','Una vez finalizada la operación, mover carpeta en Drive a "Antiguos"','Preparar y repartir carta a vecinos: "Vendí en tu barrio y tenemos interesados"']},
+    {label:'AGENDAR MENSAJE/LLAMADA',steps:['Mismo día más tarde (¿nos acercamos con regalo post escrituración?)','Día siguiente','En mudanza','A la semana de la mudanza','A las 2/3 semanas, coordinar para visitar y llevar regalo (¿planta?)','Al mes','Al año']}
+  ]},
+  referido:{...META.referido,key:'referido',sections:[
+    {label:'REGISTRO INICIAL',steps:['Cargar en OKR']},
+    {label:'SOBRE EL REFERIDOR',steps:['Verificar si ya está en la "Base de Relaciones"','Actualizar su categoría','Agregar al referido en columna correspondiente','Hacerle un regalo y visitar + Anotar en la base','Mantenerlo al tanto sobre avances']},
+    {label:'SOBRE EL REFERIDO',steps:['Cargar en la "Base de Relaciones" (vincular con referidor)','Cargar hoja "Referidos" (en Team Bolten)','Registrar información post contacto en la "Base"']}
+  ]},
+  modificacion:{...META.modificacion,key:'modificacion',sections:[
+    {label:'MODIFICACIÓN DE VALOR',steps:['Modificar en Red Remax','Anotar en Reporte','Hacer historia para Instagram de BAJA DE VALOR + Destacar','Modificar en Catálogo de WhatsApp','Mandar mensaje a todos los interesados']}
+  ]},
+  baja:{...META.baja,key:'baja',sections:[
+    {label:'BAJA DE PROPIEDAD',steps:['Modificar en Red Remax','Anotar en Reporte','Eliminar del Catálogo WhatsApp','Eliminar de Historias Destacadas de Instagram + Feed si se subió']}
+  ]},
+  renovacion:{...META.renovacion,key:'renovacion',sections:[
+    {label:'RENOVACIÓN DE PROPIEDAD',steps:['Comunicarse con propietarios con reporte "final"','Corregir en autorización: fecha, precio, días hábiles de duración','Cambiar en Red de Remax','Anotar en Reporte','Hacer historia para Instagram de BAJA DE VALOR + Destacar','Modificar en Catálogo de WhatsApp','Cambiar fecha de vencimiento en calendario']}
+  ]}
+};}
+
+init();
+</script>
+</body>
+</html>
